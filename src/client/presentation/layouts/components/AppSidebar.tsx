@@ -1,11 +1,11 @@
 import React from 'react'
-import {CImage, CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler} from '@coreui/react'
+import {CImage, CSidebar, CSidebarBrand, CSidebarNav} from '@coreui/react'
 import {AppSidebarNav} from './AppSidebarNav'
-import {logoFull, logoNarrow} from '../../../assets/brand/brand'
+// import {logoFull, logoNarrow} from '../../../assets/brand/brand'
 import SimpleBar from 'simplebar-react'
 import navigation from './_nav'
 import {ThemeAction} from "../../../recoil/theme/ThemeAction";
-import CIcon from "@coreui/icons-react";
+// import CIcon from "@coreui/icons-react";
 
 const AppSidebar = () => {
     const {

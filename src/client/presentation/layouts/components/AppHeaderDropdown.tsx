@@ -43,6 +43,7 @@ const AppHeaderDropdown = () => {
         navigate(RouteConfig.USER_ACTIVITY_HISTORY)
     }
     const handleViewUser = () => {
+        navigate('/me')
         console.log(112);
     };
 
@@ -94,7 +95,7 @@ const AppHeaderDropdown = () => {
                                 <div>
                                     <b>{vmMe.user?.name}</b>
                                 </div>
-                                <div style={linkStyle}>
+                                <div style={linkStyle} >
                                     Xem hồ sơ của bạn
                                 </div>
                                 {/* Add any other user information here */}

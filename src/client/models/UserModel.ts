@@ -7,38 +7,39 @@ export type T_LoginVO = {
     username: string
     password: string
 }
-export type T_QueryVO = {
-    page?: number
-    limit?: number
-    sort?: string
-    order?: string
-    search?: string
+
+export type T_RegisterVO = {
+    username: string
+    password: string
+    confirm: string
+    name: string
+    email: string
+    address: string
+    phone: string
+    image: File
 }
-// export type T_MeInfoV0 = {
-//     name?: string
-//     email?: string
-//     telephone?: string
-//     address?: string
-// }
 
-// export type T_MePasswordVO = {
-//     password: string
-//     current: string
-// }
+export type T_ResetPasswordVO ={
+    password: string
+    password_confirmation: string
+}
 
-// export type T_MeImageV0 = {
-//     image: File
-//     type: string
-// }
+export type T_ResetPasswordOTPVO ={
+    password: string
+    password_confirmation: string
+    otp: string
+    email: string
+}
 
 export class UserModel extends Model {
-    id?: number
+    id?: string
     name?: string
     username?: string
     email?: string
     image?: string
     isOwner?: boolean
     phone? :string
+    address? :string
     activated2fa?:boolean
     accessToken?: AccessTokenModel
     createAt?:string
@@ -46,7 +47,7 @@ export class UserModel extends Model {
     status?: boolean
     constructor(data: Record<string, any>) {
         super(data)
-        this.id = Normalize.initJsonNumber(data, 'id')
+        this.id = Normalize.initJsonString(data, 'id')
         this.name = Normalize.initJsonString(data, 'name')
         this.phone = Normalize.initJsonString(data, 'phone')
         this.activated2fa = Normalize.initJsonBool(data, 'activated_2fa')

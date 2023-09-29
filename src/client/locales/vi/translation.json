@@ -44,6 +44,8 @@
     "confirmLogout": "Bạn có muốn đăng xuất không?",
     "signingOut": "Đang đăng xuất...",
     "logoutSuccess": "Đã đăng xuất",
+    "register" : "Đăng kí",
+    "registerSubTitle" : "Đăng kí tài khoản của bạn",
     "authenticate": "Xác thực",
     "device": "Thiết bị",
     "noData": "Không có dữ liệu",

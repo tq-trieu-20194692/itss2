@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react'
-import {CContainer, CHeader, CHeaderBrand, CHeaderDivider, CHeaderNav, CHeaderToggler, CNavItem, CNavLink} from '@coreui/react'
+import {CContainer, CHeader, CHeaderNav} from '@coreui/react'
 import AppHeaderDropdown from "./AppHeaderDropdown";
 import {useNavigate} from "react-router";
 

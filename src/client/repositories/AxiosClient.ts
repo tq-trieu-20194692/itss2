@@ -31,7 +31,7 @@ export class AxiosClient {
         const storeConfig = StoreConfig.getInstance()
 
         if (storeConfig.accessToken && storeConfig.accessToken.token && storeConfig.accessToken.token.length > 0) {
-            // console.log('accessToken', storeConfig.accessToken.token)
+            console.log('accessToken', storeConfig.accessToken.token)
 
             config.headers!.Authorization = `Bearer ${storeConfig.accessToken.token}`
         }
@@ -41,7 +41,7 @@ export class AxiosClient {
             platform: 'web'
         }
 
-        config.headers!['os-data'] = EDData.setData(osData)
+        // config.headers!['os-data'] = EDData.setData(osData)
 
         return config;
     }
@@ -67,6 +67,8 @@ export class AxiosClient {
                     }
                 }
                 : AxiosClient.Config());
+        // const data_1 = r.data;
+
         const data_1 = EDData.getData(r.data) ?? r.data;
         console.log('RES:', data_1);
         console.log('%c--END------------------------------------------->', Color.ConsoleInfo);
@@ -82,10 +84,12 @@ export class AxiosClient {
 
         console.log('%c<-POST-------------------------------------------', Color.ConsoleInfo);
         console.log(`[${moment().format(App.FormatTimeFull)}] PATH: ${path}`);
-        console.log(config)
+
         const r = await axios
             .post(`${App.ApiUrl}/${path}`, data, config ?? AxiosClient.Config(isUp))
         console.log(r);
+        // const data_1 = r.data;
+
         const data_1 = EDData.getData(r.data) ?? r.data;
         console.log(r.data);
         console.log('RES:', data_1);

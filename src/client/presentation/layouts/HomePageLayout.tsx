@@ -1,7 +1,4 @@
 import React, {FC, ReactNode, useEffect, useState} from "react";
-import AppSidebar from "./components/AppSidebar";
-import AppHeader from "./components/AppHeader";
-import AppFooter from "./components/AppFooter";
 import {Outlet, useOutletContext} from "react-router";
 import {CContainer} from "@coreui/react";
 import AppHeaderForHomePage from "./components/AppHeaderForHomePage";
