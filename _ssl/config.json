@@ -1,0 +1,8 @@
+{
+  "local": {
+    "source": 6101,
+    "target": 6001,
+    "cert": "./_ssl/localhost+2.pem",
+    "key": "./_ssl/localhost+2-key.pem"
+  }
+}
