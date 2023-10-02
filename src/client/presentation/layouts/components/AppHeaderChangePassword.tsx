@@ -1,6 +1,5 @@
 import React, {ReactNode} from 'react'
-import {CContainer, CHeader, CHeaderNav} from '@coreui/react'
-import AppHeaderDropdown from "./AppHeaderDropdown";
+import {CContainer, CHeader} from '@coreui/react'
 import {useNavigate} from "react-router";
 
 type _T_Props = {
@@ -24,9 +23,6 @@ const AppHeaderChangePassword = (props: _T_Props) => {
                     }} alt=""/>
                     AUTOTIMELAPSE
                 </div>
-                <CHeaderNav className="ml-auto">
-                    <AppHeaderDropdown/>
-                </CHeaderNav>
             </CContainer>
         </CHeader>
     )

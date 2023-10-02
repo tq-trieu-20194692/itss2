@@ -53,13 +53,13 @@ export class RouteConfig {
             name: 'Reset Password',
             path: RouteConfig.RESET_PASSWORD,
             component: ChangePasswordScreen,
-            protect: true
+            protect: false
         },
         {
             name: 'Reset Password OTP',
             path: RouteConfig.RESET_PASSWORD_OTP,
             component: ChangePasswordOTPScreen,
-            protect: true
+            protect: false
         },
         {
             name: 'register',
@@ -76,12 +76,6 @@ export class RouteConfig {
             component: DashboardScreen,
             protect: true
         },
-        // {
-        //     name: 'register',
-        //     path: RouteConfig.REGISTER,
-        //     component: RegisterScreen,
-        //     protect: false
-        // },
         {
             name: 'me',
             path: RouteConfig.ME,

@@ -20,9 +20,6 @@ const App = ({...props}) => {
         <Suspense fallback={<SuspenseLoadingWidget/>}>
             <Routes>
                 <Route path={RouteConfig.LOGIN} element={<LoginScreen/>}/>
-                {/*<Route path={RouteConfig.RESET_PASSWORD} element={<ChangePasswordScreen/>}/>*/}
-                {/*<Route path={RouteConfig.RESET_PASSWORD_OTP} element={<ChangePasswordOTPScreen/>}/>*/}
-                {/*<Route path={RouteConfig.REGISTER} element={<RegisterScreen/>}/>*/}
                 <Route element={<ChangePasswordLayout/>} {...props}>
                     {
                         RouteConfig.changePasswordRoutes.map((route, idx) => (
@@ -39,8 +36,8 @@ const App = ({...props}) => {
                             )
                         ))
                     }
-                    <Route path={RouteConfig.RESET_PASSWORD} element={<ChangePasswordScreen/>}/>
-                    <Route path={RouteConfig.RESET_PASSWORD_OTP} element={<ChangePasswordOTPScreen/>}/>
+                    {/*<Route path={RouteConfig.RESET_PASSWORD} element={<ChangePasswordScreen/>}/>*/}
+                    {/*<Route path={RouteConfig.RESET_PASSWORD_OTP} element={<ChangePasswordOTPScreen/>}/>*/}
                 </Route>
                 <Route element={<HomePageLayout/>} {...props}>
                     {

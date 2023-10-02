@@ -49,7 +49,7 @@ export const SessionContextProvider: React.FC<{ data?: T_NextAppData, children?:
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
+console.log(storeConfig)
     return (
         <SessionContext.Provider value={defaultSessionContext}>
             {props.children}

@@ -57,7 +57,7 @@ export class UserModel extends Model {
         this.isOwner = Normalize.initJsonBool(data, 'is_owner')
         this.createAt = Normalize.initJsonString(data, 'create_at')
         this.updateAt = Normalize.initJsonString(data, 'update_at')
-        this.accessToken = Normalize.initJsonObject(data, 'jwt_token', v => new AccessTokenModel(v))
+        this.accessToken = Normalize.initJsonObject(data, 'access_token', v => new AccessTokenModel(v))
     }
 }
 
@@ -74,7 +74,7 @@ export class AccessTokenModel extends Model {
 
     constructor(data: Record<string, any>) {
         super(data)
-        this.token = Normalize.initJsonString(data, 'access_token')
+        this.token = Normalize.initJsonString(data, 'token')
         this.tokenType = Normalize.initJsonString(data, 'token_type')
         this.abilities = Normalize.initJsonArray(data, 'abilities')
         this.expiresAt = Normalize.initJsonString(data, 'expires_at')

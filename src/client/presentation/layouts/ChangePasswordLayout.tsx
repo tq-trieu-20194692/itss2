@@ -1,5 +1,4 @@
 import {FC, ReactNode, useEffect, useState} from "react";
-import AppSidebar from "./components/AppSidebar";
 import AppHeader from "./components/AppHeaderChangePassword";
 import AppFooter from "./components/AppFooterChangePassword";
 import {Outlet, useOutletContext} from "react-router";
@@ -18,7 +17,6 @@ export const ChangePasswordLayout: FC = _ => {
 
     return (
         <div>
-            <AppSidebar/>
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
                 <AppHeader tool={tool}/>
                 <div className="body flex-grow-1 px-2">

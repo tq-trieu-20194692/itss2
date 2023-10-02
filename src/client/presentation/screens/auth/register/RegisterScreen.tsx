@@ -10,7 +10,6 @@ import {Color} from '../../../../const/Color';
 import {FieldData, ValidateErrorEntity} from 'rc-field-form/lib/interface';
 import {E_SendingStatus} from '../../../../const/Events';
 import {Link} from "react-router-dom";
-import {MasterLayout, MasterLayoutCtxWrapper} from "../../../layouts/MasterLayout";
 
 type _T_FormName = {
     username: string;
@@ -179,9 +178,7 @@ const RegisterScreen: React.FC = () => {
     );
 
     return (
-        <MasterLayoutCtxWrapper
-        tool={'tool'}
-        >
+
         <div
             className="popup-background"
             style={{
@@ -499,7 +496,6 @@ const RegisterScreen: React.FC = () => {
                 </Modal>
             </div>
         </div>
-        </MasterLayoutCtxWrapper>
     );
 };
 
