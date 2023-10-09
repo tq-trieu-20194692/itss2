@@ -17,6 +17,7 @@ export type T_RegisterVO = {
     address: string
     phone: string
     image: File
+    birthdate: string
 }
 
 export type T_ResetPasswordVO ={

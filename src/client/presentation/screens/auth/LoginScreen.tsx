@@ -353,7 +353,10 @@ const LoginScreen = () => {
                                                     <CCol xs={12} className="text-center">
                                                             <span style={{marginLeft: '8px'}}>
                                                                     Thành viên mới? <Link to="/register"
-                                                                                          style={{color: 'green', textDecoration: 'underline'}}>Đăng kí</Link> tại đây
+                                                                                          style={{
+                                                                                              color: 'green',
+                                                                                              textDecoration: 'underline'
+                                                                                          }}>{t('text.register')}</Link> tại đây
                                                             </span>
                                                     </CCol>
                                                 </CRow>
@@ -423,7 +426,7 @@ const LoginScreen = () => {
                 </Modal>
                 <Modal
                     title="Thông báo"
-                    visible={sentMessageVisible}
+                    open={sentMessageVisible}
                     onCancel={() => setSentMessageVisible(false)}
                     footer={[
                         <Button key="back" onClick={() => setSentMessageVisible(false)}>
@@ -435,7 +438,7 @@ const LoginScreen = () => {
                 </Modal>
                 <Modal
                     title="Thông báo"
-                    visible={otpSent}
+                    open={otpSent}
                     onCancel={() => setOtpSent(false)}
                     footer={[
                         <Button key="back" onClick={() => setOtpSent(false)}>

@@ -28,7 +28,7 @@ export class RouteConfig {
     static readonly LOGIN_HISTORY_DETAIL: string = "/loginHistory/:id"
     static readonly USER_ACTIVITY_HISTORY: string = "/activityHistory"
     static readonly RESET_PASSWORD_OTP: string = "/change-password-otp"
-    static readonly RESET_PASSWORD: string = "/reset-password/:token/:email" // Attention !!!!!!!!!!
+    static readonly RESET_PASSWORD: string = "/reset-password/:token/:email/:time" // Attention !!!!!!!!!!
     static readonly REGISTER: string = "/register"
     static readonly ME: string = "/me"
 

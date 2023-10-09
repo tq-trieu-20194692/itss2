@@ -11,10 +11,6 @@ import {HomePageLayout} from "./layouts/HomePageLayout";
 
 const LoginScreen = lazy(() => import("./screens/auth/LoginScreen"));
 const NotFound = lazy(() => import("./screens/NotFound"));
-const ChangePasswordScreen = lazy(() => import("./screens/auth/changepassword/ChangePasswordScreen"))
-const ChangePasswordOTPScreen = lazy(() => import("./screens/auth/changepassword/ChangePasswordOTPScreen"))
-const RegisterScreen = lazy(() => import("./screens/auth/register/RegisterScreen"))
-
 const App = ({...props}) => {
     return (
         <Suspense fallback={<SuspenseLoadingWidget/>}>
@@ -36,8 +32,6 @@ const App = ({...props}) => {
                             )
                         ))
                     }
-                    {/*<Route path={RouteConfig.RESET_PASSWORD} element={<ChangePasswordScreen/>}/>*/}
-                    {/*<Route path={RouteConfig.RESET_PASSWORD_OTP} element={<ChangePasswordOTPScreen/>}/>*/}
                 </Route>
                 <Route element={<HomePageLayout/>} {...props}>
                     {

@@ -39,7 +39,7 @@ export const ConfigContextProvider = (props: any) => {
         const lng: string = initLng()
 
         i18n.use(initReactI18next).init({
-            fallbackLng: 'vi',
+            fallbackLng: 'vn',
             ns: ['translation'],
             defaultNS: 'translation',
             lng: lng,

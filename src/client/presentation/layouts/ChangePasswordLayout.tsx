@@ -4,6 +4,7 @@ import AppFooter from "./components/AppFooterChangePassword";
 import {Outlet, useOutletContext} from "react-router";
 import {CContainer} from "@coreui/react";
 
+
 export type T_MasterCtx = {
     tool: [ReactNode, (tool: ReactNode) => void]
 }

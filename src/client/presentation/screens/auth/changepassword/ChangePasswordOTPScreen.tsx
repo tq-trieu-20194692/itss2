@@ -1,6 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {useLocation} from 'react-router-dom';
-import {Button, Form, Input, Modal, Typography} from 'antd';
+import {Button, Divider, Form, Input, Modal, Typography, Alert} from 'antd';
 import CIcon from '@coreui/icons-react';
 import {cilLockLocked, cilUser} from '@coreui/icons';
 import {ResetPasswordOTPAction} from '../../../../recoil/account/resetpassword-otp/ResetPasswordOTPAction';
@@ -10,7 +9,6 @@ import {FieldData} from 'rc-field-form/lib/interface';
 import ErrorItemWidget from "../../../widgets/ErrorItemWidget";
 import {Utils} from "../../../../core/Utils";
 import {useTranslation} from 'react-i18next';
-import {LoginOutlined} from '@ant-design/icons';
 
 type _T_ResetPasswordOTP = {
     email: string;
@@ -26,14 +24,9 @@ type _T_FormError = {
 const ChangePasswordOTP = () => {
     const navigate = useNavigate();
     const {t} = useTranslation();
-
-    const location = useLocation();
-
-    console.log('location', location);
-
     const {vm, dispatchResetPassword} = ResetPasswordOTPAction();
     const [formErrors, setFormErrors] = useState<_T_FormError>({});
-
+    const [passwordChanged, setPasswordChanged] = useState(false);
     const inputTimeoutRef = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
 
     const isLoading = vm.status === E_SendingStatus.loading;
@@ -143,7 +136,10 @@ const ChangePasswordOTP = () => {
 
     useEffect(() => {
         if (vm.status === E_SendingStatus.success) {
-            navigate('/login', {replace: true});
+            setPasswordChanged(true);
+            setTimeout(() => {
+                navigate('/login', {replace: true});
+            }, 2000);
         }
     }, [vm.status, navigate]);
 
@@ -177,9 +173,22 @@ const ChangePasswordOTP = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                minHeight: '100vh',
+                height: '80vh',
             }}
         >
+            {passwordChanged && (
+                <Alert
+                    message={t('text.passwordChangedSuccessfully')}
+                    type="success"
+                    showIcon
+                    style={{
+                        position: 'absolute',
+                        top: '15%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                    }}
+                />
+            )}
             <div
                 className="password-change-container"
                 style={{
@@ -188,9 +197,22 @@ const ChangePasswordOTP = () => {
                     borderRadius: '5px',
                     boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
                     width: '500px',
-                    height: 'auto', // Set height to auto for dynamic content
+                    maxHeight: '100vh',
                 }}
             >
+                <div className="text-center">
+                    <Typography.Title level={2} className={'mb-0'}>
+                        {t('text.resetPassword')}
+                    </Typography.Title>
+                    <Typography.Text type={'secondary'}>
+                        {t('text.resetPasswordTitle')}
+                    </Typography.Text>
+                </div>
+                <Divider
+                    style={{
+                        margin: '20px 0',
+                        backgroundColor: 'rgb(3, 155, 145)'
+                    }}/>
                 <ErrorItemWidget status={vm.status} typeView={'modal'}>
                     <Form
                         name="basic"
@@ -300,33 +322,34 @@ const ChangePasswordOTP = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: t('error.required', {label: t('text.otp').toLowerCase()}),
+                                    message: t('error.required',
+                                        {label: t('text.otp').toLowerCase()}),
                                 },
                             ]}
                             validateStatus={Utils.viewStatusError<_T_FormError>(formErrors, 'otp')}
                             help={Utils.viewHelpError<_T_FormError>(formErrors, 'otp')}
                         >
-                            <Input.Password
+                            <Input
                                 style={{textAlign: 'start'}}
                                 placeholder={t('text.otp')}
                                 addonBefore={<CIcon icon={cilLockLocked}/>}
                             />
                         </Form.Item>
-
-                        <Button
-                            htmlType={'submit'}
-                            type={'primary'}
-                            size={'large'}
-                            loading={isLoading}
-                            icon={<LoginOutlined/>}
-                        >
-                            {t('text.resetPassword')}
-                        </Button>
+                        <div className="text-center">
+                            <Button
+                                htmlType={'submit'}
+                                type={'primary'}
+                                size={'large'}
+                                loading={isLoading}
+                            >
+                                {t('text.resetPassword')}
+                            </Button>
+                        </div>
                     </Form>
                 </ErrorItemWidget>
             </div>
             <Modal
-                visible={vm.status === E_SendingStatus.success}
+                open={vm.status === E_SendingStatus.success}
                 onCancel={() => navigate('/login')}
                 footer={[
                     <Button key="back" onClick={() => navigate('/login')}>

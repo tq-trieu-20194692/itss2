@@ -67,7 +67,7 @@ const MyApp = ({Component, pageProps}: AppProps) => {
             {
                 useMemo(() => (
                     <Head>
-                        <title>User Demo Test</title>
+                        <title>ATL Journey Diary</title>
                         <meta name="description" content="Demo project"/>
                         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                     </Head>
