@@ -10,7 +10,9 @@ import {Color} from '../../../../const/Color';
 import {FieldData, ValidateErrorEntity} from 'rc-field-form/lib/interface';
 import {Link} from "react-router-dom";
 import {useNavigate} from "react-router";
-
+import dayjs from "dayjs";
+import {T_RegisterVO} from "../../../../models/UserModel";
+import {E_SendingStatus} from "../../../../const/Events";
 
 type _T_FormName = {
     username: string
@@ -22,7 +24,7 @@ type _T_FormName = {
     phone: string
     countryCode: string
     image: File
-    birthdate: string
+    DoB: dayjs.Dayjs | null
 };
 
 type _T_FormError = {
@@ -65,10 +67,12 @@ const RegisterScreen: React.FC = () => {
             });
             setFormErrors(_formErrors);
         }
-    }, [vm.error]);
+    }, [vm.error, formErrors]);
+
 
     const onFinish = (values: _T_FormName) => {
-        dispatchRegister({
+        console.log(values)
+        const data: T_RegisterVO = {
             username: values.username.trim(),
             password: values.password,
             confirm: values.confirm,
@@ -77,16 +81,20 @@ const RegisterScreen: React.FC = () => {
             phone: values.phone,
             address: values.address,
             image: values.image,
-            birthdate: values.birthdate
-        });
-        setSuccessVisible(true);
-        setTimeout(() => {
-            setSuccessVisible(false);
-            navigate('/login');
-        }, 1500);
+            DoB: values.DoB ? values.DoB.format('YYYY-MM-DD') : ''
+        }
+        console.log(data)
+        dispatchRegister(data)
+        if (Object.keys(formErrors).length === 0) {
+            setSuccessVisible(true);
+            setTimeout(() => {
+                setSuccessVisible(false);
+                navigate('/login');
+            }, 2000);
+        }
+
         console.log('Received values of form: ', values);
     };
-
     const onFinishFailed = (errorInfo: ValidateErrorEntity) => {
         let _formErrors = formErrors;
         errorInfo.errorFields.forEach((e) => {
@@ -95,7 +103,6 @@ const RegisterScreen: React.FC = () => {
                 [e.name[0]]: e.errors[0],
             };
         });
-
         setFormErrors(_formErrors);
     };
 
@@ -155,7 +162,7 @@ const RegisterScreen: React.FC = () => {
             reader.onerror = (error) => reject(error);
         })
 
-    const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
+    const handleChange: UploadProps['onChange'] = ({fileList: newFileList}) => {
         // Keep only the last uploaded file
         const lastFile = newFileList.slice(-1);
         setFileList(lastFile);
@@ -236,6 +243,7 @@ const RegisterScreen: React.FC = () => {
                     }}/>
                 <div style={{overflowY: 'auto', maxHeight: 'calc(80vh - 280px)'}}>
                     <Form
+                        form={form}
                         name="register"
                         style={{maxWidth: 600}}
                         initialValues={{remember: true}}
@@ -378,7 +386,7 @@ const RegisterScreen: React.FC = () => {
                             <Form.Item
                                 className={'form-item-main'}
                                 key={'birthdate'}
-                                name={'birthdate'}
+                                name={'DoB'}
                                 rules={[
                                     {
                                         required: true,
@@ -412,13 +420,8 @@ const RegisterScreen: React.FC = () => {
                                         }),
                                     },
                                     {
-                                        min: 6,
-                                        max: 30,
-                                        message: t('error.length', {
-                                            label: t('text.email'),
-                                            min: 6,
-                                            max: 30,
-                                        }),
+                                        type: 'email',
+                                        message: t('error.emailFormat'),
                                     },
                                 ]}
                                 validateStatus={Utils.viewStatusError<_T_FormError>(formErrors, 'email')}
@@ -477,7 +480,7 @@ const RegisterScreen: React.FC = () => {
                                 validateStatus={Utils.viewStatusError<_T_FormError>(formErrors, 'phone')}
                                 help={Utils.viewHelpError<_T_FormError>(formErrors, 'phone')}
                             >
-                                <Input addonBefore={ // Add a Select component as an addonBefore
+                                <Input addonBefore={
                                     <Select
                                         defaultValue="+84"
                                         style={{width: 80}}
@@ -514,11 +517,9 @@ const RegisterScreen: React.FC = () => {
                     }}
                 />
                 <div className="text-center">
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            {t('text.register')}
-                        </Button>
-                    </Form.Item>
+                    <Button type="primary" htmlType="submit" onClick={() => form.submit()}>
+                        {t('text.register')}
+                    </Button>
                 </div>
                 <div className="text-center">
                     <span style={{marginLeft: '8px'}}>

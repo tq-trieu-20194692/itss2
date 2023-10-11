@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {Button, Divider, Form, Input, Modal, Typography, Alert} from 'antd';
+import {Button, Divider, Form, Input, Typography, Alert} from 'antd';
 import CIcon from '@coreui/icons-react';
 import {cilLockLocked, cilUser} from '@coreui/icons';
 import {ResetPasswordOTPAction} from '../../../../recoil/account/resetpassword-otp/ResetPasswordOTPAction';
@@ -183,7 +183,7 @@ const ChangePasswordOTP = () => {
                     showIcon
                     style={{
                         position: 'absolute',
-                        top: '15%',
+                        top: '10%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
                     }}
@@ -348,17 +348,6 @@ const ChangePasswordOTP = () => {
                     </Form>
                 </ErrorItemWidget>
             </div>
-            <Modal
-                open={vm.status === E_SendingStatus.success}
-                onCancel={() => navigate('/login')}
-                footer={[
-                    <Button key="back" onClick={() => navigate('/login')}>
-                        Quay lại
-                    </Button>,
-                ]}
-            >
-                <Typography.Title level={4}>Mật khẩu đã được thay đổi thành công.</Typography.Title>
-            </Modal>
         </div>
     );
 };

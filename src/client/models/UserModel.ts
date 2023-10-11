@@ -9,6 +9,7 @@ export type T_LoginVO = {
 }
 
 export type T_RegisterVO = {
+    accessToken?: AccessTokenModel
     username: string
     password: string
     confirm: string
@@ -17,7 +18,7 @@ export type T_RegisterVO = {
     address: string
     phone: string
     image: File
-    birthdate: string
+    DoB: string
 }
 
 export type T_ResetPasswordVO ={

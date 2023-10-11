@@ -24,13 +24,14 @@ export const RegisterAction = () => {
             status: E_SendingStatus.loading
         })
 
+        console.log(data)
+
         apiService
             .register(data)
             .then(r => {
                 console.log(r)
                 if (r.success) {
                     const user = new UserModel(r.data)
-
                     dispatchStoreUser(user)
 
                     setSession({
@@ -38,6 +39,7 @@ export const RegisterAction = () => {
                         isAuthenticated: true,
                         user: user
                     })
+
 
                     setState({
                         ...state,

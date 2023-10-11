@@ -14,7 +14,6 @@ export const LoginAction = () => {
 
     const {
         dispatchStoreUser,
-        dispatchLoadMe
     } = MeAction()
 
     const [state, setState] = useState<T_LoginState>(initialState)
