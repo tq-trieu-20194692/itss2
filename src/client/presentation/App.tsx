@@ -45,6 +45,7 @@ const App = ({...props}) => {
                                             ? <PrivateRoute component={route.component}/>
                                             : <route.component/>
                                     }
+
                                 />
                             )
                         ))
@@ -62,11 +63,12 @@ const App = ({...props}) => {
                                             ? <PrivateRoute component={route.component}/>
                                             : <route.component/>
                                     }
+
                                 />
                             )
                         ))
                     }
-                    <Route path="/" element={<Navigate to={RouteConfig.DASHBOARD} replace/>}/>
+                    <Route path="/" element={<Navigate to={RouteConfig.HOME_PAGE} replace/>}/>
                 </Route>
                 <Route path={RouteConfig.NOT_FOUND} element={<NotFound/>}/>
             </Routes>

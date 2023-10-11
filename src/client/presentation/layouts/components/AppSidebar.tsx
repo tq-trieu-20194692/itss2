@@ -27,7 +27,7 @@ const AppSidebar = () => {
             {/*@ts-ignore*/}
             <CSidebarBrand className="d-none d-md-flex" to="/homepage" style={{backgroundColor: "#001529"}}>
                 <div style={{fontSize:'20px'}}>
-                    <CImage  rounded src="/logo.svg" width={32} height={32} />
+                    <CImage  rounded src="/logo.svg" width={32} height={32} style={{color:"white"}} />
                     AUTOTIMELAPSE
             </div>
             </CSidebarBrand>

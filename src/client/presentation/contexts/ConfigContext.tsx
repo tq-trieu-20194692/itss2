@@ -15,11 +15,12 @@ import antViVN from 'antd/locale/vi_VN';
 import antZhCN from 'antd/locale/zh_CN';
 import antEnGB from 'antd/locale/en_GB';
 import {ConfigModel, initialConfig} from "../../models/ConfigModel";
-import {getLng, initLng, resources} from "../../locales/i18n";
+import {_TLangCode, getLng, resources} from "../../locales/i18n";
 import {App} from "../../const/App";
 import {Color} from "../../const/Color";
 import {Style} from "../../const/Style";
 import {Locale} from "antd/es/locale";
+import {LanguageAction} from "../../recoil/language/LanguageAction";
 
 export const ConfigContext = createContext<[ConfigModel, (config: ConfigModel) => void]>([initialConfig, () => {
     //
@@ -32,14 +33,18 @@ export const ConfigContextProvider = (props: any) => {
     const defaultConfigContext: [ConfigModel, typeof setConfigState] = [configState, setConfigState]
 
     const [localeAnt, setLocaleAnt] = useState<Locale>()
-
+    const {
+        vm: vmLanguage
+    } = LanguageAction()
     useEffect(() => {
         console.log('%cInit: ConfigContextProvider', Color.ConsoleInfo);
 
-        const lng: string = initLng()
+        const lng:_TLangCode= vmLanguage.language
+        // setLng(lng)
+        console.log(lng);
 
         i18n.use(initReactI18next).init({
-            fallbackLng: 'vn',
+            fallbackLng: 'vi',
             ns: ['translation'],
             defaultNS: 'translation',
             lng: lng,
@@ -48,8 +53,8 @@ export const ConfigContextProvider = (props: any) => {
 
         const lang = App.Lang[findIndex(App.Lang, (o) => o.code === getLng())]
 
-        moment.locale(lang.moment)
-        dayjs.locale(lang.dayjs)
+        // moment.locale(lang.moment)
+        // dayjs.locale(lang.dayjs)
 
         switch (lang.code) {
             case 'vi':
@@ -68,7 +73,7 @@ export const ConfigContextProvider = (props: any) => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [vmLanguage.language])
 
     useEffect(() => {
         //Do not use condition (configState.lang) because it always returns false
@@ -92,7 +97,7 @@ export const ConfigContextProvider = (props: any) => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [configState.lang])
+    }, [configState.lang,vmLanguage.language])
 
     const getView = useCallback(() => {
         if (localeAnt) {
@@ -107,7 +112,7 @@ export const ConfigContextProvider = (props: any) => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [localeAnt])
+    }, [localeAnt,vmLanguage])
 
     return (
         <ConfigContext.Provider value={defaultConfigContext}>

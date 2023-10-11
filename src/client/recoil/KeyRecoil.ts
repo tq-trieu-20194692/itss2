@@ -20,3 +20,5 @@ export const KeyMe = createKey("me")
 
 // User Login History
 export const KeyLoginHistory = createKey('UserLoginHistory')
+
+export const KeyLanguage = createKey('language')

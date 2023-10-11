@@ -13,7 +13,7 @@ export const UserLoginHistoryAction = () => {
     const [state, setState] = useRecoilState(UserLoginHistoryState)
     const vm = useRecoilValue(UserLoginHistoryState)
 
-    const [detailState, setDetailState] = useState<T_CommonState>(initialDetailState)
+    const [detailState] = useState<T_CommonState>(initialDetailState)
     const [logoutState, setLogoutState] = useState<T_CommonState>(initialLogoutState)
     const dispatchHistoryLogin = () => {
         setState({
@@ -27,7 +27,7 @@ export const UserLoginHistoryAction = () => {
                     setState({
                         ...state,
                         isLoading: E_SendingStatus.success,
-                        items: r.items.map(item => new LoginHistoryModel(item)),
+                        items: r.items.map((item: Record<string, any>) => new LoginHistoryModel(item)),
                     })
                 } else {
                     setState({
@@ -41,35 +41,6 @@ export const UserLoginHistoryAction = () => {
 
     }
 
-    const dispatchOneDetail = (idSession: string) => {
-        setDetailState({
-            ...detailState,
-            isLoading: E_SendingStatus.loading
-        })
-        apiService.getDetailLogin(idSession).then(
-            r => {
-                if (r.success) {
-                    console.log(r)
-                    setState({
-                        ...state,
-                        // isLoading: E_SendingStatus.success,
-                        item: new LoginHistoryModel(r.item)
-                    })
-                    setDetailState({
-                        ...detailState,
-                        isLoading: E_SendingStatus.success
-                    })
-                } else {
-                    setDetailState({
-                        ...detailState,
-                        isLoading: E_SendingStatus.error,
-                        error: r.error
-                    })
-                }
-            })
-            .catch(err => setErrorHandled(state, setState, 'state', err))
-
-    }
 
     const dispatchFarLogout = (idSession: string) => {
         setLogoutState({
@@ -84,9 +55,11 @@ export const UserLoginHistoryAction = () => {
                             ...state,
                             // isLoading: E_SendingStatus.success,
                             items: state.items.map(item => {
-                                if (item.history?.idSession===idSession) {
+                                if (item.id===idSession) {
                                     return {...item,
-                                        history:{...item.history,key:'admin.user.logout.far'}}
+                                        key:'admin.user.logout',
+                                        anotherLogout:true
+                                    }
                                 }
                                 return item;
                             })
@@ -114,7 +87,6 @@ export const UserLoginHistoryAction = () => {
         vmDetail: detailState,
         vmLogout: logoutState,
         dispatchHistoryLogin,
-        dispatchOneDetail,
         dispatchFarLogout
     }
 }

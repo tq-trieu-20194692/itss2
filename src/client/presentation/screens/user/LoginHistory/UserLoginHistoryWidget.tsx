@@ -6,36 +6,44 @@ import {UserLoginHistoryAction} from "../../../../recoil/user/LoginHistory/UserL
 import {LocationWidget} from "../../../widgets/LocationWidget";
 import CIcon from "@coreui/icons-react";
 import { cilLocationPin } from "@coreui/icons";
-import {ActivityText} from "../../../../const/Function";
+import Function from "../../../../const/Function";
+import {useTranslation} from "react-i18next";
 
-export type T_AccountLoginHistoryWidgetProps = {
+export type T_UserLoginHistoryWidgetProps = {
     isOpen: boolean
     onClose?: Function
-    idSession?: string | undefined
+    id?: string | undefined
 }
 
 export const UserLoginHistoryWidget = (props: { id: string | undefined; onClose: () => void; isOpen: boolean | undefined; }) => {
     const {
-        vm: vmLoginHistory,
-        dispatchOneDetail
+        vm: vmLoginHistory
     } = UserLoginHistoryAction()
-
+    const {
+        ActivityText,
+    } = Function()
+    const {t} = useTranslation();
     const [oneLoginDetail, setOneLoginDetail] = useState<LoginHistoryModel>()
     const [selectedCoordinate, setSelectedCoordinate] = useState<[number | undefined, number | undefined]>([0, 0]);
     const [isModalMapVisible, setIsModalMapVisible] = useState(false)
-
+    let createAt: Date | undefined;
+    if (oneLoginDetail?.createdAt) {
+        createAt = new Date(oneLoginDetail.createdAt);
+    }
     useEffect(() => {
         console.log('MOUNT: One Activity Screen');
         // Gọi hàm dispatchGetActivity khi component được mount lại
         if (props.id !== undefined) { // Kiểm tra xem props.id có được định nghĩa hay không
-            dispatchOneDetail(props.id)
+            const foundDetail = vmLoginHistory.items.find((detail) => detail.id === props.id);
+            setOneLoginDetail(foundDetail)
+            console.log(props.id)
+
         }
         return () => {
             console.log('UNMOUNT: One Activity Screen');
             setIsModalMapVisible(false)
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.id]);
+    }, [props.id, vmLoginHistory.items]);
     useEffect(() => {
         console.log('vm.isLoading', vmLoginHistory.isLoading)
     }, [vmLoginHistory.isLoading])
@@ -45,17 +53,6 @@ export const UserLoginHistoryWidget = (props: { id: string | undefined; onClose:
         setOneLoginDetail(vmLoginHistory.item)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vmLoginHistory.item])
-
-    const changeDate = (date: string | undefined) => {
-        const createdAt = date ?? "No date available";
-        const dateTime = new Date(createdAt);
-        dateTime.getFullYear();
-        const month = (dateTime.getMonth() + 1).toString().padStart(2, "0"); // Tháng bắt đầu từ 0, nên cộng 1 và định dạng thành 2 chữ số
-        const day = dateTime.getDate().toString().padStart(2, "0");
-        const hours = dateTime.getHours().toString().padStart(2, "0");
-        const minutes = dateTime.getMinutes().toString().padStart(2, "0");
-        return `${day} tháng ${month}, ${hours}:${minutes}`
-    }
 
     const onCloseWidget = () => {
         if (props.onClose) {
@@ -70,6 +67,7 @@ export const UserLoginHistoryWidget = (props: { id: string | undefined; onClose:
     }
     const onCloseModalMap = () => {
         setIsModalMapVisible(false)
+        setOneLoginDetail(undefined)
     }
 
     return (
@@ -88,7 +86,7 @@ export const UserLoginHistoryWidget = (props: { id: string | undefined; onClose:
                     <div style={{display: 'flex', alignItems: 'center', marginRight: '20px'}}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                            src={getImageForPlatForm(oneLoginDetail?.history?.userAgent?.platForm)}
+                            src={getImageForPlatForm(oneLoginDetail?.userAgent?.platForm)}
                             alt="Activity"
                             style={{
                                 width: '70px',
@@ -101,33 +99,33 @@ export const UserLoginHistoryWidget = (props: { id: string | undefined; onClose:
                 <div style={{flex: 2}}>
                     <div>
                         <div style={{fontSize: '20px'}}>
-                            {oneLoginDetail?.history?.userAgent !== undefined ? (<div>
-                                {oneLoginDetail.history.userAgent.platForm}
+                            {oneLoginDetail?.userAgent !== undefined ? (<div>
+                                {oneLoginDetail.userAgent.platForm}
                             </div>) : (<div>
-                                Thiết bị không xác định
+                                {t('text.unknownDevice')}
                             </div>)}
                         </div>
                     </div>
                     <p>
-                        {oneLoginDetail?.history?.createdAt ? changeDate(oneLoginDetail.history.createdAt).toString() : "No date available"}
+                        {createAt?.toLocaleString()}
                     </p>
                     <p>
-                        Hoạt động lần cuối : {ActivityText(oneLoginDetail?.history?.key)}
+                        {t('text.lastActivity')} : {ActivityText(oneLoginDetail?.key)}
                     </p>
-                    {oneLoginDetail?.history?.userAgent?.browser!==undefined&&(
+                    {oneLoginDetail?.userAgent?.browser!==undefined&&(
                         <p>
-                            Browser : {oneLoginDetail?.history?.userAgent?.browser}
+                            {t('text.browser')} : {oneLoginDetail?.userAgent?.browser}
                         </p>
                     )}
-                    {oneLoginDetail?.history?.userAgent?.device!==undefined&&(
+                    {oneLoginDetail?.userAgent?.device!==undefined&&(
                         <p>
-                            Device : {oneLoginDetail?.history?.userAgent?.device}
+                            {t('text.device')} : {oneLoginDetail?.userAgent?.device}
                         </p>
                     )}
 
-                    {oneLoginDetail?.history?.location !== undefined && (
+                    {oneLoginDetail?.location !== undefined && (
                         <div>
-                            <p>Location: <span style={{fontSize:'15px',color: 'blue', transition: 'color 0.3s',marginTop:'10px',marginBottom:'10px' }} onClick={()=>handleShowMap(oneLoginDetail?.history?.location)} >{oneLoginDetail.history?.location}<CIcon icon={cilLocationPin}/></span> </p>
+                            <p>{t('text.location')}: <span style={{fontSize:'15px',color: 'blue', transition: 'color 0.3s',marginTop:'10px',marginBottom:'10px' }} onClick={()=>handleShowMap(oneLoginDetail?.location)} >{oneLoginDetail.location}<CIcon icon={cilLocationPin}/></span> </p>
                         </div>
 
                     )}
@@ -142,7 +140,7 @@ export const UserLoginHistoryWidget = (props: { id: string | undefined; onClose:
 
             </div>
             <div style={{display: "flex", justifyContent: "flex-end", paddingRight: "20px", marginTop: "20px"}}>
-                <Button danger onClick={onCloseWidget}>Close</Button>
+                <Button danger onClick={onCloseWidget}>{t('button.close')}</Button>
             </div>
         </Modal>
     );

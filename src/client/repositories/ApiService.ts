@@ -49,11 +49,8 @@ export class ApiService {
         return AxiosClient.post("register", data);
     }
 
-    getDetailLogin(idSession?:string):Promise<ApiResModel>{   //xem detail 1 login
-        return AxiosClient.get(`admin/loginHistory/${idSession}`)
-    }
     postFarLogout(idSession:string): Promise<ApiResModel> {
-        return AxiosClient.post(`admin/logout/${idSession}`);
+        return AxiosClient.post(`account/logout/${idSession}`);
     }
 
 

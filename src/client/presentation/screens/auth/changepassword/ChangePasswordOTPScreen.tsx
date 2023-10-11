@@ -163,6 +163,7 @@ const ChangePasswordOTP = () => {
             setFormErrors(_formErrors);
         }
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vm.error]);
 
     return (

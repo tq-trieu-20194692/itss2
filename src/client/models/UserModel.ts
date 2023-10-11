@@ -121,10 +121,28 @@ export class HistoryModel extends Model {
     }
 }
 export class LoginHistoryModel extends Model{
-    history?:HistoryModel
+    createdAt?:string
+    ip?:string
+    userAgent?:UserAgent
+    location?:string
+    id?:string
+    key? :string
+    mySession?:boolean
+    state?:number
+    session?:string
     constructor(data: Record<string, any>) {
         super(data)
-        this.history =Normalize.initJsonObject(data, 'history', v => new HistoryModel(v))
+
+        this.state = Normalize.initJsonNumber(data,'state')
+        this.ip = Normalize.initJsonString(data, 'ip')
+        this.key = Normalize.initJsonString(data, 'key')
+        this.createdAt = Normalize.initJsonString(data, 'created_at')
+        this.session = Normalize.initJsonString(data, 'session')
+        this.userAgent =Normalize.initJsonObject(data, 'user_agent', v => new UserAgent(v))
+        this.location =Normalize.initJsonString(data, 'location')
+        this.id = Normalize.initJsonString(data, 'id_session')
+        this.mySession =Normalize.initJsonBool(data, 'is_my_session')
+
 
     }
     copyFrom = (data: Record<string, any>): LoginHistoryModel => {
@@ -135,3 +153,5 @@ export class LoginHistoryModel extends Model{
         }
     }
 }
+
+

@@ -41,12 +41,10 @@ const LoginScreen = () => {
     } = LoginAction();
 
     const {
-        vm: T_ForgotPasswordState,
         dispatchForgotPassword
     } = ForgotPasswordAction();
 
     const {
-        vm: T_ForgotPasswordOTPState,
         dispatchForgotPasswordOTP
     } = ForgotPasswordOTPAction();
 
@@ -130,7 +128,7 @@ const LoginScreen = () => {
         })
     };
 
-    const handleForgotPasswordUsernameChange = (e) => {
+    const handleForgotPasswordUsernameChange = (e: { target: { value: any; }; }) => {
         setForgotPasswordProps({
             ...forgotPasswordProps,
             username: e.target.value
@@ -231,7 +229,7 @@ const LoginScreen = () => {
 
     // redirect if logged
     if (session.isAuthenticated) {
-        return <Navigate to={RouteConfig.DASHBOARD}/>;
+        return <Navigate to={RouteConfig.HOME_PAGE}/>;
     }
 
     return (

@@ -33,7 +33,7 @@ export function getLng(): string {
     return i18n.language;
 }
 
-type _TLangCode = 'vi' | 'en' | 'zh';
+ export type _TLangCode = 'vi' | 'en' | 'zh';
 
 export function setLng(lang: _TLangCode): void {
     EDLocal.setLocalStore(E_LSKey.Lang, lang)

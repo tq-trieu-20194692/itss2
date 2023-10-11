@@ -4,6 +4,8 @@ import AppHeader from "./components/AppHeader";
 import AppFooter from "./components/AppFooter";
 import {Outlet, useOutletContext} from "react-router";
 import {CContainer} from "@coreui/react";
+import {notification} from "antd";
+import {useTranslation} from "react-i18next";
 
 export type T_MasterCtx = {
     tool: [ReactNode, (tool: ReactNode) => void]
