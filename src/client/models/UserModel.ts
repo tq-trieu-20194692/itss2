@@ -20,7 +20,13 @@ export type T_RegisterVO = {
     image: File
     DoB: string
 }
-
+export type T_QueryVO = {
+    page?: number
+    limit?: number
+    sort?: string
+    order?: string
+    search?: string
+}
 export type T_ResetPasswordVO ={
     password: string
     password_confirmation: string
@@ -120,6 +126,31 @@ export class HistoryModel extends Model {
         }
     }
 }
+export class ActivityLogModel extends Model{
+    createdAt?:string
+    ip?:string
+    key?:string
+    userAgent?:UserAgent
+    location?:string
+    id?:string
+    refId?:string
+    state?:number
+
+    constructor(data: Record<string, any>) {
+        super(data)
+
+        this.ip = Normalize.initJsonString(data, 'ip')
+        this.key = Normalize.initJsonString(data, 'key')
+        this.createdAt = Normalize.initJsonString(data, 'created_at')
+        this.userAgent =Normalize.initJsonObject(data, 'user_agent', v => new UserAgent(v))
+        this.location =Normalize.initJsonString(data, 'location')
+        this.id = Normalize.initJsonString(data, 'id')
+        this.refId = Normalize.initJsonString(data, 'ref_id')
+        this.state = Normalize.initJsonNumber(data,'state')
+    }
+
+}
+
 export class LoginHistoryModel extends Model{
     createdAt?:string
     ip?:string
@@ -130,6 +161,7 @@ export class LoginHistoryModel extends Model{
     mySession?:boolean
     state?:number
     session?:string
+    logout?:boolean
     constructor(data: Record<string, any>) {
         super(data)
 
@@ -140,8 +172,10 @@ export class LoginHistoryModel extends Model{
         this.session = Normalize.initJsonString(data, 'session')
         this.userAgent =Normalize.initJsonObject(data, 'user_agent', v => new UserAgent(v))
         this.location =Normalize.initJsonString(data, 'location')
-        this.id = Normalize.initJsonString(data, 'id_session')
+        this.id = Normalize.initJsonString(data, 'id')
         this.mySession =Normalize.initJsonBool(data, 'is_my_session')
+        this.logout =Normalize.initJsonBool(data, 'far_logout')
+
 
 
     }

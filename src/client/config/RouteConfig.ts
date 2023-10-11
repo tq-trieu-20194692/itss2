@@ -15,6 +15,7 @@ export type T_Rco = _T_Rcc & {
 const HomePageScreen = lazy(() => import("../presentation/screens/homepage/HomePage"))
 const DashboardScreen = lazy(() => import("../presentation/screens/dashboard/DashboardScreen"))
 const UserLoginHistoryScreen = lazy(() => import("../presentation/screens/user/LoginHistory/UserLoginHistoryScreen"))
+const UserActivityLogScreen = lazy(() => import("../presentation/screens/user/ActivityLog/UserActivityLogScreen"))
 const ChangePasswordScreen = lazy(() => import("../presentation/screens/auth/changepassword/ChangePasswordScreen"))
 const ChangePasswordOTPScreen = lazy(() => import("../presentation/screens/auth/changepassword/ChangePasswordOTPScreen"))
 const RegisterScreen = lazy(() => import("../presentation/screens/auth/register/RegisterScreen"))
@@ -31,6 +32,7 @@ export class RouteConfig {
     static readonly RESET_PASSWORD: string = "/reset-password/:token/:email/:time" // Attention !!!!!!!!!!
     static readonly REGISTER: string = "/register"
     static readonly ME: string = "/me"
+    static readonly USER_ACTIVITY_LOG: string = "/activityLog"
 
 
     static homePageRoute: T_Rco[] = [
@@ -44,6 +46,12 @@ export class RouteConfig {
             name: 'Lịch sử đăng nhập',
             path: RouteConfig.LOGIN_HISTORY,
             component: UserLoginHistoryScreen,
+            protect: true
+        },
+        {
+            name: 'Nhat ky hoat dong',
+            path: RouteConfig.USER_ACTIVITY_LOG,
+            component: UserActivityLogScreen,
             protect: true
         },
     ]

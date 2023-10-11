@@ -1,7 +1,7 @@
 import {AxiosClient} from "./AxiosClient";
 import {ApiResModel} from "../models/ApiResModel";
 import {injectable} from "inversify";
-import {T_LoginVO, T_ResetPasswordVO, T_ResetPasswordOTPVO, T_RegisterVO} from "../models/UserModel";
+import {T_LoginVO, T_ResetPasswordVO, T_ResetPasswordOTPVO, T_RegisterVO, T_QueryVO} from "../models/UserModel";
 
 @injectable()
 export class ApiService {
@@ -27,6 +27,9 @@ export class ApiService {
 
     getLoginHistory() :Promise<ApiResModel>{   //xem lịch sử login của tk đăng nhập
         return AxiosClient.get(`account/loginHistory`)
+    }
+    getActivites(query?: T_QueryVO) :Promise<ApiResModel>{
+        return AxiosClient.get(`account/activity`)
     }
 
     forgotpassword(data: {username: string}): Promise<ApiResModel> {

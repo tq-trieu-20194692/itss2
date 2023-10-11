@@ -49,21 +49,21 @@ const Function = () => {
     }
     const ActivityText  =(key :string|undefined) =>{
         switch (key) {
-            case "admin.user.login":
+            case "user.login":
                 return t('text.loginSuccess');
-            case "admin.user.logout":
+            case "user.logout":
                 return t('text.logoutSuccess');
-            case "admin.user.logout.all":
+            case "user.logout.all":
                 return t('text.logoutFar');
-            case "admin.edit.user":
+            case "edit.user":
                 return t('text.editAccount');
-            case "admin.user.logout.far":
+            case "user.logout.far":
                 return t('text.logoutFar');
-            case "admin.delete.user":
+            case "delete.user":
                 return t('text.deleteAccount');
-            case "admin.user.delete":
+            case "user.delete":
                 return t('text.deleteAdmin');
-            case "admin.user.register":
+            case "user.register":
                 return t('text.adminRegister');
             default:
                 return `None`;
@@ -75,8 +75,8 @@ const Function = () => {
             case 0:
                 return true;
             case 1:
-                return true;
-            case undefined:
+                return false;
+            case 2:
                 return false;
             default:
                 return `....`;

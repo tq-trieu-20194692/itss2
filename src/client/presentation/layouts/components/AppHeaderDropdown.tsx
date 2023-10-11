@@ -40,7 +40,7 @@ const AppHeaderDropdown = () => {
         navigate(RouteConfig.LOGIN_HISTORY)
     }
     const onActivityLog = () => {
-        navigate(RouteConfig.USER_ACTIVITY_HISTORY)
+        navigate(RouteConfig.USER_ACTIVITY_LOG)
     }
     const handleViewUser = () => {
         navigate('/me')

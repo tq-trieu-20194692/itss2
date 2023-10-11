@@ -165,7 +165,7 @@ const AccountLoginHistoryScreen = () => {
                                                             ))}
                                                         <Typography.Text>{setUpDate(item.createdAt)}</Typography.Text>
                                                     </div>
-                                                    {(StateDetail(item.state) === true) && (
+                                                    {(      item.logout===true) && (
                                                         <div>
                                                             <MinusCircleOutlined style={{color: '#3b657b', marginRight: '8px'}}/> <span style={{color: 'red'}}>{t('text.Loggedout')}</span>
                                                         </div>
