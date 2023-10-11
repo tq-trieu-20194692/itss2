@@ -22,17 +22,17 @@ export type T_MapProps = {
     coordinate?: [number | undefined, number | undefined]
     callback?: Function
     onClose?: Function
-
 }
 
 export const MapWidget: FC<T_MapProps> = props => {
     const {t} = useTranslation()
+
     const [viewport, setViewport] = useState({
-        width: 400,
-        height: 300,
-        latitude: props.coordinate && props.coordinate[0] !== undefined ? props.coordinate[0] : 21.0042,
-        longitude: props.coordinate && props.coordinate[1] !== undefined ? props.coordinate[1] : 105.8426,
-        zoom: 400
+        width: 800,
+        height: 700,
+        latitude: 21.031673076538056,
+        longitude: 105.84038426747847,
+        zoom: 14
     })
 
     const [options, setOptions] = useState([])
@@ -96,12 +96,6 @@ export const MapWidget: FC<T_MapProps> = props => {
                 lat: viewport.latitude,
                 lng: viewport.longitude
             })
-            if (props.coordinate) {
-                setUrlQueryParams({
-                    ...urlQueryParams,
-                    input: `${props.coordinate[0]}, ${props.coordinate[1]}` // Định dạng địa chỉ từ coordinate
-                });
-            }
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -115,6 +109,7 @@ export const MapWidget: FC<T_MapProps> = props => {
                 lng: address.lng
             })
         }
+
         onCloseMap()
     }
 
@@ -126,7 +121,7 @@ export const MapWidget: FC<T_MapProps> = props => {
 
     const handleSearch = debounce((value: string) => {
         if (value.length > 0) {
-            console.log(value)
+            console.log("gia tri là", value)
             setUrlQueryParams({
                 ...urlQueryParams,
                 input: value
@@ -138,18 +133,44 @@ export const MapWidget: FC<T_MapProps> = props => {
 
     const handleSelect = (value: string) => {
         if (value !== undefined) {
-            console.log(value)
             setSelected({
                 ...selected,
                 place_id: value
             })
         }
+        console.log(selected)
     }
+
+    useEffect(() => {
+        if (urlQueryParams.input !== '') {
+            const urlQuery = new UrlQuery(urlQueryParams)
+            console.log(urlQuery)
+            axios
+                .get(`https://rsapi.goong.io/Place/AutoComplete${urlQuery.toString()}`)
+                .then(r => {
+                    if (r.data) {
+                        if (r.data.predictions) {
+                            setOptions(
+                                r.data.predictions.map((item: any) => {
+                                    return {
+                                        value: item.hasOwnProperty('place_id') ? item.place_id : '',
+                                        label: item.hasOwnProperty('description') ? item.description : ''
+                                    }
+                                })
+                            )
+                        } else {
+                            setOptions([])
+                        }
+                    }
+                })
+        }
+
+    }, [urlQueryParams])
 
     useEffect(() => {
         if (selected.place_id !== '') {
             const urlQuery = new UrlQuery(selected)
-            console.log(urlQuery)
+
             axios
                 .get(`https://rsapi.goong.io/Place/Detail${urlQuery.toString()}`)
                 .then(r => {
@@ -172,34 +193,6 @@ export const MapWidget: FC<T_MapProps> = props => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selected])
-    useEffect(() => {
-        if (urlQueryParams.input !== '') {
-
-                const urlQuery = new UrlQuery(urlQueryParams)
-
-                axios
-                    .get(`https://rsapi.goong.io/Place/AutoComplete${urlQuery.toString()}`)
-                    .then(r => {
-                        console.log(r)
-                        if (r.data) {
-                            if (r.data.predictions) {
-                                setOptions(
-                                    r.data.predictions.map((item: any) => {
-                                        return {
-                                            value: item.hasOwnProperty('place_id') ? item.place_id : '',
-                                            label: item.hasOwnProperty('description') ? item.description : ''
-                                        }
-                                    })
-                                )
-                            } else {
-                                setOptions([])
-                            }
-                        }
-                    })
-            }
-
-
-    }, [urlQueryParams])
 
     const changeCoordinate = (coordinate: number[]) => {
         setAddress({
@@ -215,7 +208,7 @@ export const MapWidget: FC<T_MapProps> = props => {
             centered
             open={props.isOpen}
             onCancel={onCloseMap}
-            width={450}
+            width={400}
             closable={false}
             className={'relative'}
             zIndex={400}
@@ -237,17 +230,14 @@ export const MapWidget: FC<T_MapProps> = props => {
                 </Marker>
             </ReactMapGL>
             <Select
-                popupMatchSelectWidth={false}
                 showSearch
                 allowClear
                 defaultActiveFirstOption={false}
                 showArrow={false}
                 filterOption={false}
                 notFoundContent={null}
-                style={{ width: '70%' }}
-                // defaultValue='dcdxc'
                 className={'absolute top-10 left-10 w-[400px]'}
-                placeholder={t('text.search')}
+                placeholder={`${t('text.search')}`}
                 onChange={handleSelect}
                 onSearch={handleSearch}
                 options={options}

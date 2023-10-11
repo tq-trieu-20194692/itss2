@@ -43,7 +43,7 @@ const UserActivityLogScreen = () => {
     let currentDate: string | null = null;
     let groupedItems: any[] = [];
 
-    const groupedHistory = accountActivity.reduce((result: { [key: string]: any[] }, item) => {
+    const groupedHistory = accountActivity.reduce((result: { [key: string]: ActivityLogModel[] }, item) => {
         const timestamp = item.createdAt;
         const date = timestamp ? new Date(timestamp).toISOString().split('T')[0] : null;
         if (date !== currentDate) {
@@ -56,13 +56,13 @@ const UserActivityLogScreen = () => {
             groupedItems.push(item);
         }
         return result;
-    }, {} as { [key: string]: any[] });
+    }, {} as { [key: string]: ActivityLogModel[] });
 
     if (groupedItems.length > 0) {
         groupedHistory[currentDate!] = groupedItems;
     }
 
-    const handleViewDetail = (id: string,refId?:string) => {
+    const handleViewDetail = (id: string|undefined ,refId?:string) => {
         setAccountActivityWidget({
             isOpen: true,
             ActivityId: id,
@@ -126,7 +126,7 @@ const UserActivityLogScreen = () => {
             >
                 {Object.entries(groupedHistory).map(([date, items],index) => (
                     <div
-                        key={`${date}-${index}`}
+                        key={index}
                         style={{
                             border: '2px solid #ddd',
                             borderRadius: '5px',
@@ -140,9 +140,9 @@ const UserActivityLogScreen = () => {
                         <List
                             dataSource={items} // Use 'items' instead of 'Object.entries(groupedHistory)'
                             renderItem={(item,index) => (
-                                <List.Item style={{ padding: 0, paddingRight: '2%', marginBottom: '2%' }}  key={`${item.id}-${index}`}>
+                                <List.Item style={{ padding: 0, paddingRight: '2%', marginBottom: '2%' }}  key={item.id}>
                                     <div
-                                        key={`${item.id}-${index}`}
+                                        // key={`${item.id}-${index}`}
                                         style={{
                                             display: 'flex',
                                             alignItems: 'center',

@@ -34,8 +34,10 @@ const MeScreen = () => {
     };
 
     return (
-        <div>
-            <h1>User Information</h1>
+        <div className="me-screen-container">
+            <div className="text-center">
+                <h1>User Information</h1>
+            </div>
             {vm.user && (
                 <div>
                     <p>Username: {vm.user.username}</p>

@@ -25,7 +25,7 @@ export const AccountActivityWidget = (props: { id: string | undefined; refId: st
     } = Function()
     const {t} = useTranslation();
     const [oneActivity, setOneActivity] = useState<ActivityLogModel>()
-    const [selectedCoordinate, setSelectedCoordinate] = useState<[number | undefined, number | undefined]>([0, 0]);
+    const [selectedLocation, setSelectedLocation] = useState<string|undefined>();
     const [isModalMapVisible, setIsModalMapVisible] = useState(false)
 
     useEffect(() => {
@@ -63,10 +63,8 @@ export const AccountActivityWidget = (props: { id: string | undefined; refId: st
         }
     }
     const handleShowMap = (coordinate: any) => {
-        const trimmedString = coordinate.replace(/\s/g, ""); // Xóa khoảng trắng
-        const parsedArray = JSON.parse(trimmedString);
+        setSelectedLocation(coordinate)
         setIsModalMapVisible(true)
-        setSelectedCoordinate(parsedArray)
     }
     const onCloseModalMap = () => {
         setIsModalMapVisible(false)
@@ -132,8 +130,9 @@ export const AccountActivityWidget = (props: { id: string | undefined; refId: st
             {
                 isModalMapVisible && (
                     <LocationWidget onClose={onCloseModalMap}
-                                    isOpen={isModalMapVisible}
-                                    coordinate={selectedCoordinate}
+                                    isOpen={true}
+                                    location={selectedLocation}
+
                     />
                 )
             }
