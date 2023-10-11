@@ -129,7 +129,7 @@ export class HistoryModel extends Model {
 export class ActivityLogModel extends Model{
     createdAt?:string
     ip?:string
-    key?:string
+    activity?:string
     userAgent?:UserAgent
     location?:string
     id?:string
@@ -140,7 +140,7 @@ export class ActivityLogModel extends Model{
         super(data)
 
         this.ip = Normalize.initJsonString(data, 'ip')
-        this.key = Normalize.initJsonString(data, 'key')
+        this.activity = Normalize.initJsonString(data, 'key')
         this.createdAt = Normalize.initJsonString(data, 'created_at')
         this.userAgent =Normalize.initJsonObject(data, 'user_agent', v => new UserAgent(v))
         this.location =Normalize.initJsonString(data, 'location')

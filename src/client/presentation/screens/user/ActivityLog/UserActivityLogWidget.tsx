@@ -94,7 +94,7 @@ export const AccountActivityWidget = (props: { id: string | undefined; refId: st
                 />
                 <p>
                     <b>
-                        {ActivityText(oneActivity?.key)} {oneActivity?.userAgent === undefined
+                        {ActivityText(oneActivity?.activity)} {oneActivity?.userAgent === undefined
                         ?  t('text.unknownDevice')
                         : ""}
                     </b>

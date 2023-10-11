@@ -165,7 +165,7 @@ const UserActivityLogScreen = () => {
                                                     }}
                                                 />
                                                 <div style={{flex: 1, textAlign: 'left'}}>
-                                                    <p><b>{ActivityText(item.key)} {item.userAgent ===undefined ? t('text.unknownDevice')  : ""}  </b></p>
+                                                    <p><b>{ActivityText(item.activity)} {item.userAgent ===undefined ? t('text.unknownDevice')  : ""}  </b></p>
                                                     {/*<p>Device: {item.activity?.userAgent?.name}</p>*/}
                                                     <div style={{display: 'flex', alignItems: 'center'}}>
                                                         <ClockCircleOutlined style={{marginRight: '8px'}}/>

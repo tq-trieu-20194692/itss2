@@ -54,6 +54,8 @@ export const LocationWidget: FC<T_MapProps> = props => {
         }
     }, [])
 
+
+
     useEffect(() => {
         if (!props.isOpen) {
             setViewport({

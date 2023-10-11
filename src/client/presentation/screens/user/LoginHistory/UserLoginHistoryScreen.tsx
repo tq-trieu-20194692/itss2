@@ -21,7 +21,7 @@ const AccountLoginHistoryScreen = () => {
     const {
         setIcon,
         setUpDate,
-        StateDetail
+
     } = Function()
     const {t} = useTranslation();
     const [logoutModal, setLogOutModal] = useState(false)
