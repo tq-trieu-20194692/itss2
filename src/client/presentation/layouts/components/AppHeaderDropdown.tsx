@@ -106,18 +106,18 @@ const AppHeaderDropdown = () => {
                 )}
                 menu={{
                     items: [
-                        {
-                            key: '1',
-                            label: "Lịch sử đăng nhập",
-                            icon: <CIcon icon={cilUser}/>,
-                            onClick: onLoginHistory,
-                        },
-                        {
-                            key: '2',
-                            label: "Nhật ký hoạt động",
-                            icon: <CIcon icon={cilList}/>,
-                            onClick: onActivityLog,
-                        },
+                        // {
+                        //     key: '1',
+                        //     label: "Lịch sử đăng nhập",
+                        //     icon: <CIcon icon={cilUser}/>,
+                        //     onClick: onLoginHistory,
+                        // },
+                        // {
+                        //     key: '2',
+                        //     label: "Nhật ký hoạt động",
+                        //     icon: <CIcon icon={cilList}/>,
+                        //     onClick: onActivityLog,
+                        // },
                         {
                             key: '3',
                             label: 'Đăng xuất',

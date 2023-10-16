@@ -1,7 +1,9 @@
-import React, {FC, ReactNode, useEffect, useState} from "react";
+import {FC, ReactNode, useEffect, useState} from "react";
+import AppHeader from "./components/AppHeaderHomePage";
 import {Outlet, useOutletContext} from "react-router";
 import {CContainer} from "@coreui/react";
-import AppHeaderForHomePage from "./components/AppHeaderForHomePage";
+import AppFooter from "./components/AppFooter";
+
 
 export type T_MasterCtx = {
     tool: [ReactNode, (tool: ReactNode) => void]
@@ -17,12 +19,13 @@ export const HomePageLayout: FC = _ => {
     return (
         <div>
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-                <AppHeaderForHomePage tool={tool}/>
+                <AppHeader tool={tool}/>
                 <div className="body flex-grow-1 px-2">
                     <CContainer fluid>
                         <Outlet context={outletCtx}/>
                     </CContainer>
                 </div>
+                <AppFooter/>
             </div>
         </div>
     )
@@ -33,8 +36,8 @@ type _T_Props = {
     tool?: ReactNode
 }
 
-export const MasterLayoutCtxWrapper: FC<_T_Props> = props => {
-    const {master} = useMasterLayout()
+export const HomePageLayoutCtxWrapper: FC<_T_Props> = props => {
+    const {master} = useHomePageLayout()
 
     useEffect(() => {
         const [, setTool] = master.tool
@@ -55,7 +58,7 @@ export const MasterLayoutCtxWrapper: FC<_T_Props> = props => {
     )
 }
 
-export const useMasterLayout = () => {
+export const useHomePageLayout = () => {
     const outletContext = useOutletContext<T_MasterCtx>()
 
     return {

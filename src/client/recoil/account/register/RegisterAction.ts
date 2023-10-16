@@ -13,7 +13,6 @@ export const RegisterAction = () => {
     const apiService = useInjection(ApiService)
 
     const {
-        dispatchStoreUser
     } = MeAction()
 
     const [state, setState] = useState<T_RegisterState>(initialState)
@@ -32,7 +31,6 @@ export const RegisterAction = () => {
                 console.log(r)
                 if (r.success) {
                     const user = new UserModel(r.data)
-                    dispatchStoreUser(user)
 
                     setSession({
                         ...session,

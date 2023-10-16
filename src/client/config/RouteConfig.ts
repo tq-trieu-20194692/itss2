@@ -42,18 +42,6 @@ export class RouteConfig {
             component: HomePageScreen,
             protect: true
         },
-        {
-            name: 'Lịch sử đăng nhập',
-            path: RouteConfig.LOGIN_HISTORY,
-            component: UserLoginHistoryScreen,
-            protect: true
-        },
-        {
-            name: 'Nhat ky hoat dong',
-            path: RouteConfig.USER_ACTIVITY_LOG,
-            component: UserActivityLogScreen,
-            protect: true
-        },
     ]
 
     static changePasswordRoutes: T_Rco[] = [
@@ -90,6 +78,17 @@ export class RouteConfig {
             component: MeScreen,
             protect: true
         },
-
+        {
+            name: 'Lịch sử đăng nhập',
+            path: RouteConfig.LOGIN_HISTORY,
+            component: UserLoginHistoryScreen,
+            protect: true
+        },
+        {
+            name: 'Nhat ky hoat dong',
+            path: RouteConfig.USER_ACTIVITY_LOG,
+            component: UserActivityLogScreen,
+            protect: true
+        },
     ]
 }

@@ -45,6 +45,7 @@ export class UserModel extends Model {
     username?: string
     email?: string
     image?: string
+    password?: string
     isOwner?: boolean
     phone? :string
     address? :string
@@ -61,6 +62,7 @@ export class UserModel extends Model {
         this.activated2fa = Normalize.initJsonBool(data, 'activated_2fa')
         this.username = Normalize.initJsonString(data, 'username')
         this.email = Normalize.initJsonString(data, 'email')
+        this.address = Normalize.initJsonString(data, 'address')
         this.image = Normalize.initJsonString(data, 'image')
         this.isOwner = Normalize.initJsonBool(data, 'is_owner')
         this.createAt = Normalize.initJsonString(data, 'create_at')

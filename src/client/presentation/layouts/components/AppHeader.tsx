@@ -1,21 +1,24 @@
 import React, {ReactNode, useEffect, useState} from 'react'
-import {CContainer, CHeader, CHeaderBrand, CHeaderNav, CHeaderToggler, CImage} from '@coreui/react'
+import {CContainer, CHeader, CHeaderBrand, CHeaderDivider, CHeaderNav, CHeaderToggler, CNavItem, CNavLink} from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import {cilMenu} from '@coreui/icons'
+import {logoHeader} from '../../../assets/brand/brand'
 import {ThemeAction} from "../../../recoil/theme/ThemeAction";
+import AppBreadcrumb from "./AppBreadcrumb";
 import AppHeaderDropdown from "./AppHeaderDropdown";
+import {ArrowLeftOutlined, ArrowRightOutlined, ReloadOutlined} from "@ant-design/icons";
+import {useNavigate} from "react-router";
 import {Button, Dropdown, Image, MenuProps,notification} from "antd";
 import {LanguageAction} from "../../../recoil/language/LanguageAction";
 import Function from "../../../const/Function";
 import {useTranslation} from "react-i18next";
-
 type _T_Props = {
     tool?: ReactNode
     onReload?: Function
-    setOpen?: boolean
 }
 
 const AppHeader = (props: _T_Props) => {
+    const navigate = useNavigate()
     const {t} = useTranslation();
     const mess = t('text.changeLanguageSuccess')
     const [keyFlag, setKeyFlag] = useState(1)
@@ -75,76 +78,67 @@ const AppHeader = (props: _T_Props) => {
         onClick: handleMenuClick,
     };
 
-
     return (
-        <>
-            <CHeader position="sticky" className="mb-3" style={{backgroundColor: "#001529"}}>
-                <CContainer fluid>
-
-                    {/*@ts-ignore*/}
-                    <CHeaderBrand className="mx-auto d-md-none" to="/">  <div style={{fontSize:'20px'}}>
-                        <CImage  rounded src="/logo.svg" width={32} height={32} />
-                        AUTOTIMELAPSE
-                    </div>
-                    </CHeaderBrand>
-                    <CHeaderNav className="d-none d-md-flex me-auto">
-                        {/*<CNavItem>*/}
-                        {/*    <CNavLink className={"cursor-pointer"} onClick={() => navigate(-1)}>*/}
-                        {/*        <ArrowLeftOutlined style={{fontSize: "1.32rem"}}/>*/}
-                        {/*    </CNavLink>*/}
-                        {/*</CNavItem>*/}
-                        {/*<CNavItem>*/}
-                        {/*    <CNavLink className={"cursor-pointer"} onClick={() => navigate(1)}>*/}
-                        {/*        <ArrowRightOutlined style={{fontSize: "1.3rem"}}/>*/}
-                        {/*    </CNavLink>*/}
-                        {/*</CNavItem>*/}
-
-                    </CHeaderNav>
-                    {/*<CHeaderNav>*/}
-                    {/*    <CNavItem>*/}
-                    {/*        <CNavLink href="#">*/}
-                    {/*            <CIcon icon={cilBell} size="lg"/>*/}
-                    {/*        </CNavLink>*/}
-                    {/*    </CNavItem>*/}
-                    {/*    <CNavItem>*/}
-                    {/*        <CNavLink href="#">*/}
-                    {/*            <CIcon icon={cilEnvelopeOpen} size="lg"/>*/}
-                    {/*        </CNavLink>*/}
-                    {/*    </CNavItem>*/}
-                    {/*</CHeaderNav>*/}
-                    <CHeaderNav className="me-3">
-                        <Dropdown menu={menuProps} placement="bottom" arrow>
-                            <Button><Image src={setFlag(keyFlag)} alt="Icon 1" style={{marginRight: '8px', width: '20px', height: '20px'}}/> Language</Button>
-                        </Dropdown>
-                    </CHeaderNav>
-                    <CHeaderNav className="ml-3">
-                        <AppHeaderDropdown/>
-                    </CHeaderNav>
-                </CContainer>
-                {/*<CHeaderDivider/>*/}
-                {/*<CContainer fluid>*/}
-                {/*    <AppBreadcrumb/>*/}
-                {/*    {*/}
-                {/*        !!props.tool && (*/}
-                {/*            <div className={"overflow-x-auto overflow-y-hidden"}>*/}
-                {/*                {props.tool}*/}
-                {/*            </div>*/}
-                {/*        )*/}
-                {/*    }*/}
-                {/*</CContainer>*/}
-            </CHeader>
-            <div style={{ width: '25px', height: '25px', marginBottom: '30px' ,backgroundColor:'red'}}>
+        <CHeader position="sticky" className="mb-4">
+            <CContainer fluid>
                 <CHeaderToggler
-                    className="m-0 ms-2"
-                    onClick={() => dispatchSetState({ sidebarShow: !vm.sidebarShow })}
+                    className="ps-1"
+                    onClick={() => dispatchSetState({sidebarShow: !vm.sidebarShow})}
                 >
-
-                    <CIcon icon={cilMenu} size="xl" />
-fff
+                    <CIcon icon={cilMenu} size="lg"/>
                 </CHeaderToggler>
-            </div>
+                {/*@ts-ignore*/}
+                <CHeaderBrand className="mx-auto d-md-none" to="/">
+                    <CIcon icon={logoHeader} height={28}/>
+                </CHeaderBrand>
+                <CHeaderNav className="d-none d-md-flex me-auto">
+                    <CNavItem>
+                        <CNavLink className={"cursor-pointer"} onClick={() => navigate(-1)}>
+                            <ArrowLeftOutlined style={{fontSize: "1.3rem"}}/>
+                        </CNavLink>
+                    </CNavItem>
+                    <CNavItem>
+                        <CNavLink className={"cursor-pointer"} onClick={() => navigate(1)}>
+                            <ArrowRightOutlined style={{fontSize: "1.3rem"}}/>
+                        </CNavLink>
+                    </CNavItem>
+                    <CNavItem>
+                        <CNavLink
+                            className={"cursor-pointer"}
+                            disabled={props.onReload === undefined}
+                            onClick={(event) => {
+                                event.preventDefault()
 
-        </>
+                                if (props.onReload) {
+                                    props.onReload()
+                                }
+                            }}
+                        >
+                            <ReloadOutlined style={{fontSize: "1.3rem"}}/>
+                        </CNavLink>
+                    </CNavItem>
+                </CHeaderNav>
+                <CHeaderNav className="me-3">
+                    <Dropdown menu={menuProps} placement="bottom" arrow>
+                        <Button><Image src={setFlag(keyFlag)} alt="Icon 1" style={{marginRight: '8px', width: '20px', height: '20px'}}/> Language</Button>
+                    </Dropdown>
+                </CHeaderNav>
+                <CHeaderNav className="ml-3">
+                    <AppHeaderDropdown/>
+                </CHeaderNav>
+            </CContainer>
+            <CHeaderDivider/>
+            <CContainer fluid>
+                <AppBreadcrumb/>
+                {
+                    !!props.tool && (
+                        <div className={"overflow-x-auto overflow-y-hidden"}>
+                            {props.tool}
+                        </div>
+                    )
+                }
+            </CContainer>
+        </CHeader>
     )
 }
 

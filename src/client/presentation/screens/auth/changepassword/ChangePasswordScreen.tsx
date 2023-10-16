@@ -192,7 +192,7 @@ const ChangePassword = () => {
                             style={{width: '100%'}}
                             disabled={passwordUpdated}
                         >
-                            {t('button.sent')}
+                            {t('text.resetPassword')}
                         </Button>
                     </Form.Item>
                 </Form>

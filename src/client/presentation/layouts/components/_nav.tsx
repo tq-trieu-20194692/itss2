@@ -1,6 +1,6 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
-import {cilSpeedometer} from '@coreui/icons'
+import {cilHistory, cilCalendar, cilUser} from '@coreui/icons'
 import {CNavItem} from '@coreui/react'
 import {RouteConfig} from "../../../config/RouteConfig";
 
@@ -23,14 +23,22 @@ export type T_Nav = _T_NavChild & {
 const _nav: T_Nav[] = [
     {
         component: CNavItem,
-        name: 'Dashboard',
-        to: RouteConfig.DASHBOARD,
-        icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon"/>,
-        badge: {
-            color: 'info',
-            text: 'NEW',
-        },
+        name: 'Thông tin cá nhân',
+        to: RouteConfig.ME,
+        icon: <CIcon icon={cilUser} customClassName="nav-icon"/>,
     },
+    {
+        component: CNavItem,
+        name: 'Nhật kí hoạt động',
+        icon: <CIcon icon={cilCalendar} customClassName="nav-icon"/>,
+        to: RouteConfig.USER_ACTIVITY_LOG
+    },
+    {
+        component: CNavItem,
+        name: 'Lịch sử đăng nhập',
+        icon: <CIcon icon={cilHistory} customClassName="nav-icon"/>,
+        to: RouteConfig.LOGIN_HISTORY
+    }
 
 ]
 
