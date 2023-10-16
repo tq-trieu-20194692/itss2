@@ -24,7 +24,7 @@ export const UserLoginHistoryWidget = (props: { id: string | undefined; onClose:
     } = Function()
     const {t} = useTranslation();
     const [oneLoginDetail, setOneLoginDetail] = useState<LoginHistoryModel>()
-    const [selectedCoordinate, setSelectedCoordinate] = useState<[number | undefined, number | undefined]>([0, 0]);
+    const [selectedLocation, setSelectedLocation] = useState<string|undefined>();
     const [isModalMapVisible, setIsModalMapVisible] = useState(false)
     let createAt: Date | undefined;
     if (oneLoginDetail?.createdAt) {
@@ -60,10 +60,8 @@ export const UserLoginHistoryWidget = (props: { id: string | undefined; onClose:
         }
     }
     const handleShowMap = (coordinate: any) => {
-        const trimmedString = coordinate.replace(/\s/g, ""); // Xóa khoảng trắng
-        const parsedArray = JSON.parse(trimmedString);
+        setSelectedLocation(coordinate)
         setIsModalMapVisible(true)
-        setSelectedCoordinate(parsedArray)
     }
     const onCloseModalMap = () => {
         setIsModalMapVisible(false)
@@ -132,7 +130,9 @@ export const UserLoginHistoryWidget = (props: { id: string | undefined; onClose:
 
                     {
                         isModalMapVisible && (
-                            <LocationWidget onClose={onCloseModalMap} isOpen={isModalMapVisible} coordinate={selectedCoordinate}
+                            <LocationWidget onClose={onCloseModalMap}
+                                            isOpen={isModalMapVisible}
+                                            location={selectedLocation}
                             />
                         )
                     }

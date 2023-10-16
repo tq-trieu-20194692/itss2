@@ -43,7 +43,7 @@ const UserActivityLogScreen = () => {
     let currentDate: string | null = null;
     let groupedItems: any[] = [];
 
-    const groupedHistory = accountActivity.reduce((result: { [key: string]: any[] }, item) => {
+    const groupedHistory = accountActivity.reduce((result: { [key: string]: ActivityLogModel[] }, item) => {
         const timestamp = item.createdAt;
         const date = timestamp ? new Date(timestamp).toISOString().split('T')[0] : null;
         if (date !== currentDate) {
@@ -56,17 +56,17 @@ const UserActivityLogScreen = () => {
             groupedItems.push(item);
         }
         return result;
-    }, {} as { [key: string]: any[] });
+    }, {} as { [key: string]: ActivityLogModel[] });
 
     if (groupedItems.length > 0) {
         groupedHistory[currentDate!] = groupedItems;
     }
 
-    const handleViewDetail = (id: string, refId?: string) => {
+    const handleViewDetail = (id: string|undefined ,refId?:string) => {
         setAccountActivityWidget({
             isOpen: true,
             ActivityId: id,
-            Refit: refId
+            Refit:refId
 
         })
     }
@@ -111,8 +111,6 @@ const UserActivityLogScreen = () => {
         }
     }
 
-    console.log(groupedHistory)
-
     return (
         <>
             <h1>{t('text.activityLog')}</h1>
@@ -126,87 +124,75 @@ const UserActivityLogScreen = () => {
                     position: 'relative', // Thêm thuộc tính position
                 }}
             >
-                {
-                    Object.entries(groupedHistory).map(([date, items], index) => (
-                        <div
-                            key={`${date}-${index}`}
-                            style={{
-                                border: '2px solid #ddd',
-                                borderRadius: '5px',
-                                margin: '2% 2% auto',
-                                width: '96%',
-                                backgroundColor: '#f9f9f9',
-                                position: 'relative',
-                            }}
-                        >
-                            <h3 style={{display: 'flex', justifyContent: 'flex-start', marginLeft: '15px', marginTop: '5px'}}>{date}</h3>
-                            <List
-                                dataSource={items} // Use 'items' instead of 'Object.entries(groupedHistory)'
-                                renderItem={(item, index) => (
-                                    <List.Item
+                {Object.entries(groupedHistory).map(([date, items],index) => (
+                    <div
+                        key={index}
+                        style={{
+                            border: '2px solid #ddd',
+                            borderRadius: '5px',
+                            margin: '2% 2% auto',
+                            width: '96%',
+                            backgroundColor: '#f9f9f9',
+                            position: 'relative',
+                        }}
+                    >
+                        <h3 style={{display: 'flex', justifyContent: 'flex-start', marginLeft: '15px', marginTop: '5px'}}>{date}</h3>
+                        <List
+                            dataSource={items} // Use 'items' instead of 'Object.entries(groupedHistory)'
+                            renderItem={(item,index) => (
+                                <List.Item style={{ padding: 0, paddingRight: '2%', marginBottom: '2%' }}  key={item.id}>
+                                    <div
+                                        // key={`${item.id}-${index}`}
                                         style={{
-                                            padding: 0,
-                                            paddingRight: '2%',
-                                            marginBottom: '2%'
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between',
+                                            margin: '10px 0',
                                         }}
-                                        key={`${item.id}-${index}`}>
-                                        <div
-                                            key={`${item.id}-${index}`}
-                                            style={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'space-between',
-                                                margin: '10px 0',
-                                            }}
 
-                                        >
-                                            <div style={{flex: 1}}>
-                                                <div style={{display: 'flex', alignItems: 'center'}}>
-                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                    <img
-                                                        src={getImageForPlatForm(item.userAgent?.platForm)}
-                                                        alt="Activity"
-                                                        style={{
-                                                            width: '50px',
-                                                            height: '50px',
-                                                            marginRight: '40px',
-                                                            marginLeft: '40px'
-                                                        }}
-                                                    />
-                                                    <div style={{flex: 1, textAlign: 'left'}}>
-                                                        <p>
-                                                            <b>{ActivityText(item.key)} {item.userAgent === undefined ? t('text.unknownDevice') : ""}  </b>
-                                                        </p>
-                                                        {/*<p>Device: {item.activity?.userAgent?.name}</p>*/}
-                                                        <div style={{display: 'flex', alignItems: 'center'}}>
-                                                            <ClockCircleOutlined style={{marginRight: '8px'}}/>
-                                                            <Typography.Text>{setUpDate(item.createdAt)}</Typography.Text>
-                                                        </div>
+                                    >
+                                        <div style={{flex: 1}}>
+                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img
+                                                    src={getImageForPlatForm(item.userAgent?.platForm)}
+                                                    alt="Activity"
+                                                    style={{
+                                                        width: '50px',
+                                                        height: '50px',
+                                                        marginRight: '40px',
+                                                        marginLeft: '40px'
+                                                    }}
+                                                />
+                                                <div style={{flex: 1, textAlign: 'left'}}>
+                                                    <p><b>{ActivityText(item.activity)} {item.userAgent ===undefined ? t('text.unknownDevice')  : ""}  </b></p>
+                                                    {/*<p>Device: {item.activity?.userAgent?.name}</p>*/}
+                                                    <div style={{display: 'flex', alignItems: 'center'}}>
+                                                        <ClockCircleOutlined style={{marginRight: '8px'}}/>
+                                                        <Typography.Text>{setUpDate(item.createdAt)}</Typography.Text>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div style={{position: 'absolute', right: 0}}>
-                                                <Popover
-                                                    placement="bottomRight"
-                                                    content={
-                                                        <div style={{display: 'flex', flexDirection: 'column'}}>
-                                                            <Button
-                                                                onClick={() => handleViewDetail(item.id, item.refId)}
-                                                                type="text">{t('text.view')}</Button>
-                                                        </div>
-                                                    }
-                                                    trigger="click"
-                                                >
-                                                    <EllipsisOutlined
-                                                        style={{fontSize: '30px', color: 'blue', marginRight: '40px'}}/>
-                                                </Popover>
-                                            </div>
                                         </div>
-                                    </List.Item>
-                                )}
-                            />
-                        </div>
-                    ))}
+                                        <div style={{position: 'absolute', right: 0}} >
+                                            <Popover
+                                                placement="bottomRight"
+                                                content={
+                                                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                                                        <Button onClick={() => handleViewDetail(item.id,item.refId)} type="text">{t('text.view')}</Button>
+                                                    </div>
+                                                }
+                                                trigger="click"
+                                            >
+                                                <EllipsisOutlined style={{fontSize: '30px', color: 'blue', marginRight: '40px'}}/>
+                                            </Popover>
+                                        </div>
+                                    </div>
+                                </List.Item>
+                            )}
+                        />
+                    </div>
+                ))}
             </div>
             <AccountActivityWidget
                 refId={accountActivityWidget.Refit}
@@ -215,8 +201,7 @@ const UserActivityLogScreen = () => {
                 onClose={onCloseWidget}
                 queryParams={queryParams}
             />
-            <Pagination
-                style={{display: 'flex', justifyContent: 'flex-end', marginTop: "10px", marginBottom: '10px'}} {...paginationOptions} />
+            <Pagination style={{display: 'flex', justifyContent: 'flex-end', marginTop: "10px", marginBottom: '10px'}} {...paginationOptions} />
         </>
     );
 
