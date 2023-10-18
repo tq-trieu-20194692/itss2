@@ -224,6 +224,9 @@
     "length": "{{label}}必须介于{{min}}和{{max}}个字符之间",
     "usernameFormat": "用户名不得包含空格或特殊字符",
     "emailFormat": "电子邮件格式无效",
-    "phoneFormat": "电话号码格式无效"
+    "phoneFormat": "电话号码格式无效",
+    "password confirmation does not match": "密码确认不匹配",
+    "missingRequiredInformation": "缺少所需信息"
+
   }
 }

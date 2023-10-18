@@ -225,6 +225,8 @@
     "length": "{{label}} từ {{min}} đến {{max}} ký tự",
     "usernameFormat": "Tên đăng nhập không có khoảng trắng, ký tự đặc biệt",
     "emailFormat": "Email sai định dạng",
-    "phoneFormat": "Số điện thoại sai định dạng"
+    "phoneFormat": "Số điện thoại sai định dạng",
+    "password confirmation does not match": "Xác nhận mật khẩu không khớp",
+    "missingRequiredInformation": "Thiếu thông tin bắt buộc"
   }
 }

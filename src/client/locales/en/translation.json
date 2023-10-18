@@ -224,6 +224,8 @@
     "length": "{{label}} must be between {{min}} and {{max}} characters",
     "usernameFormat": "Username should not contain spaces or special characters",
     "emailFormat": "Invalid email format",
-    "phoneFormat": "Invalid phone number format"
+    "phoneFormat": "Invalid phone number format",
+    "password confirmation does not match": "Password confirmation does not match",
+    "missingRequiredInformation": "Missing required information"
   }
 }

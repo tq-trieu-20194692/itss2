@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Form, Input, Button, Typography, Select, Modal, Upload, Alert, Divider, DatePicker} from 'antd';
+import {Form, Input, Button, Typography, Select, Modal, Upload, Divider, DatePicker} from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
 import type {UploadFile} from 'antd/es/upload/interface';
 import type {RcFile, UploadProps} from 'antd/es/upload';
@@ -12,7 +12,6 @@ import {Link} from "react-router-dom";
 import {useNavigate} from "react-router";
 import dayjs from "dayjs";
 import {T_RegisterVO} from "../../../../models/UserModel";
-import {E_SendingStatus} from "../../../../const/Events";
 
 type _T_FormName = {
     username: string
@@ -69,9 +68,28 @@ const RegisterScreen: React.FC = () => {
         }
     }, [vm.error, formErrors]);
 
+    const requiredFields: Array<keyof _T_FormName> = [
+        'username',
+        'password',
+        'confirm',
+        'email',
+        'name'
+    ];
 
     const onFinish = (values: _T_FormName) => {
         console.log(values)
+        const missingFields = requiredFields.filter(field => !values[field]);
+        if (missingFields.length > 0) {
+            const missingFieldsMessage = missingFields.map(field =>
+                t('error.required', { label: t(`text.${field}`).toLowerCase() })
+            ).join('\n');
+
+            Modal.error({
+                title: t('error.missingRequiredInformation'),
+                content: missingFieldsMessage,
+            });
+            return;
+        }
         const data: T_RegisterVO = {
             username: values.username.trim(),
             password: values.password,
@@ -94,7 +112,8 @@ const RegisterScreen: React.FC = () => {
         }
 
         console.log('Received values of form: ', values);
-    };
+    }
+
     const onFinishFailed = (errorInfo: ValidateErrorEntity) => {
         let _formErrors = formErrors;
         errorInfo.errorFields.forEach((e) => {
@@ -108,6 +127,8 @@ const RegisterScreen: React.FC = () => {
 
     const onFieldsChange = (data: FieldData[]) => {
         let _formErrors = formErrors;
+        let passwordMatchError = false;
+        let isPhoneValid = true;
 
         data.forEach((e: any) => {
             switch (e.name[0]) {
@@ -115,12 +136,10 @@ const RegisterScreen: React.FC = () => {
                     if (inputTimeoutRef.current.username) clearTimeout(inputTimeoutRef.current.username);
 
                     if (e.errors.length > 0) {
-                        inputTimeoutRef.current.username = setTimeout(() => {
-                            setFormErrors((error) => ({
-                                ...error,
-                                username: e.errors[0],
-                            }));
-                        }, 1000);
+                        _formErrors = {
+                            ..._formErrors,
+                            username: e.errors[0],
+                        };
                     } else if (_formErrors.username) {
                         _formErrors = {
                             ..._formErrors,
@@ -133,12 +152,10 @@ const RegisterScreen: React.FC = () => {
                     if (inputTimeoutRef.current.password) clearTimeout(inputTimeoutRef.current.password);
 
                     if (e.errors.length > 0) {
-                        inputTimeoutRef.current.password = setTimeout(() => {
-                            setFormErrors((error) => ({
-                                ...error,
-                                password: e.errors[0],
-                            }));
-                        }, 1000);
+                        _formErrors = {
+                            ..._formErrors,
+                            password: e.errors[0],
+                        };
                     } else if (_formErrors.password) {
                         _formErrors = {
                             ..._formErrors,
@@ -147,11 +164,93 @@ const RegisterScreen: React.FC = () => {
                     }
 
                     break;
+                case 'confirm':
+                    if (inputTimeoutRef.current.confirm) clearTimeout(inputTimeoutRef.current.confirm);
+
+                    if (e.errors.length > 0) {
+                        _formErrors = {
+                            ..._formErrors,
+                            confirm: e.errors[0],
+                        };
+                        passwordMatchError = true;
+                    } else if (_formErrors.confirm) {
+                        _formErrors = {
+                            ..._formErrors,
+                            confirm: '',
+                        };
+                    } else {
+                        const passwordValue = form.getFieldValue('password');
+                        const confirmValue = form.getFieldValue('confirm');
+                        if (passwordValue !== confirmValue) {
+                            _formErrors = {
+                                ..._formErrors,
+                                confirm: 'Password confirmation does not match',
+                            };
+                            passwordMatchError = true;
+                        }
+                    }
+
+                    break;
+                case 'name':
+                    if (inputTimeoutRef.current.name) clearTimeout(inputTimeoutRef.current.name);
+
+                    if (e.errors.length > 0) {
+                        _formErrors = {
+                            ..._formErrors,
+                            name: e.errors[0],
+                        };
+                    } else if (_formErrors.name) {
+                        _formErrors = {
+                            ..._formErrors,
+                            name: '',
+                        };
+                    }
+
+                    break;
+
+                case 'email':
+                    if (inputTimeoutRef.current.email) clearTimeout(inputTimeoutRef.current.email);
+
+                    if (e.errors.length > 0) {
+                        _formErrors = {
+                            ..._formErrors,
+                            email: e.errors[0],
+                        };
+                    } else if (_formErrors.email) {
+                        _formErrors = {
+                            ..._formErrors,
+                            email: '',
+                        };
+                    }
+
+                    break;
+
+                case 'phone':
+                    if (inputTimeoutRef.current.phone) clearTimeout(inputTimeoutRef.current.phone);
+
+                    if (e.errors.length > 0) {
+                        _formErrors = {
+                            ..._formErrors,
+                            phone: e.errors[0],
+                        };
+                        isPhoneValid = false;
+                    } else if (_formErrors.phone) {
+                        _formErrors = {
+                            ..._formErrors,
+                            phone: '',
+                        };
+                    } else {
+                        isPhoneValid = true;
+                    }
+
+                    break;
+                // Thêm các trường khác nếu cần
             }
         });
 
-        setFormErrors(_formErrors);
-    };
+        setFormErrors(_formErrors)
+    }
+
 
     //Upload image
     const getBase64 = (file: RcFile): Promise<string> =>
@@ -209,25 +308,6 @@ const RegisterScreen: React.FC = () => {
                     maxHeight: '100vh',
                 }}
             >
-                {successVisible && (
-                    <>
-                        <Alert
-                            message="Registered successfully"
-                            type="success"
-                            showIcon
-                            closable
-                            style={{marginBottom: 20}}
-                            onClose={() => setSuccessVisible(false)}
-                        />
-                        <Link to="/login"
-                              style={{
-                                  color: 'green',
-                                  textDecoration: 'underline'
-                              }}>
-                            {t('button.comeBack')}
-                        </Link>
-                    </>
-                )}
                 <div className="text-center">
                     <Typography.Title level={2} className={'mb-0'}>
                         {t('text.register')}
@@ -337,7 +417,7 @@ const RegisterScreen: React.FC = () => {
                                             if (!value || getFieldValue('password') === value) {
                                                 return Promise.resolve();
                                             }
-                                            return Promise.reject(new Error('Password confirmation does not match'));
+                                            return Promise.reject(new Error(t('error.password confirmation does not match')));
                                         },
                                     }),
                                 ]}
@@ -378,7 +458,7 @@ const RegisterScreen: React.FC = () => {
                                 validateStatus={Utils.viewStatusError<_T_FormError>(formErrors, 'name')}
                                 help={Utils.viewHelpError<_T_FormError>(formErrors, 'name')}
                             >
-                                <Input placeholder={t('text.fullname')}/>
+                                <Input placeholder={t('text.fullname')} />
                             </Form.Item>
                             <Typography.Title level={5} className={'mb-0'}>
                                 {t('text.birthdate')} (YYYY-MM-DD)

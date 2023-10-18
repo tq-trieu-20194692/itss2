@@ -5,7 +5,7 @@ import {getImageForPlatForm} from "../../../../const/Img";
 import {UserLoginHistoryAction} from "../../../../recoil/user/LoginHistory/UserLoginHistoryAction";
 import {LocationWidget} from "../../../widgets/LocationWidget";
 import CIcon from "@coreui/icons-react";
-import { cilLocationPin } from "@coreui/icons";
+import {cilLocationPin} from "@coreui/icons";
 import Function from "../../../../const/Function";
 import {useTranslation} from "react-i18next";
 
@@ -15,7 +15,11 @@ export type T_UserLoginHistoryWidgetProps = {
     id?: string | undefined
 }
 
-export const UserLoginHistoryWidget = (props: { id: string | undefined; onClose: () => void; isOpen: boolean | undefined; }) => {
+export const UserLoginHistoryWidget = (props: {
+    id: string | undefined;
+    onClose: () => void;
+    isOpen: boolean | undefined;
+}) => {
     const {
         vm: vmLoginHistory
     } = UserLoginHistoryAction()
@@ -24,7 +28,7 @@ export const UserLoginHistoryWidget = (props: { id: string | undefined; onClose:
     } = Function()
     const {t} = useTranslation();
     const [oneLoginDetail, setOneLoginDetail] = useState<LoginHistoryModel>()
-    const [selectedLocation, setSelectedLocation] = useState<string|undefined>();
+    const [selectedLocation, setSelectedLocation] = useState<string | undefined>();
     const [isModalMapVisible, setIsModalMapVisible] = useState(false)
     let createAt: Date | undefined;
     if (oneLoginDetail?.createdAt) {
@@ -79,9 +83,19 @@ export const UserLoginHistoryWidget = (props: { id: string | undefined; onClose:
             zIndex={1000}
             footer={null} // Loại bỏ phần footer mặc định
         >
-            <div style={{display: "flex", marginBottom: "16px", marginTop: '10px'}}>
+            <div
+                style={{
+                    display: "flex",
+                    marginBottom: "16px",
+                    marginTop: '10px'
+                }}>
                 <div style={{flex: 1}}>
-                    <div style={{display: 'flex', alignItems: 'center', marginRight: '20px'}}>
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            marginRight: '20px'
+                        }}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                             src={getImageForPlatForm(oneLoginDetail?.userAgent?.platForm)}
@@ -110,12 +124,12 @@ export const UserLoginHistoryWidget = (props: { id: string | undefined; onClose:
                     <p>
                         {t('text.lastActivity')} : {ActivityText(oneLoginDetail?.key)}
                     </p>
-                    {oneLoginDetail?.userAgent?.browser!==undefined&&(
+                    {oneLoginDetail?.userAgent?.browser !== undefined && (
                         <p>
                             {t('text.browser')} : {oneLoginDetail?.userAgent?.browser}
                         </p>
                     )}
-                    {oneLoginDetail?.userAgent?.device!==undefined&&(
+                    {oneLoginDetail?.userAgent?.device !== undefined && (
                         <p>
                             {t('text.device')} : {oneLoginDetail?.userAgent?.device}
                         </p>
@@ -123,24 +137,46 @@ export const UserLoginHistoryWidget = (props: { id: string | undefined; onClose:
 
                     {oneLoginDetail?.location !== undefined && (
                         <div>
-                            <p>{t('text.location')}: <span style={{fontSize:'15px',color: 'blue', transition: 'color 0.3s',marginTop:'10px',marginBottom:'10px' }} onClick={()=>handleShowMap(oneLoginDetail?.location)} >{oneLoginDetail.location}<CIcon icon={cilLocationPin}/></span> </p>
+                            <p>{t('text.location')}:
+                                <span
+                                    style={{
+                                        fontSize: '15px',
+                                        color: 'blue',
+                                        transition: 'color 0.3s',
+                                        marginTop: '10px',
+                                        marginBottom: '10px'
+                                    }}
+                                    onClick={() => handleShowMap(oneLoginDetail?.location)}>{oneLoginDetail.location}
+                                    <CIcon icon={cilLocationPin}/>
+                            </span>
+                            </p>
                         </div>
 
                     )}
 
                     {
                         isModalMapVisible && (
-                            <LocationWidget onClose={onCloseModalMap}
-                                            isOpen={isModalMapVisible}
-                                            location={selectedLocation}
+                            <LocationWidget
+                                onClose={onCloseModalMap}
+                                isOpen={isModalMapVisible}
+                                location={selectedLocation}
                             />
                         )
                     }
                 </div>
 
             </div>
-            <div style={{display: "flex", justifyContent: "flex-end", paddingRight: "20px", marginTop: "20px"}}>
-                <Button danger onClick={onCloseWidget}>{t('button.close')}</Button>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    paddingRight: "20px",
+                    marginTop: "20px"
+                }}>
+                <Button
+                    danger
+                    onClick={onCloseWidget}>{t('button.close')}
+                </Button>
             </div>
         </Modal>
     );
