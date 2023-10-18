@@ -32,15 +32,15 @@ const AppHeader = (props: _T_Props) => {
     const {
         setFlag
     } = Function()
-    useEffect(() => {
-        if (mess) {
-            // Show notification after the transition
-            notification.success({
-                message: mess,
-                duration: 1,
-            });
-        }
-    }, [mess]);
+    // useEffect(() => {
+    //     if (mess) {
+    //         // Show notification after the transition
+    //         notification.success({
+    //             message: mess,
+    //             duration: 1,
+    //         });
+    //     }
+    // }, [mess]);
     const items: MenuProps['items'] = [
         {
             label: 'Tiếng Việt',

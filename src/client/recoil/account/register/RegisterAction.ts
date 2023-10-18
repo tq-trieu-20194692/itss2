@@ -1,29 +1,20 @@
-import {initialState, T_RegisterState} from "./RegisterState";
+import {initialFormState, initialState, T_CommonState, T_RegisterState} from "./RegisterState";
 import {ApiService} from "../../../repositories/ApiService";
 import {T_RegisterVO, UserModel} from "../../../models/UserModel";
 import {setErrorHandled} from "../../CmAction";
-import {MeAction} from "../me/MeAction";
-import {useSessionContext} from "../../../presentation/contexts/SessionContext";
 import {useInjection} from "inversify-react";
 import {E_SendingStatus} from "../../../const/Events";
 import {useState} from "react";
 
 export const RegisterAction = () => {
-    const [session, setSession] = useSessionContext()
     const apiService = useInjection(ApiService)
-
-    const {
-    } = MeAction()
-
+    const [formState,setFormState] = useState<T_CommonState>(initialFormState)
     const [state, setState] = useState<T_RegisterState>(initialState)
-
     const dispatchRegister = (data: T_RegisterVO) => {
         setState({
             ...state,
             status: E_SendingStatus.loading
         })
-
-        console.log(data)
 
         apiService
             .register(data)
@@ -31,23 +22,24 @@ export const RegisterAction = () => {
                 console.log(r)
                 if (r.success) {
                     const user = new UserModel(r.data)
-
-                    setSession({
-                        ...session,
-                        isAuthenticated: true,
-                        user: user
-                    })
-
-
                     setState({
                         ...state,
                         user: user,
                         status: E_SendingStatus.success
                     })
+                    setFormState({
+                        ...state,
+                        isLoading:E_SendingStatus.success
+                    })
                 } else {
                     setState({
                         ...state,
                         status: E_SendingStatus.error,
+                        error: r.error
+                    })
+                    setFormState({
+                        ...state,
+                        isLoading: E_SendingStatus.error,
                         error: r.error
                     })
                 }
@@ -61,6 +53,7 @@ export const RegisterAction = () => {
 
     return {
         vm: state,
+        vmForm:formState,
         dispatchRegister,
         dispatchResetState
     }

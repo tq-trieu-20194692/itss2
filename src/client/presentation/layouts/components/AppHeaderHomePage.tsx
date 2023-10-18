@@ -15,8 +15,6 @@ type _T_Props = {
 };
 
 const AppHeader = (props: _T_Props) => {
-    const {t} = useTranslation();
-    const mess = t('text.changeLanguageSuccess');
     const [keyFlag, setKeyFlag] = useState(1);
     const {
         vm,
@@ -28,14 +26,7 @@ const AppHeader = (props: _T_Props) => {
     const {
         setFlag
     } = Function();
-    useEffect(() => {
-        if (mess) {
-            notification.success({
-                message: mess,
-                duration: 1,
-            });
-        }
-    }, [mess]);
+
     const items: MenuProps['items'] = [
         {
             label: 'Tiếng Việt',

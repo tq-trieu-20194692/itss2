@@ -10,3 +10,10 @@ export type T_RegisterState = {
 export const initialState: T_RegisterState = {
     status: E_SendingStatus.idle
 }
+export const initialFormState: T_CommonState = {
+    isLoading: E_SendingStatus.idle
+}
+export type T_CommonState = {
+    isLoading: E_SendingStatus,
+    error?: Record<string, any>
+}

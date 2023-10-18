@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Form, Input, Button, Typography, Select, Modal, Upload, Divider, DatePicker} from 'antd';
+import {Form, Input, Button, Typography, Select, Modal, Upload, Divider, DatePicker, message} from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
 import type {UploadFile} from 'antd/es/upload/interface';
 import type {RcFile, UploadProps} from 'antd/es/upload';
@@ -12,6 +12,8 @@ import {Link} from "react-router-dom";
 import {useNavigate} from "react-router";
 import dayjs from "dayjs";
 import {T_RegisterVO} from "../../../../models/UserModel";
+import {E_SendingStatus} from "../../../../const/Events";
+import {RouteConfig} from "../../../../config/RouteConfig";
 
 type _T_FormName = {
     username: string
@@ -31,7 +33,7 @@ type _T_FormError = {
 };
 
 const RegisterScreen: React.FC = () => {
-    const {vm, dispatchRegister, dispatchResetState} = RegisterAction();
+    const {vm,vmForm, dispatchRegister, dispatchResetState} = RegisterAction();
     const navigate = useNavigate();
     const {t} = useTranslation();
     const [formErrors, setFormErrors] = useState<_T_FormError>({});
@@ -54,7 +56,15 @@ const RegisterScreen: React.FC = () => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
+    useEffect(() => {
+        if (vmForm.isLoading === E_SendingStatus.success) {
+            message.success(t('message.updateSuccess')).then()
+            setTimeout(() => {
+               navigate(RouteConfig.LOGIN)
+            }, 2000);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [vmForm]);
     useEffect(() => {
         if (vm.error) {
             let _formErrors = formErrors;
