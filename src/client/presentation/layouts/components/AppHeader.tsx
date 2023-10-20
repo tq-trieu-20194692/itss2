@@ -1,4 +1,4 @@
-import React, {ReactNode, useEffect, useState} from 'react'
+import React, {ReactNode, useState} from 'react'
 import {CContainer, CHeader, CHeaderBrand, CHeaderDivider, CHeaderNav, CHeaderToggler, CNavItem, CNavLink} from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import {cilMenu} from '@coreui/icons'
@@ -8,10 +8,10 @@ import AppBreadcrumb from "./AppBreadcrumb";
 import AppHeaderDropdown from "./AppHeaderDropdown";
 import {ArrowLeftOutlined, ArrowRightOutlined, ReloadOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
-import {Button, Dropdown, Image, MenuProps,notification} from "antd";
+import {Button, Dropdown, Image, MenuProps} from "antd";
 import {LanguageAction} from "../../../recoil/language/LanguageAction";
 import Function from "../../../const/Function";
-import {useTranslation} from "react-i18next";
+
 type _T_Props = {
     tool?: ReactNode
     onReload?: Function
@@ -19,8 +19,6 @@ type _T_Props = {
 
 const AppHeader = (props: _T_Props) => {
     const navigate = useNavigate()
-    const {t} = useTranslation();
-    const mess = t('text.changeLanguageSuccess')
     const [keyFlag, setKeyFlag] = useState(1)
     const {
         vm,
@@ -32,15 +30,7 @@ const AppHeader = (props: _T_Props) => {
     const {
         setFlag
     } = Function()
-    // useEffect(() => {
-    //     if (mess) {
-    //         // Show notification after the transition
-    //         notification.success({
-    //             message: mess,
-    //             duration: 1,
-    //         });
-    //     }
-    // }, [mess]);
+    //
     const items: MenuProps['items'] = [
         {
             label: 'Tiếng Việt',
@@ -66,6 +56,7 @@ const AppHeader = (props: _T_Props) => {
             setKeyFlag(1)
         } else if (e.key === "2") {
             dispatchSetLanguage('en')
+
             setKeyFlag(2)
         } else if (e.key === "3") {
             dispatchSetLanguage('zh')

@@ -1,30 +1,31 @@
-import React, {ReactNode, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {CContainer, CHeader, CHeaderNav, CHeaderBrand,} from '@coreui/react';
 import {useTranslation} from 'react-i18next';
 import {LanguageAction} from '../../../recoil/language/LanguageAction';
 import Function from '../../../const/Function';
-import {Button, Dropdown, Image, MenuProps, notification} from 'antd';
+import {Button, Dropdown, Image, MenuProps} from 'antd';
 
-type _T_Props = {
-    tool?: ReactNode;
-    onReload?: Function;
-    setOpen?: boolean;
-};
+// type _T_Props = {
+//     tool?: ReactNode;
+//     onReload?: Function;
+//     setOpen?: boolean;
+// };
 
-const AppHeaderChangePassword = (props: _T_Props) => {
+const AppHeaderChangePassword = () => {
     const {t} = useTranslation();
-    const mess = t('text.changeLanguageSuccess');
-    const [keyFlag, setKeyFlag] = useState(1);
-    const {dispatchSetLanguage} = LanguageAction();
-    const {setFlag} = Function();
-    useEffect(() => {
-        if (mess) {
-            notification.success({
-                message: mess,
-                duration: 1,
-            });
-        }
-    }, [mess]);
+    t('text.changeLanguageSuccess');
+    const [keyFlag, setKeyFlag] = useState(1)
+    // const {
+    //     vm,
+    //     dispatchSetState
+    // } = ThemeAction()
+    const {
+        dispatchSetLanguage
+    } = LanguageAction()
+    const {
+        setFlag
+    } = Function()
+
     const items: MenuProps['items'] = [
         {
             label: 'Tiếng Việt',
@@ -61,16 +62,20 @@ const AppHeaderChangePassword = (props: _T_Props) => {
         },
     ];
     const handleMenuClick: MenuProps['onClick'] = (e) => {
-        if (e.key === '1') {
-            dispatchSetLanguage('vi');
-            setKeyFlag(1);
-        } else if (e.key === '2') {
-            dispatchSetLanguage('en');
-            setKeyFlag(2);
-        } else if (e.key === '3') {
-            dispatchSetLanguage('zh');
-            setKeyFlag(3);
+        if (e.key === "1") {
+            dispatchSetLanguage('vi')
+
+            setKeyFlag(1)
+        } else if (e.key === "2") {
+            dispatchSetLanguage('en')
+
+
+            setKeyFlag(2)
+        } else if (e.key === "3") {
+            dispatchSetLanguage('zh')
+            setKeyFlag(3)
         }
+
     };
     const menuProps = {
         items,
@@ -83,7 +88,7 @@ const AppHeaderChangePassword = (props: _T_Props) => {
             <CContainer fluid>
                 <CHeaderBrand>
                     <div style={{fontSize: '20px', color: 'whitesmoke'}}>
-                        <img
+                        <Image
                             src="/logo.svg"
                             style={{
                                 width: '32px',

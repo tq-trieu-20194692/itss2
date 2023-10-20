@@ -1,32 +1,26 @@
-import React, {ReactNode, useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import {CContainer, CHeader, CHeaderBrand, CHeaderNav} from '@coreui/react';
-import {ThemeAction} from "../../../recoil/theme/ThemeAction";
-import {Button, Dropdown, Image, MenuProps, notification} from "antd";
+import {Button, Dropdown, Image, MenuProps} from "antd";
 import {LanguageAction} from "../../../recoil/language/LanguageAction";
 import Function from "../../../const/Function";
-import {useTranslation} from "react-i18next";
 import AppHeaderDropdown from "./AppHeaderDropdown";
 
 
-type _T_Props = {
-    tool?: ReactNode;
-    onReload?: Function;
-    setOpen?: boolean;
-};
+// type _T_Props = {
+//     tool?: ReactNode;
+//     onReload?: Function;
+//     setOpen?: boolean;
+// };
 
-const AppHeader = (props: _T_Props) => {
+const AppHeader = () => {
     const [keyFlag, setKeyFlag] = useState(1);
-    const {
-        vm,
-        dispatchSetState
-    } = ThemeAction();
+
     const {
         dispatchSetLanguage
     } = LanguageAction();
     const {
         setFlag
     } = Function();
-
     const items: MenuProps['items'] = [
         {
             label: 'Tiếng Việt',
@@ -50,15 +44,20 @@ const AppHeader = (props: _T_Props) => {
     ];
     const handleMenuClick: MenuProps['onClick'] = (e) => {
         if (e.key === "1") {
-            dispatchSetLanguage('vi');
-            setKeyFlag(1);
+            dispatchSetLanguage('vi')
+            localStorage.setItem('language','vi')
+            setKeyFlag(1)
         } else if (e.key === "2") {
-            dispatchSetLanguage('en');
-            setKeyFlag(2);
+            dispatchSetLanguage('en')
+            localStorage.setItem('language','en')
+
+            setKeyFlag(2)
         } else if (e.key === "3") {
-            dispatchSetLanguage('zh');
-            setKeyFlag(3);
+            localStorage.setItem('language','zh')
+            dispatchSetLanguage('zh')
+            setKeyFlag(3)
         }
+
     };
     const menuProps = {
         items,
@@ -74,7 +73,7 @@ const AppHeader = (props: _T_Props) => {
                     {/*<Link to="/" className="mx-auto d-md-none" style={{display: 'flex', alignItems: 'center'}}>*/}
                     <CHeaderBrand>
                         <div style={{fontSize: '20px', color: 'whitesmoke'}}>
-                            <img
+                            <Image
                                 src="/logo.svg"
                                 style={{
                                     width: '32px',

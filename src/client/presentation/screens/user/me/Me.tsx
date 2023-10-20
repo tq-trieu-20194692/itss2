@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {MeAction} from "../../../../recoil/account/me/MeAction";
 import {Col, Row, Modal, Avatar} from 'antd';
+import {useTranslation} from "react-i18next";
 
 const MeScreen = () => {
     const {
@@ -12,13 +13,13 @@ const MeScreen = () => {
     useEffect(() => {
         dispatchLoadMe();
     }, []);
-
+    const {t} = useTranslation();
     const [previewVisible, setPreviewVisible] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
 
     const handlePreview = async file => {
         if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj);
+            file.preview = await getBase64({file: file.originFileObj});
         }
         setPreviewImage(file.url || file.preview);
         setPreviewVisible(true);
@@ -28,7 +29,7 @@ const MeScreen = () => {
         setPreviewVisible(false);
     };
 
-    const getBase64 = (file) => {
+    const getBase64 = ({file}: { file: any }) => {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
@@ -40,10 +41,10 @@ const MeScreen = () => {
     return (
         <div>
             <h1 className="text-center">
-                Thông tin cá nhân
+                {t('text.personalInfo')}
             </h1>
             <div className="text-center">
-                Thông tin cá nhân của bạn được lưu trên Autotimelapse
+                {t('text.profileSaved')}
             </div>
             <br/>
             {vm?.user && (
@@ -57,19 +58,19 @@ const MeScreen = () => {
                         <Row gutter={[16, 16]}>
                             <Col span={12}>
                                 <div>
-                                    <h5 style={{color: 'blue'}}>Thông tin cơ bản</h5>
+                                    <h5 style={{color: 'blue'}}>{t('text.basicInfo')}</h5>
                                     <hr/>
                                 </div>
                                 <div>
-                                    Tài khoản: {vm.user.username}
+                                    {t('text.username')}: {vm.user.username}
                                     <hr/>
                                 </div>
                                 <div>
-                                    Tên: {vm.user.name}
+                                    {t('text.name')}: {vm.user.name}
                                     <hr/>
                                 </div>
                                 <div>
-                                    Địa chỉ: {vm.user.address}
+                                    {t('text.address')}: {vm.user.address}
                                 </div>
                             </Col>
                             <Col span={6} offset={6}>
@@ -77,7 +78,7 @@ const MeScreen = () => {
                                     <Col span={24}>
                                         <div style={{textAlign: 'center'}}>
                                             <div style={{borderBottom: '1px solid #ccc', marginBottom: '8px'}}>
-                                                Ảnh hồ sơ
+                                                {t('text.profilePhoto')}
                                             </div>
                                             <div>
                                                 <Avatar
@@ -102,15 +103,15 @@ const MeScreen = () => {
                                 marginTop: '16px'
                             }}>
                                 <div>
-                                    <h5 style={{color: 'blue'}}>Thông tin liên hệ </h5>
+                                    <h5 style={{color: 'blue'}}> {t('text.contactInfo')} </h5>
                                     <hr/>
                                 </div>
                                 <div>
-                                    Email: {vm.user.email}
+                                    {t('text.email')}: {vm.user.email}
                                     <hr/>
                                 </div>
                                 <div>
-                                    Số điện thoại: {vm.user.phone}
+                                    {t('text.phone')}: {vm.user.phone}
                                 </div>
                             </div>
                         </Col>
@@ -125,12 +126,12 @@ const MeScreen = () => {
                                 marginTop: '16px'
                             }}>
                                 <div>
-                                    <h5 style={{color: 'blue'}}>Mật khẩu</h5>
-                                    Mật khẩu là nơi để bảo vệ tài khoản của bạn
+                                    <h5 style={{color: 'blue'}}> {t('text.password')}</h5>
+                                    {t('text.passwordInfoMess')}
                                     <hr/>
                                 </div>
                                 <div>
-                                    Mật khẩu: ******
+                                    {t('text.password')}: ******
                                 </div>
                             </div>
                         </Col>

@@ -73,19 +73,19 @@ export class RouteConfig {
             protect: true
         },
         {
-            name: 'me',
+            name: 'personalInfo',
             path: RouteConfig.ME,
             component: MeScreen,
             protect: true
         },
         {
-            name: 'Lịch sử đăng nhập',
+            name: 'loginHistory',
             path: RouteConfig.LOGIN_HISTORY,
             component: UserLoginHistoryScreen,
             protect: true
         },
         {
-            name: 'Nhat ky hoat dong',
+            name:'activityLog',
             path: RouteConfig.USER_ACTIVITY_LOG,
             component: UserActivityLogScreen,
             protect: true

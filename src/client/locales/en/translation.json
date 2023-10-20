@@ -177,7 +177,14 @@
     "deleteAccount": "Delete User Account",
     "deleteAdmin": "Delete Admin Account",
     "adminRegister": "Create New Admin Account",
-    "changeLanguageSuccess": "Language changed successfully"
+    "changeLanguageSuccess": "Language changed successfully",
+    "viewProfile": "View your profile",
+    "personalInfo":"Personal information",
+    "basicInfo": "Basic information",
+    "contactInfo": "Contact Info",
+    "passwordInfoMess": "Password is where to protect your account",
+    "profilePhoto": "Profile photo",
+    "profileSaved": "Your personal information is saved on Autotimelapse"
   },
   "help": {
     "admin": "Please contact the administrator"

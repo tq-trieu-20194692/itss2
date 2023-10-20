@@ -177,7 +177,15 @@
     "deleteAccount": "删除用户帐户",
     "deleteAdmin": "删除管理员帐户",
     "adminRegister": "创建新的管理员帐户",
-    "changeLanguageSuccess": "语言更改成功"
+    "changeLanguageSuccess": "语言更改成功",
+    "viewProfile": "查看您的个人资料",
+    "personalInfo":"个人信息",
+    "basicInfo": "基本信息",
+    "contactInfo": "联系方式",
+    "passwordInfoMess": "密码是保护您帐户的地方",
+    "profilePhoto": "头像照片",
+    "profileSaved": "您的个人信息保存在 Autotimelapse 上"
+
   },
   "help": {
     "admin": "请联系管理员"

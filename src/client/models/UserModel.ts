@@ -159,7 +159,7 @@ export class LoginHistoryModel extends Model{
     userAgent?:UserAgent
     location?:string
     id?:string
-    key? :string
+    activity? :string
     mySession?:boolean
     state?:number
     session?:string
@@ -169,7 +169,7 @@ export class LoginHistoryModel extends Model{
 
         this.state = Normalize.initJsonNumber(data,'state')
         this.ip = Normalize.initJsonString(data, 'ip')
-        this.key = Normalize.initJsonString(data, 'key')
+        this.activity = Normalize.initJsonString(data, 'key')
         this.createdAt = Normalize.initJsonString(data, 'created_at')
         this.session = Normalize.initJsonString(data, 'session')
         this.userAgent =Normalize.initJsonObject(data, 'user_agent', v => new UserAgent(v))

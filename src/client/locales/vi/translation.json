@@ -177,7 +177,14 @@
     "deleteAccount": "Xóa tài khoản user",
     "deleteAdmin": "Xóa tài khoản admin",
     "adminRegister" : "Tạo tài khoản admin mới",
-    "changeLanguageSuccess": "Thay đổi ngôn ngữ thành công"
+    "changeLanguageSuccess": "Thay đổi ngôn ngữ thành công",
+    "viewProfile": "Xem hồ sơ của bạn",
+    "personalInfo":"Thông tin cá nhân",
+    "basicInfo": "Thông tin cơ bản",
+    "contactInfo": "Thông tin liên hệ",
+    "passwordInfoMess": "Mật khẩu là nơi để bảo vệ tài khoản của bạn",
+    "profilePhoto": "Ảnh hồ sơ",
+    "profileSaved": "Thông tin cá nhân của bạn được lưu trên Autotimelapse"
   },
   "help": {
     "admin": "Vui lòng liên hệ với quản trị viên"

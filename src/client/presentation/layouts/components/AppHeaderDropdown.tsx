@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CAvatar } from '@coreui/react';
-import {cilAccountLogout, cilList, cilUser} from '@coreui/icons';
+import {cilAccountLogout} from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import noAvatar from './../../../assets/images/no_avatar.jpg';
 import { MeAction } from '../../../recoil/account/me/MeAction';
@@ -36,15 +36,9 @@ const AppHeaderDropdown = () => {
     const onCloseModalLogout = () => {
         setIsModalLogoutVisible(false);
     };
-    const onLoginHistory = () => {
-        navigate(RouteConfig.LOGIN_HISTORY)
-    }
-    const onActivityLog = () => {
-        navigate(RouteConfig.USER_ACTIVITY_LOG)
-    }
+
     const handleViewUser = () => {
-        navigate('/me')
-        console.log(112);
+        navigate(RouteConfig.ME)
     };
 
     const userDivStyle = {
@@ -96,7 +90,7 @@ const AppHeaderDropdown = () => {
                                     <b>{vmMe.user?.name}</b>
                                 </div>
                                 <div style={linkStyle} >
-                                    Xem hồ sơ của bạn
+                                    {t('text.viewProfile')}
                                 </div>
                                 {/* Add any other user information here */}
                             </div>
@@ -106,21 +100,10 @@ const AppHeaderDropdown = () => {
                 )}
                 menu={{
                     items: [
-                        // {
-                        //     key: '1',
-                        //     label: "Lịch sử đăng nhập",
-                        //     icon: <CIcon icon={cilUser}/>,
-                        //     onClick: onLoginHistory,
-                        // },
-                        // {
-                        //     key: '2',
-                        //     label: "Nhật ký hoạt động",
-                        //     icon: <CIcon icon={cilList}/>,
-                        //     onClick: onActivityLog,
-                        // },
+
                         {
                             key: '3',
-                            label: 'Đăng xuất',
+                            label: t('text.logout'),
                             icon: <CIcon icon={cilAccountLogout} />,
                             onClick: onClickLogout,
                         },

@@ -2,10 +2,11 @@ import {memo} from 'react'
 import {useLocation} from 'react-router-dom'
 import {CBreadcrumb, CBreadcrumbItem} from '@coreui/react'
 import {T_Rco, RouteConfig} from "../../../config/RouteConfig";
+import {useTranslation} from "react-i18next";
 
 const AppBreadcrumb = () => {
     const currentLocation = useLocation().pathname
-
+    const {t} = useTranslation();
     const getRouteName = (pathname: string, routes: T_Rco[]) => {
         const currentRoute = routes.find((route) => route.path === pathname)
 
@@ -23,7 +24,7 @@ const AppBreadcrumb = () => {
 
                 routeName && breadcrumbs.push({
                     pathname: currentPathname,
-                    name: routeName,
+                    name: t(`text.${routeName}`),
                     active: index + 1 === array.length
                 })
 

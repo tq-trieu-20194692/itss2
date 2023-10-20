@@ -5,11 +5,13 @@ import {_TLangCode} from "../../locales/i18n";
 
 type T_LanguageState = {
     language: _TLangCode
+    check: number
     error?: Record<string, any>
 }
 
 export const initialState: T_LanguageState = {
-    language: 'vi'
+    language: 'vi',
+    check:1
 }
 export const LanguageState = atom<T_LanguageState>({
     key: KeyLanguage,

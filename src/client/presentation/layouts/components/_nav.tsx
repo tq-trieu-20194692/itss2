@@ -23,19 +23,19 @@ export type T_Nav = _T_NavChild & {
 const _nav: T_Nav[] = [
     {
         component: CNavItem,
-        name: 'Thông tin cá nhân',
+        name: 'personalInfo',
         to: RouteConfig.ME,
         icon: <CIcon icon={cilUser} customClassName="nav-icon"/>,
     },
     {
         component: CNavItem,
-        name: 'Nhật kí hoạt động',
+        name:  'activityLog',
         icon: <CIcon icon={cilCalendar} customClassName="nav-icon"/>,
         to: RouteConfig.USER_ACTIVITY_LOG
     },
     {
         component: CNavItem,
-        name: 'Lịch sử đăng nhập',
+        name: 'loginHistory',
         icon: <CIcon icon={cilHistory} customClassName="nav-icon"/>,
         to: RouteConfig.LOGIN_HISTORY
     }

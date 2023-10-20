@@ -1,5 +1,5 @@
 import React, {createContext, useCallback, useContext, useEffect, useState} from "react";
-import {ConfigProvider} from "antd";
+import {ConfigProvider, notification} from "antd";
 import {initReactI18next} from "react-i18next";
 import i18n from "i18next";
 import {findIndex} from "lodash";
@@ -31,11 +31,35 @@ export const useConfigContext = () => useContext(ConfigContext)
 export const ConfigContextProvider = (props: any) => {
     const [configState, setConfigState] = useState(initialConfig)
     const defaultConfigContext: [ConfigModel, typeof setConfigState] = [configState, setConfigState]
-
-    const [localeAnt, setLocaleAnt] = useState<Locale>()
     const {
         vm: vmLanguage
     } = LanguageAction()
+
+    useEffect(() => {
+        if (vmLanguage.check!==1) {
+            let mess: string
+            switch (vmLanguage.language){
+                case "en":
+                    mess = "Language changed successfully"
+                    break
+                case "vi":
+                    mess = "Thay đổi ngôn ngữ thành công"
+                    break
+                case "zh":
+                    mess = "语言更改成功"
+                    break
+            }
+            // Show notification after the transition
+            notification.success({
+                message:mess,
+                duration: 1,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ vmLanguage.language]);
+
+    const [localeAnt, setLocaleAnt] = useState<Locale>()
+
     useEffect(() => {
         console.log('%cInit: ConfigContextProvider', Color.ConsoleInfo);
 

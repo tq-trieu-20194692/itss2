@@ -10,7 +10,8 @@ export const LanguageAction = () => {
     const dispatchSetLanguage = (value: _TLangCode) => {
         setState({
             ...state,
-            language: value
+            language: value,
+            check:2
         })
     }
     return {
