@@ -7,11 +7,12 @@ export const LanguageAction = () => {
     const vm = useRecoilValue(LanguageState)
     const resetState = useResetRecoilState(LanguageState)
 
-    const dispatchSetLanguage = (value: _TLangCode) => {
+    const dispatchSetLanguage = (value: _TLangCode,num:number) => {
         setState({
             ...state,
             language: value,
-            check:2
+            check:2,
+            languageNum:num
         })
     }
     return {

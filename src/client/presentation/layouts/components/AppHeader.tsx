@@ -18,15 +18,17 @@ type _T_Props = {
 }
 
 const AppHeader = (props: _T_Props) => {
-    const navigate = useNavigate()
-    const [keyFlag, setKeyFlag] = useState(1)
+
     const {
         vm,
         dispatchSetState
     } = ThemeAction()
     const {
+        vm:vmLanguage,
         dispatchSetLanguage
-    } = LanguageAction()
+    } = LanguageAction();
+    const navigate = useNavigate()
+    const [keyFlag, setKeyFlag] = useState(vmLanguage.languageNum);
     const {
         setFlag
     } = Function()
@@ -52,14 +54,14 @@ const AppHeader = (props: _T_Props) => {
     ];
     const handleMenuClick: MenuProps['onClick'] = (e) => {
         if (e.key === "1") {
-            dispatchSetLanguage('vi')
+            dispatchSetLanguage('vi',1)
             setKeyFlag(1)
         } else if (e.key === "2") {
-            dispatchSetLanguage('en')
+            dispatchSetLanguage('en',2)
 
             setKeyFlag(2)
         } else if (e.key === "3") {
-            dispatchSetLanguage('zh')
+            dispatchSetLanguage('zh',3)
             setKeyFlag(3)
         }
 

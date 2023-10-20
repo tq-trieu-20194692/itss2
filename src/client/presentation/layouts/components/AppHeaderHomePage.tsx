@@ -13,11 +13,11 @@ import AppHeaderDropdown from "./AppHeaderDropdown";
 // };
 
 const AppHeader = () => {
-    const [keyFlag, setKeyFlag] = useState(1);
-
     const {
+        vm:vmLanguage,
         dispatchSetLanguage
     } = LanguageAction();
+    const [keyFlag, setKeyFlag] = useState(vmLanguage.languageNum);
     const {
         setFlag
     } = Function();
@@ -44,17 +44,13 @@ const AppHeader = () => {
     ];
     const handleMenuClick: MenuProps['onClick'] = (e) => {
         if (e.key === "1") {
-            dispatchSetLanguage('vi')
-            localStorage.setItem('language','vi')
+            dispatchSetLanguage('vi',1)
             setKeyFlag(1)
         } else if (e.key === "2") {
-            dispatchSetLanguage('en')
-            localStorage.setItem('language','en')
-
+            dispatchSetLanguage('en',2)
             setKeyFlag(2)
         } else if (e.key === "3") {
-            localStorage.setItem('language','zh')
-            dispatchSetLanguage('zh')
+            dispatchSetLanguage('zh',3)
             setKeyFlag(3)
         }
 

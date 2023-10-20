@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {CContainer, CHeader, CHeaderNav, CHeaderBrand,} from '@coreui/react';
-import {useTranslation} from 'react-i18next';
 import {LanguageAction} from '../../../recoil/language/LanguageAction';
 import Function from '../../../const/Function';
 import {Button, Dropdown, Image, MenuProps} from 'antd';
@@ -12,16 +11,11 @@ import {Button, Dropdown, Image, MenuProps} from 'antd';
 // };
 
 const AppHeaderChangePassword = () => {
-    const {t} = useTranslation();
-    t('text.changeLanguageSuccess');
-    const [keyFlag, setKeyFlag] = useState(1)
-    // const {
-    //     vm,
-    //     dispatchSetState
-    // } = ThemeAction()
     const {
+        vm:vmLanguage,
         dispatchSetLanguage
-    } = LanguageAction()
+    } = LanguageAction();
+    const [keyFlag, setKeyFlag] = useState(vmLanguage.languageNum);
     const {
         setFlag
     } = Function()
@@ -63,16 +57,13 @@ const AppHeaderChangePassword = () => {
     ];
     const handleMenuClick: MenuProps['onClick'] = (e) => {
         if (e.key === "1") {
-            dispatchSetLanguage('vi')
-
+            dispatchSetLanguage('vi',1)
             setKeyFlag(1)
         } else if (e.key === "2") {
-            dispatchSetLanguage('en')
-
-
+            dispatchSetLanguage('en',2)
             setKeyFlag(2)
         } else if (e.key === "3") {
-            dispatchSetLanguage('zh')
+            dispatchSetLanguage('zh',3)
             setKeyFlag(3)
         }
 

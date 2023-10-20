@@ -122,7 +122,7 @@ export const UserLoginHistoryWidget = (props: {
                         {createAt?.toLocaleString()}
                     </p>
                     <p>
-                        {t('text.lastActivity')} : {ActivityText(oneLoginDetail?.key)}
+                        {t('text.lastActivity')} : {ActivityText(oneLoginDetail?.activity)}
                     </p>
                     {oneLoginDetail?.userAgent?.browser !== undefined && (
                         <p>
