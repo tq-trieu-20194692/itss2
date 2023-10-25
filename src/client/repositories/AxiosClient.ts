@@ -31,7 +31,7 @@ export class AxiosClient {
         const storeConfig = StoreConfig.getInstance()
 
         if (storeConfig.accessToken && storeConfig.accessToken.token && storeConfig.accessToken.token.length > 0) {
-            console.log('accessToken', storeConfig.accessToken.token)
+            // console.log('accessToken', storeConfig.accessToken.token)
 
             config.headers!.Authorization = `Bearer ${storeConfig.accessToken.token}`
         }

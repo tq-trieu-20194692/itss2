@@ -57,10 +57,7 @@ export const UserLoginHistoryAction = () => {
                             items: state.items.map(item => {
                                 if (item.id===idSession) {
                                     return {...item,
-                                        key:'user.logout',
-                                        logout:true,
                                         state:0,
-
                                     }
                                 }
                                 return item;

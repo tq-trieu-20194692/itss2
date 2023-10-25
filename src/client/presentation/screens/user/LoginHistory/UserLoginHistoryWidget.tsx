@@ -137,7 +137,7 @@ export const UserLoginHistoryWidget = (props: {
 
                     {oneLoginDetail?.location !== undefined && (
                         <div>
-                            <p>{t('text.location')}:
+                            <p>{t('text.location')} :
                                 <span
                                     style={{
                                         fontSize: '15px',
@@ -146,7 +146,7 @@ export const UserLoginHistoryWidget = (props: {
                                         marginTop: '10px',
                                         marginBottom: '10px'
                                     }}
-                                    onClick={() => handleShowMap(oneLoginDetail?.location)}>{oneLoginDetail.location}
+                                    onClick={() => handleShowMap(oneLoginDetail?.location)}> {oneLoginDetail.location}
                                     <CIcon icon={cilLocationPin}/>
                             </span>
                             </p>

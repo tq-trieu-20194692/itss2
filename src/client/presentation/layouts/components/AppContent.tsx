@@ -24,7 +24,7 @@ const AppContent = () => {
                             )
                         ))
                     }
-                    <Route path="/" element={<Navigate to={RouteConfig.DASHBOARD} replace/>}/>
+                    <Route path="/" element={<Navigate to={RouteConfig.HOME_PAGE} replace/>}/>
                 </Routes>
             </Suspense>
         </CContainer>

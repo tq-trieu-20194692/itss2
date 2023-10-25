@@ -139,7 +139,7 @@ const UserActivityLogScreen = () => {
                         <h3 style={{display: 'flex', justifyContent: 'flex-start', marginLeft: '15px', marginTop: '5px'}}>{date}</h3>
                         <List
                             dataSource={items} // Use 'items' instead of 'Object.entries(groupedHistory)'
-                            renderItem={(item,index) => (
+                            renderItem={(item) => (
                                 <List.Item style={{ padding: 0, paddingRight: '2%', marginBottom: '2%' }}  key={item.id}>
                                     <div
                                         // key={`${item.id}-${index}`}

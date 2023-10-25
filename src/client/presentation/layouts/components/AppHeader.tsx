@@ -1,8 +1,7 @@
 import React, {ReactNode, useState} from 'react'
-import {CContainer, CHeader, CHeaderBrand, CHeaderDivider, CHeaderNav, CHeaderToggler, CNavItem, CNavLink} from '@coreui/react'
+import {CContainer, CHeader, CHeaderDivider, CHeaderNav, CHeaderToggler, CNavItem, CNavLink} from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import {cilMenu} from '@coreui/icons'
-import {logoHeader} from '../../../assets/brand/brand'
 import {ThemeAction} from "../../../recoil/theme/ThemeAction";
 import AppBreadcrumb from "./AppBreadcrumb";
 import AppHeaderDropdown from "./AppHeaderDropdown";
@@ -80,10 +79,6 @@ const AppHeader = (props: _T_Props) => {
                 >
                     <CIcon icon={cilMenu} size="lg"/>
                 </CHeaderToggler>
-                {/*@ts-ignore*/}
-                <CHeaderBrand className="mx-auto d-md-none" to="/">
-                    <CIcon icon={logoHeader} height={28}/>
-                </CHeaderBrand>
                 <CHeaderNav className="d-none d-md-flex me-auto">
                     <CNavItem>
                         <CNavLink className={"cursor-pointer"} onClick={() => navigate(-1)}>

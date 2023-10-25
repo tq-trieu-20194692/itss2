@@ -77,7 +77,7 @@ const Function = () => {
             case 1:
                 return false;
             case 2:
-                return false;
+                return true;
             default:
                 return `....`;
         }
@@ -92,12 +92,25 @@ const Function = () => {
                 return 'https://th.bing.com/th/id/OIP.TJhS9Ks-cfxuk8TLTcBWmgHaFQ?w=268&h=190&c=7&r=0&o=5&dpr=1.3&pid=1.7'
         }
     }
+    const setExpiresAtTime = (time :string|undefined)=>{
+        const TimeNow: Date = new Date();
+        if(time!=undefined)
+        {
+            const TimeExpires: Date = new Date(time);
+            if (TimeNow > TimeExpires) {
+                return true
+            } else {
+                return false
+            }
+        }
+    }
     return{
         setIcon,
         setUpDate,
         StateDetail,
         ActivityText,
-        setFlag
+        setFlag,
+        setExpiresAtTime
     }
 }
 export default Function

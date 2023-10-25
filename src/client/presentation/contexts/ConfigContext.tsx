@@ -15,7 +15,7 @@ import antViVN from 'antd/locale/vi_VN';
 import antZhCN from 'antd/locale/zh_CN';
 import antEnGB from 'antd/locale/en_GB';
 import {ConfigModel, initialConfig} from "../../models/ConfigModel";
-import {_TLangCode, getLng, resources} from "../../locales/i18n";
+import {_TLangCode, getLng, resources, setLng} from "../../locales/i18n";
 import {App} from "../../const/App";
 import {Color} from "../../const/Color";
 import {Style} from "../../const/Style";
@@ -62,11 +62,9 @@ export const ConfigContextProvider = (props: any) => {
 
     useEffect(() => {
         console.log('%cInit: ConfigContextProvider', Color.ConsoleInfo);
-
         const lng:_TLangCode= vmLanguage.language
-        // setLng(lng)
+        setLng(lng)
         console.log(lng);
-
         i18n.use(initReactI18next).init({
             fallbackLng: 'vi',
             ns: ['translation'],
@@ -77,8 +75,8 @@ export const ConfigContextProvider = (props: any) => {
 
         const lang = App.Lang[findIndex(App.Lang, (o) => o.code === getLng())]
 
-        // moment.locale(lang.moment)
-        // dayjs.locale(lang.dayjs)
+        moment.locale(lang.moment)
+        dayjs.locale(lang.dayjs)
 
         switch (lang.code) {
             case 'vi':

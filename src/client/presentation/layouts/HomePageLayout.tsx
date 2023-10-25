@@ -2,7 +2,6 @@ import {FC, ReactNode, useEffect, useState} from "react";
 import AppHeader from "./components/AppHeaderHomePage";
 import {Outlet, useOutletContext} from "react-router";
 import {CContainer} from "@coreui/react";
-import AppFooter from "./components/AppFooter";
 
 
 export type T_MasterCtx = {
@@ -17,17 +16,14 @@ export const HomePageLayout: FC = _ => {
     }
 
     return (
-        <div>
-            <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-                <AppHeader tool={tool}/>
-                <div className="body flex-grow-1 px-2">
-                    <CContainer fluid>
-                        <Outlet context={outletCtx}/>
-                    </CContainer>
-                </div>
-                <AppFooter/>
-            </div>
-        </div>
+        <>
+
+            <AppHeader/>
+            <CContainer fluid>
+                <Outlet/>
+            </CContainer>
+
+        </>
     )
 }
 

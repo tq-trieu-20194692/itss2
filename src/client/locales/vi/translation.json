@@ -184,7 +184,11 @@
     "contactInfo": "Thông tin liên hệ",
     "passwordInfoMess": "Mật khẩu là nơi để bảo vệ tài khoản của bạn",
     "profilePhoto": "Ảnh hồ sơ",
-    "profileSaved": "Thông tin cá nhân của bạn được lưu trên Autotimelapse"
+    "profileSaved": "Thông tin cá nhân của bạn được lưu trên Autotimelapse",
+    "loginExpires": "phiên đăng nhập đã hết hạn",
+    "diary": "Nhật ký",
+    "diarySchedule": "Lịch trình",
+    "diaryExportData": "Xuất dữ liệu"
   },
   "help": {
     "admin": "Vui lòng liên hệ với quản trị viên"
@@ -225,7 +229,9 @@
     "reload": "Tải lại",
     "view": "Xem chi tiết",
     "cancel": "Hủy",
-    "sent": "Gửi"
+    "sent": "Gửi",
+    "showMore": "Hiển thị thêm",
+    "showLess": "Thu gọn"
   },
   "error": {
     "required": "Vui lòng nhập {{label}}",

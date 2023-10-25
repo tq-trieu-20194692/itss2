@@ -184,8 +184,11 @@
     "contactInfo": "联系方式",
     "passwordInfoMess": "密码是保护您帐户的地方",
     "profilePhoto": "头像照片",
-    "profileSaved": "您的个人信息保存在 Autotimelapse 上"
-
+    "profileSaved": "您的个人信息保存在 Autotimelapse 上",
+    "loginExpires": "登录会话已过期",
+    "diary": "日记",
+    "diarySchedule": "日程",
+    "diaryExportData": "导出数据"
   },
   "help": {
     "admin": "请联系管理员"
@@ -225,7 +228,9 @@
     "reload": "重新加载",
     "view": "查看详情",
     "cancel": "取消",
-    "sent": "发送"
+    "sent": "发送",
+    "showMore": "显示更多",
+    "showLess": "显示更少"
   },
   "error": {
     "required": "请输入{{label}}",

@@ -64,6 +64,7 @@ const AppHeaderDropdown = () => {
                 arrow={{
                     pointAtCenter: true,
                 }}
+
                 dropdownRender={(originNode) => (
                     <Card
                         size="small"
@@ -117,7 +118,7 @@ const AppHeaderDropdown = () => {
                     },
                 }}
             >
-                <CAvatar className={'cursor-pointer'} src={vmMe.user?.image ?? noAvatar.src} size="md" />
+                <CAvatar  className={'cursor-pointer'} src={vmMe.user?.image ?? noAvatar.src} size="md" />
             </Dropdown>
             {isModalLogoutVisible && <LogoutWidget onClose={onCloseModalLogout} />}
         </>

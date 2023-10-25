@@ -1,23 +1,28 @@
-import React, { useState} from 'react';
-import {CContainer, CHeader, CHeaderBrand, CHeaderNav, CNavItem} from '@coreui/react';
+import React, {useState} from 'react'
+import {CContainer, CHeader, CHeaderNav, CHeaderToggler, CNavItem} from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import {cilIndentDecrease, cilIndentIncrease} from '@coreui/icons'
+import {ThemeAction} from "../../../recoil/theme/ThemeAction";
+import AppHeaderDropdown from "./AppHeaderDropdown";
 import {Button, Dropdown, Image, MenuProps} from "antd";
 import {LanguageAction} from "../../../recoil/language/LanguageAction";
 import Function from "../../../const/Function";
-import AppHeaderDropdown from "./AppHeaderDropdown";
 import {HomeOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
 import {RouteConfig} from "../../../config/RouteConfig";
 
-
 // type _T_Props = {
-//     tool?: ReactNode;
-//     onReload?: Function;
-//     setOpen?: boolean;
-// };
+//     tool?: ReactNode
+//     onReload?: Function
+// }
 
-const AppHeader = () => {
+const AppHeaderForDiary = () => {
     const {
-        vm:vmLanguage,
+        vm,
+        dispatchSetState
+    } = ThemeAction()
+    const {
+        vm: vmLanguage,
         dispatchSetLanguage
     } = LanguageAction();
     const [keyFlag, setKeyFlag] = useState(vmLanguage.languageNum);
@@ -25,37 +30,37 @@ const AppHeader = () => {
     const navigate = useNavigate()
     const {
         setFlag
-    } = Function();
+    } = Function()
+    //
     const items: MenuProps['items'] = [
         {
             label: 'Tiếng Việt',
             key: '1',
-            icon: <Image src='https://file.vfo.vn/hinh/2013/12/co-viet-nam-2.jpg' alt="Icon 1"
-                         style={{marginRight: '8px', width: '20px', height: '20px'}}/>,
+            icon: <Image src='https://file.vfo.vn/hinh/2013/12/co-viet-nam-2.jpg' alt="Icon 1" style={{marginRight: '8px', width: '20px', height: '20px'}}/>,
         },
         {
             label: 'English',
             key: '2',
-            icon: <Image src={'https://th.bing.com/th/id/OIP.U-h9wYdOSH047roWjY_1TgHaE3?pid=ImgDet&rs=1'} alt="Icon 1"
-                         style={{marginRight: '8px', width: '20px', height: '20px'}}/>,
+            icon: <Image src={'https://th.bing.com/th/id/OIP.U-h9wYdOSH047roWjY_1TgHaE3?pid=ImgDet&rs=1'} alt="Icon 1" style={{marginRight: '8px', width: '20px', height: '20px'}}/>,
         },
         {
             label: 'China',
             key: '3',
-            icon: <Image
-                src={'https://th.bing.com/th/id/OIP.TJhS9Ks-cfxuk8TLTcBWmgHaFQ?w=268&h=190&c=7&r=0&o=5&dpr=1.3&pid=1.7'}
-                alt="Icon 1" style={{marginRight: '8px', width: '20px', height: '20px'}}/>,
+            icon: <Image src={'https://th.bing.com/th/id/OIP.TJhS9Ks-cfxuk8TLTcBWmgHaFQ?w=268&h=190&c=7&r=0&o=5&dpr=1.3&pid=1.7'} alt="Icon 1" style={{marginRight: '8px', width: '20px', height: '20px'}}/>,
+
         },
+
     ];
     const handleMenuClick: MenuProps['onClick'] = (e) => {
         if (e.key === "1") {
-            dispatchSetLanguage('vi',1)
+            dispatchSetLanguage('vi', 1)
             setKeyFlag(1)
         } else if (e.key === "2") {
-            dispatchSetLanguage('en',2)
+            dispatchSetLanguage('en', 2)
+
             setKeyFlag(2)
         } else if (e.key === "3") {
-            dispatchSetLanguage('zh',3)
+            dispatchSetLanguage('zh', 3)
             setKeyFlag(3)
         }
 
@@ -69,26 +74,8 @@ const AppHeader = () => {
     }
     return (
         <>
-            <CHeader position="sticky"
-                     className="mb-6"
-                     style={{backgroundColor: "#001529"}}>
+            <CHeader position="sticky" style={{ backgroundColor: '#001529' }}>
                 <CContainer fluid>
-                    {/*<Link to="/" className="mx-auto d-md-none" style={{display: 'flex', alignItems: 'center'}}>*/}
-                    <CHeaderBrand>
-                        <div style={{fontSize: '20px', color: 'whitesmoke'}}>
-                            <Image
-                                src="/logo.svg"
-                                style={{
-                                    width: '32px',
-                                    height: '32px',
-                                    marginRight: '5px',
-                                }}
-                                alt=""
-                            />
-                            AUTOTIMELAPSE
-                        </div>
-                    </CHeaderBrand>
-                    {/*</Link>*/}
                     <CHeaderNav className="d-none d-md-flex me-auto">
                         <CNavItem>
                             <div
@@ -112,6 +99,7 @@ const AppHeader = () => {
                                 }} />
                             </div>
                         </CNavItem>
+                        <CNavItem></CNavItem>
                     </CHeaderNav>
                     <CHeaderNav className="me-3">
                         <Dropdown menu={menuProps} placement="bottom" arrow>
@@ -119,23 +107,32 @@ const AppHeader = () => {
                                 <Image
                                     src={setFlag(keyFlag)}
                                     alt="Icon 1"
-                                    style={{
-                                        marginRight: '8px',
-                                        width: '20px',
-                                        height: '20px'
-                                    }}
-                                /> {' '}
+                                    style={{ marginRight: '8px', width: '20px', height: '20px' }}
+                                />{' '}
                                 Language
                             </Button>
                         </Dropdown>
                     </CHeaderNav>
                     <CHeaderNav className="ml-3">
-                        <AppHeaderDropdown/>
+                        <AppHeaderDropdown />
                     </CHeaderNav>
                 </CContainer>
             </CHeader>
+
+            <div style={{display: 'flex', alignItems: 'center', height: '50px', backgroundColor:'white'}}>
+                <CHeaderToggler style={{marginLeft:'20px',}}
+                    onClick={() => dispatchSetState({ sidebarShow: !vm.sidebarShow })}
+                >
+                    {!vm.sidebarShow ? (
+                        <CIcon icon={cilIndentIncrease} size="lg" />
+                    ) : (
+                        <CIcon icon={cilIndentDecrease} size="lg" />
+                    )}
+                </CHeaderToggler>
+                <hr style={{ width: '1px', height: '20px', border: '1px', color: 'red', backgroundColor: '#fff', margin: '0' }} />
+            </div>
         </>
     );
 };
 
-export default AppHeader;
+export default AppHeaderForDiary;

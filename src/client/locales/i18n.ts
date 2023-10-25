@@ -37,7 +37,7 @@ export function getLng(): string {
 
 export function setLng(lang: _TLangCode): void {
     EDLocal.setLocalStore(E_LSKey.Lang, lang)
-
-    i18n.changeLanguage(lang)
-        .then(() => `Change language: ${lang}`);
+    //
+    // i18n.changeLanguage(lang)
+    //     .then(() => `Change language: ${lang}`);
 }

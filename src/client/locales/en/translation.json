@@ -184,7 +184,12 @@
     "contactInfo": "Contact Info",
     "passwordInfoMess": "Password is where to protect your account",
     "profilePhoto": "Profile photo",
-    "profileSaved": "Your personal information is saved on Autotimelapse"
+    "profileSaved": "Your personal information is saved on Autotimelapse",
+    "loginExpires": "Login session has expired",
+    "diary": "Diary",
+    "diarySchedule": "Schedule",
+    "diaryExportData": "Export Data"
+
   },
   "help": {
     "admin": "Please contact the administrator"
@@ -224,7 +229,9 @@
     "reload": "Reload",
     "view": "View Details",
     "cancel": "Cancel",
-    "sent": "Send"
+    "sent": "Send",
+    "showMore": "Show more",
+    "showLess": "Show less"
   },
   "error": {
     "required": "Please enter {{label}}",

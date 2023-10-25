@@ -1,15 +1,16 @@
 import {FC, ReactNode, useEffect, useState} from "react";
-import AppHeader from "./components/AppHeaderChangePassword";
-import AppFooter from "./components/AppFooterChangePassword";
+import AppFooter from "./components/AppFooter";
 import {Outlet, useOutletContext} from "react-router";
 import {CContainer} from "@coreui/react";
+import AppSidebarForDiary from "./components/AppSidebarForDiary";
+import AppHeaderForDiary from "./components/AppHeaderForDiary";
 
 
 export type T_MasterCtx = {
     tool: [ReactNode, (tool: ReactNode) => void]
 }
 
-export const ChangePasswordLayout: FC = _ => {
+export const DiaryLayout: FC = _ => {
     const [tool, setTool] = useState<ReactNode>(null)
 
     const outletCtx: T_MasterCtx = {
@@ -18,8 +19,9 @@ export const ChangePasswordLayout: FC = _ => {
 
     return (
         <div>
+            <AppSidebarForDiary/>
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-                <AppHeader/>
+                <AppHeaderForDiary />
                 <div className="body flex-grow-1 px-2">
                     <CContainer fluid>
                         <Outlet context={outletCtx}/>
@@ -36,9 +38,8 @@ type _T_Props = {
     tool?: ReactNode
 }
 
-export const ChangePasswordLayoutCtxWrapper: FC<_T_Props> = props => {
-    const {master} = useChangePasswordLayout()
-
+export const DiaryLayoutCtxWrapper: FC<_T_Props> = props => {
+    const {master} = useDiaryLayout()
     useEffect(() => {
         const [, setTool] = master.tool
 
@@ -58,7 +59,7 @@ export const ChangePasswordLayoutCtxWrapper: FC<_T_Props> = props => {
     )
 }
 
-export const useChangePasswordLayout = () => {
+export const useDiaryLayout = () => {
     const outletContext = useOutletContext<T_MasterCtx>()
 
     return {

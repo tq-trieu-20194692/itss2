@@ -29,7 +29,7 @@ export class ApiService {
         return AxiosClient.get(`account/loginHistory`)
     }
     getActivites(query?: T_QueryVO) :Promise<ApiResModel>{
-        return AxiosClient.get(`account/activity`)
+        return AxiosClient.get(`account/activity`,query)
     }
 
     forgotpassword(data: {username: string}): Promise<ApiResModel> {

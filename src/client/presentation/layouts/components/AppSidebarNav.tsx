@@ -32,7 +32,6 @@ export const AppSidebarNav = ({items}: _T_Props) => {
     const navItem = (item: T_Nav, index: number) => {
         const {component, name, badge, icon, ...rest} = item
         const Component = component
-
         return (
             <Component
                 {

@@ -26,6 +26,7 @@ export type T_QueryVO = {
     sort?: string
     order?: string
     search?: string
+    tab?: string
 }
 export type T_ResetPasswordVO ={
     password: string
@@ -38,7 +39,10 @@ export type T_ResetPasswordOTPVO ={
     otp: string
     email: string
 }
-
+export type _T_Params = {
+    diaryId: string;
+    tab?: string;
+};
 export class UserModel extends Model {
     id?: string
     name?: string
@@ -164,6 +168,7 @@ export class LoginHistoryModel extends Model{
     state?:number
     session?:string
     logout?:boolean
+    expiresAt?:string
     constructor(data: Record<string, any>) {
         super(data)
 
@@ -171,6 +176,7 @@ export class LoginHistoryModel extends Model{
         this.ip = Normalize.initJsonString(data, 'ip')
         this.activity = Normalize.initJsonString(data, 'key')
         this.createdAt = Normalize.initJsonString(data, 'created_at')
+        this.expiresAt = Normalize.initJsonString(data, 'expires_at')
         this.session = Normalize.initJsonString(data, 'session')
         this.userAgent =Normalize.initJsonObject(data, 'user_agent', v => new UserAgent(v))
         this.location =Normalize.initJsonString(data, 'location')

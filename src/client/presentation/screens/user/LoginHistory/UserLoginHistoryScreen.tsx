@@ -20,7 +20,8 @@ const AccountLoginHistoryScreen = () => {
     const {
         setIcon,
         setUpDate,
-        StateDetail
+        StateDetail,
+        setExpiresAtTime
     } = Function()
     const {t} = useTranslation();
     const [logoutModal, setLogOutModal] = useState(false)
@@ -102,7 +103,6 @@ const AccountLoginHistoryScreen = () => {
     };
 
     const handleLogoutModalOpen = (Session: string | undefined) => {
-        console.log(Session)
         setLogOutModal(true);
         setLogoutIdSession(Session)
     };
@@ -122,8 +122,9 @@ const AccountLoginHistoryScreen = () => {
                         <List.Item
                             style={{
 
-                                border: '2px solid black',
+                                border: '2px solid #E5DFDD',
                                 borderRadius: '8px',
+                                backgroundColor:"white",
                                 margin: '10px 0', // Giảm khoảng cách giữa các mục
                                 padding: '5px',
                                 display: 'flex',
@@ -165,6 +166,11 @@ const AccountLoginHistoryScreen = () => {
                                                                 ))}
                                                             <Typography.Text>{setUpDate(item.createdAt)}</Typography.Text>
                                                         </div>
+                                                        {setExpiresAtTime(item.expiresAt) && (
+                                                            <div>
+                                                                <ExclamationCircleOutlined style={{marginRight: '8px', color: 'blue'}}/> <span style={{color: 'blue'}}>{t('text.loginExpires')}</span>
+                                                            </div>
+                                                        )}
                                                         {(StateDetail(item.state) === true) && (
                                                             <div>
                                                                 <MinusCircleOutlined style={{color: '#3b657b', marginRight: '8px'}}/> <span style={{color: 'red'}}>{t('text.Loggedout')}</span>
@@ -183,7 +189,7 @@ const AccountLoginHistoryScreen = () => {
                                         content={
                                             <div style={{display: 'flex', flexDirection: 'column'}}>
                                                 <Button onClick={() => handleViewDetail(item.id)} type="text">{t('button.view')}</Button>
-                                                <Button type="text" style={{marginTop: '8px', color: 'red'}} onClick={() => handleLogoutModalOpen(item.id)}><CIcon icon={cilTrash} style={{marginRight: '5px'}}/> {t('button.logout')}</Button>
+                                                <Button type="text" style={{marginTop: '8px', color: 'red'}} onClick={() => handleLogoutModalOpen(item.session)}><CIcon icon={cilTrash} style={{marginRight: '5px'}}/> {t('button.logout')}</Button>
                                             </div>
                                         }
                                         trigger="click"
