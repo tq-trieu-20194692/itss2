@@ -11,13 +11,28 @@ export const RegisterAction = () => {
     const [formState,setFormState] = useState<T_CommonState>(initialFormState)
     const [state, setState] = useState<T_RegisterState>(initialState)
     const dispatchRegister = (data: T_RegisterVO) => {
+        const formData = new FormData()
+
+        formData.append('name', data.name)
+        formData.append('username', data.username)
+        formData.append('address', data.address)
+        formData.append('DoB', data.DoB)
+        formData.append('confirm', data.confirm)
+        formData.append('password', data.password)
+        formData.append('email', data.email)
+        formData.append('phone', data.phone)
+
+        if (data.image) {
+            formData.append('image', data.image.slice(), data.image.name)
+        }
+
         setState({
             ...state,
             status: E_SendingStatus.loading
         })
 
         apiService
-            .register(data)
+            .register(formData)
             .then(r => {
                 console.log(r)
                 if (r.success) {

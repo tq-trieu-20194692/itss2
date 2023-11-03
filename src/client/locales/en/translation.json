@@ -196,6 +196,7 @@
   },
   "message": {
     "logoutSuccess": "Logged out successfully!!",
+    "registerSuccess": "Registration successful!",
     "logoutError": "Logout unsuccessful!!",
     "deleteAccount": "Are you sure you want to delete this account?",
     "saveSuccess": "Saved successfully",
@@ -207,13 +208,17 @@
     "deleteError": "Deletion unsuccessful. Please try again later.",
     "copySuccess": "Copied successfully: {{value}}",
     "updateSuccess": "Update successful!!",
-    "updateError": "Update unsuccessful!!"
+    "updateError": "Update unsuccessful!!",
+    "sentEmail": "Sent a message to your email",
+    "sentOTPEmail": "The OTP code has been sent to your email"
   },
+
   "button": {
     "close": "Close",
     "ok": "OK",
     "save": "Save",
     "comeBack": "Come Back",
+    "next": "Next",
     "saveClose": "Save & Close",
     "tryAgain": "Try Again",
     "filter": "Filter",
@@ -233,6 +238,7 @@
     "showMore": "Show more",
     "showLess": "Show less"
   },
+
   "error": {
     "required": "Please enter {{label}}",
     "length": "{{label}} must be between {{min}} and {{max}} characters",

@@ -9,7 +9,6 @@ export type T_LoginVO = {
 }
 
 export type T_RegisterVO = {
-    accessToken?: AccessTokenModel
     username: string
     password: string
     confirm: string
@@ -17,9 +16,10 @@ export type T_RegisterVO = {
     email: string
     address: string
     phone: string
-    image: File
+    image?: File
     DoB: string
 }
+
 export type T_QueryVO = {
     page?: number
     limit?: number
@@ -28,6 +28,7 @@ export type T_QueryVO = {
     search?: string
     tab?: string
 }
+
 export type T_ResetPasswordVO ={
     password: string
     password_confirmation: string
@@ -120,9 +121,9 @@ export class HistoryModel extends Model {
         this.ip = Normalize.initJsonString(data, 'ip')
         this.key = Normalize.initJsonString(data, 'key')
         this.createdAt = Normalize.initJsonString(data, 'created_at')
-        this.userAgent =Normalize.initJsonObject(data, 'user_agent', v => new UserAgent(v))
-        this.location =Normalize.initJsonString(data, 'location')
-        this.idSession =Normalize.initJsonString(data, 'id_session')
+        this.userAgent = Normalize.initJsonObject(data, 'user_agent', v => new UserAgent(v))
+        this.location = Normalize.initJsonString(data, 'location')
+        this.idSession = Normalize.initJsonString(data, 'id_session')
     }
     copyFrom = (data: Record<string, any>): HistoryModel => {
         if (this.raw) {

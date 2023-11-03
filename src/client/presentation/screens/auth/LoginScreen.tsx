@@ -137,7 +137,6 @@ const LoginScreen = () => {
 
     const handleForgotPasswordSubmit = (method: 'link' | 'otp') => {
         if (!forgotPasswordProps.username) {
-            // Show an error message if the username is empty
             modalApi.error({
                 title: 'Error',
                 content: 'Bạn chưa điền tên tài khoản',
@@ -428,11 +427,11 @@ const LoginScreen = () => {
                     onCancel={() => setSentMessageVisible(false)}
                     footer={[
                         <Button key="back" onClick={() => setSentMessageVisible(false)}>
-                            Quay lại
+                            {t('button.comeBack')}
                         </Button>,
                     ]}
                 >
-                    <p>Đã gửi tin nhắn đến gmail của bạn</p>
+                    {t('message.sentEmail')}
                 </Modal>
                 <Modal
                     title="Thông báo"
@@ -440,18 +439,18 @@ const LoginScreen = () => {
                     onCancel={() => setOtpSent(false)}
                     footer={[
                         <Button key="back" onClick={() => setOtpSent(false)}>
-                            Quay lại
+                            {t('button.comeBack')}
                         </Button>,
                         <Button
                             key="next"
                             type="primary"
                             onClick={() => setRedirectToChangePassword(true)}
                         >
-                            Tiếp theo
-                        </Button>,
+                            {t('button.next')}
+                        </Button>
                     ]}
                 >
-                    <p>Đã gửi mã OTP đến gmail của bạn</p>
+                    {t('message.sentOTPEmail')}
                 </Modal>
             </div>
         </>

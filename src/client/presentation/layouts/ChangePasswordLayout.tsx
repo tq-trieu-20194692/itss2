@@ -19,7 +19,7 @@ export const ChangePasswordLayout: FC = _ => {
     return (
         <div>
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-                <AppHeader/>
+                <AppHeader />
                 <div className="body flex-grow-1 px-2">
                     <CContainer fluid>
                         <Outlet context={outletCtx}/>

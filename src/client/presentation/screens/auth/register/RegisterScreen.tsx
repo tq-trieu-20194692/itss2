@@ -33,7 +33,7 @@ type _T_FormError = {
 };
 
 const RegisterScreen: React.FC = () => {
-    const {vm,vmForm, dispatchRegister, dispatchResetState} = RegisterAction();
+    const {vm, vmForm, dispatchRegister, dispatchResetState} = RegisterAction();
     const navigate = useNavigate();
     const {t} = useTranslation();
     const [formErrors, setFormErrors] = useState<_T_FormError>({});
@@ -44,11 +44,11 @@ const RegisterScreen: React.FC = () => {
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
     const [fileList, setFileList] = useState<UploadFile[]>([]);
+    const [file, setFile] = useState<File>()
 ////////-----------------
 
     useEffect(() => {
         console.log('%cMount Screen: RegisterScreen', Color.ConsoleInfo);
-
         return () => {
             dispatchResetState();
 
@@ -58,10 +58,10 @@ const RegisterScreen: React.FC = () => {
     }, []);
     useEffect(() => {
         if (vmForm.isLoading === E_SendingStatus.success) {
-            message.success(t('message.updateSuccess')).then()
+            message.success(t('message.registerSuccess')).then()
             setTimeout(() => {
-               navigate(RouteConfig.LOGIN)
-            }, 2000);
+                navigate(RouteConfig.LOGIN)
+            }, 1500);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vmForm]);
@@ -87,19 +87,6 @@ const RegisterScreen: React.FC = () => {
     ];
 
     const onFinish = (values: _T_FormName) => {
-        console.log(values)
-        const missingFields = requiredFields.filter(field => !values[field]);
-        if (missingFields.length > 0) {
-            const missingFieldsMessage = missingFields.map(field =>
-                t('error.required', { label: t(`text.${field}`).toLowerCase() })
-            ).join('\n');
-
-            Modal.error({
-                title: t('error.missingRequiredInformation'),
-                content: missingFieldsMessage,
-            });
-            return;
-        }
         const data: T_RegisterVO = {
             username: values.username.trim(),
             password: values.password,
@@ -108,20 +95,11 @@ const RegisterScreen: React.FC = () => {
             email: values.email,
             phone: values.phone,
             address: values.address,
-            image: values.image,
+            image: file,
             DoB: values.DoB ? values.DoB.format('YYYY-MM-DD') : ''
         }
-        console.log(data)
-        dispatchRegister(data)
-        if (Object.keys(formErrors).length === 0) {
-            setSuccessVisible(true);
-            setTimeout(() => {
-                setSuccessVisible(false);
-                navigate('/login');
-            }, 2000);
-        }
 
-        console.log('Received values of form: ', values);
+        dispatchRegister(data)
     }
 
     const onFinishFailed = (errorInfo: ValidateErrorEntity) => {
@@ -251,6 +229,22 @@ const RegisterScreen: React.FC = () => {
                         };
                     } else {
                         isPhoneValid = true;
+                    }
+
+                    break;
+                case 'address':
+                    if (inputTimeoutRef.current.address) clearTimeout(inputTimeoutRef.current.address);
+
+                    if (e.errors.length > 0) {
+                        _formErrors = {
+                            ..._formErrors,
+                            address: e.errors[0],
+                        };
+                    } else if (_formErrors.address) {
+                        _formErrors = {
+                            ..._formErrors,
+                            address: '',
+                        };
                     }
 
                     break;
@@ -456,11 +450,11 @@ const RegisterScreen: React.FC = () => {
                                         }),
                                     },
                                     {
-                                        min: 6,
+                                        min: 3,
                                         max: 30,
                                         message: t('error.length', {
                                             label: t('text.fullname'),
-                                            min: 6,
+                                            min: 3,
                                             max: 30,
                                         }),
                                     },
@@ -468,7 +462,7 @@ const RegisterScreen: React.FC = () => {
                                 validateStatus={Utils.viewStatusError<_T_FormError>(formErrors, 'name')}
                                 help={Utils.viewHelpError<_T_FormError>(formErrors, 'name')}
                             >
-                                <Input placeholder={t('text.fullname')} />
+                                <Input placeholder={t('text.fullname')}/>
                             </Form.Item>
                             <Typography.Title level={5} className={'mb-0'}>
                                 {t('text.birthdate')} (YYYY-MM-DD)
@@ -491,8 +485,6 @@ const RegisterScreen: React.FC = () => {
                                 <DatePicker
                                     style={{width: '100%'}}
                                     placeholder={t('text.birthdate')}
-                                    // value={selectedBirthdate}
-                                    // onChange={(date) => setSelectedBirthdate(date as Moment | null)}
                                 />
                             </Form.Item>
                             <Typography.Title level={5} className={'mb-0'}>
@@ -534,11 +526,11 @@ const RegisterScreen: React.FC = () => {
                                         }),
                                     },
                                     {
-                                        min: 6,
+                                        min: 1,
                                         max: 100,
                                         message: t('error.length', {
                                             label: t('text.address'),
-                                            min: 6,
+                                            min: 1,
                                             max: 100,
                                         }),
                                     },
@@ -591,9 +583,9 @@ const RegisterScreen: React.FC = () => {
                             </Typography.Title>
                             <Upload
                                 listType="picture-circle"
-                                fileList={fileList}
-                                onPreview={handlePreview}
-                                onChange={handleChange}
+                                maxCount={1}
+                                showUploadList
+                                beforeUpload={file => setFile(file)}
                             >
                                 {fileList.length >= 1 ? null : uploadButton}
                             </Upload>

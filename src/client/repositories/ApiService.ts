@@ -1,7 +1,7 @@
 import {AxiosClient} from "./AxiosClient";
 import {ApiResModel} from "../models/ApiResModel";
 import {injectable} from "inversify";
-import {T_LoginVO, T_ResetPasswordVO, T_ResetPasswordOTPVO, T_RegisterVO, T_QueryVO} from "../models/UserModel";
+import {T_LoginVO, T_ResetPasswordVO, T_ResetPasswordOTPVO, T_QueryVO, UserModel} from "../models/UserModel";
 
 @injectable()
 export class ApiService {
@@ -24,6 +24,12 @@ export class ApiService {
     getMe(): Promise<ApiResModel> {
         return AxiosClient.get("account/me")
     }
+
+    editMe(data?:UserModel): Promise<ApiResModel> {
+        return AxiosClient.put("account/edit", data)
+    }
+
+    //emailVerify()
 
     getLoginHistory() :Promise<ApiResModel>{   //xem lịch sử login của tk đăng nhập
         return AxiosClient.get(`account/loginHistory`)
@@ -48,8 +54,8 @@ export class ApiService {
         return AxiosClient.post("reset-password/otp", data);
     }
 
-    register(data: T_RegisterVO): Promise<ApiResModel> {
-        return AxiosClient.post("register", data);
+    register(data: FormData): Promise<ApiResModel> {
+        return AxiosClient.post("register", data, true);
     }
 
     postFarLogout(idSession:string): Promise<ApiResModel> {

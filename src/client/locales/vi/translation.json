@@ -195,6 +195,7 @@
   },
   "message": {
     "logoutSuccess": "Đăng xuất thành công!!",
+    "registerSuccess": "Đăng kí thành công!",
     "logoutError": "Đăng xuất không thành công!!",
     "deleteAccount": "Bạn chắc chắn muốn xóa tài khoản này chứ?",
     "saveSuccess": "Lưu thành công",
@@ -206,7 +207,9 @@
     "deleteError": "Xóa không thành công. Quý khách vui lòng thử lại sau.",
     "copySuccess": "Sao chép thành công: {{value}}",
     "updateSuccess" : "Cập nhập thành công!!",
-    "updateError": "Cập nhập không thành công!!"
+    "updateError": "Cập nhập không thành công!!",
+    "sentEmail": "Đã gửi tin nhắn đến email của bạn",
+    "sentOTPEmail": "Đã gửi mã OTP đến gmail của bạn"
 
   },
   "button": {
@@ -214,6 +217,7 @@
     "ok": "Đồng ý",
     "save": "Lưu",
     "comeBack": "Quay lại",
+    "next": "Tiếp theo",
     "saveClose": "Lưu & Đóng",
     "tryAgain": "Thử lại",
     "filter": "Lọc",

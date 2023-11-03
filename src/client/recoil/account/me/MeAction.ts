@@ -74,6 +74,49 @@ export const MeAction = () => {
         })
     }
 
+    const dispatchEditMe = (data: Partial<UserModel>) => {
+        setState({
+            ...state,
+            isLoading: E_SendingStatus.loading
+        });
+
+        // Tạo một bản sao của người dùng hiện tại
+        const updatedUser = new UserModel({
+            ...state.user
+        });
+
+        // Cập nhật trường dữ liệu mới từ đối tượng `data`
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                updatedUser[key] = data[key];
+            }
+        }
+
+        // Gửi dữ liệu người dùng đã cập nhật đến dịch vụ API
+        apiService.editMe(updatedUser).then(
+            (r) => {
+                if (r.success) {
+                    setState({
+                        ...state,
+                        user: updatedUser, // Cập nhật trạng thái Recoil với người dùng đã cập nhật
+                        isLoading: E_SendingStatus.success,
+                    });
+
+                    // Cập nhật ngữ cảnh phiên và lưu trữ dữ liệu người dùng bằng cách sử dụng dispatchStoreUser
+                    dispatchStoreUser(updatedUser, true, true);
+                } else {
+                    setState({
+                        ...state,
+                        isLoading: E_SendingStatus.error,
+                        error: r.error,
+                    });
+                }
+            }
+        ).catch((err) => setErrorHandled(state, setState, 'state', err));
+    }
+
+
+
     const dispatchStoreUser = (user: UserModel, isLS: boolean = true, isCookie: boolean = true) => {
         storeConfig.accessToken = user.accessToken
         // set localStorage
@@ -114,6 +157,7 @@ export const MeAction = () => {
         vm,
         dispatchLoadMe,
         dispatchSetMe,
+        dispatchEditMe,
         dispatchUpdateMeImage,
         dispatchStoreUser,
         dispatchClearUser,

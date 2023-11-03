@@ -195,6 +195,7 @@
   },
   "message": {
     "logoutSuccess": "成功注销！",
+    "registerSuccess": "注册成功！",
     "logoutError": "注销失败！",
     "deleteAccount": "您确定要删除此帐户吗？",
     "saveSuccess": "保存成功",
