@@ -11,7 +11,7 @@ import {useTranslation} from "react-i18next";
 
 export type T_UserLoginHistoryWidgetProps = {
     isOpen: boolean
-    onClose?: Function
+    onClose?: () => void
     id?: string | undefined
 }
 

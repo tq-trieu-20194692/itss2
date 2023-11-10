@@ -32,7 +32,7 @@ export class RouteConfig {
     static readonly USER_ACTIVITY_HISTORY: string = "/activityHistory"
     static readonly RESET_PASSWORD_OTP: string = "/change-password-otp"
     static readonly RESET_PASSWORD: string = "/reset-password/:token/:email/:time" // Attention !!!!!!!!!!
-    static readonly ONE_DIARY: string = "/diary" // Attention !!!!!!!!!!
+    static readonly ONE_DIARY: string = "/diary/:diaryId"
     static readonly REGISTER: string = "/register"
     static readonly ME: string = "/me"
     static readonly USER_ACTIVITY_LOG: string = "/activityLog"
@@ -62,7 +62,7 @@ export class RouteConfig {
             protect: true
         },
         {
-            name: 'diartExportData',
+            name: 'diaryExportData',
             path: RouteConfig.ONE_DIARY_EXPORT,
             component: DiaryScheduleScreen,
             protect: true

@@ -47,6 +47,20 @@ const Function = () => {
             return (result + `${t('text.ago')}`)
         }
     }
+    const ChangeTime = (time: string | undefined) => {
+        if (time) {
+            const date = new Date(time);
+
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Tháng trong JavaScript đếm từ 0
+            const year = date.getFullYear();
+
+            return `${hours}:${minutes} ${day}/${month}/${year}`;
+        }
+    }
     const ActivityText  =(key :string|undefined) =>{
         switch (key) {
             case "user.login":
@@ -97,20 +111,43 @@ const Function = () => {
         if(time!=undefined)
         {
             const TimeExpires: Date = new Date(time);
-            if (TimeNow > TimeExpires) {
-                return true
-            } else {
-                return false
-            }
+            return TimeNow > TimeExpires;
         }
     }
+    const decimalToDMS = (coordinatesString: string|undefined) => {
+      if(coordinatesString!==undefined)
+      {
+          const [latitude, longitude] = coordinatesString.split(',').map(coord => parseFloat(coord.trim()));
+          const convertDMS = (coord: number): [number, number, number] => {
+              const degrees = Math.floor(coord);
+              const minutes = Math.floor((coord - degrees) * 60);
+              const seconds = Math.round(((coord - degrees) * 60 - minutes) * 60);
+              return [degrees, minutes, seconds];
+          };
+          let result: string;
+
+          const [latDeg, latMin, latSec] = convertDMS(latitude);
+          const [longDeg, longMin, longSec] = convertDMS(longitude);
+
+          const latDir = latitude >= 0 ? 'N' : 'S';
+          const longDir = longitude >= 0 ? 'E' : 'W';
+
+          const latString = `${Math.abs(latDeg)}° ${latMin}' ${latSec}" ${latDir}`;
+          const longString = `${Math.abs(longDeg)}° ${longMin}' ${longSec}" ${longDir}`;
+          result =`${latString} ${longString}`
+          return result
+      }
+    };
+
     return{
         setIcon,
         setUpDate,
         StateDetail,
         ActivityText,
         setFlag,
-        setExpiresAtTime
+        setExpiresAtTime,
+        decimalToDMS,
+        ChangeTime
     }
 }
 export default Function

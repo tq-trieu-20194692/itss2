@@ -3,6 +3,10 @@ import {PostDiaryModel} from "../../../models/DiaryModel";
 import {PaginateMetaModel} from "../../../models/ApiResModel";
 import {atom} from "recoil";
 import {KeyDiaryListPost} from "../../KeyRecoil";
+export type T_CommonState = {
+    isLoading: E_SendingStatus,
+    error?: Record<string, any>
+}
 
 export type T_DiaryListPostState = {
     isLoading: E_SendingStatus,
@@ -36,3 +40,6 @@ export const DiaryListPostState  = atom<T_DiaryListPostState>({
     key:KeyDiaryListPost,
     default:initialState
 })
+export const initialDeleteState: T_CommonState = {
+    isLoading: E_SendingStatus.idle
+}

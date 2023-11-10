@@ -27,6 +27,7 @@ export type T_CommonState = {
     error?: Record<string, any>
 }
 
+
 export const initialDetailState: T_CommonState = {
     isLoading: E_SendingStatus.idle
 }

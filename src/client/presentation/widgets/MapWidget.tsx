@@ -121,7 +121,6 @@ export const MapWidget: FC<T_MapProps> = props => {
 
     const handleSearch = debounce((value: string) => {
         if (value.length > 0) {
-            console.log("gia tri là", value)
             setUrlQueryParams({
                 ...urlQueryParams,
                 input: value

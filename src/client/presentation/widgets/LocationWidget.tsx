@@ -20,14 +20,16 @@ export type T_MapProps = {
     location?: string
     callback?: Function
     onClose?: Function
+    coordinate?: [number | undefined, number | undefined]
+
 }
 
 export const LocationWidget: FC<T_MapProps> = props => {
     const [viewport, setViewport] = useState({
         width: 400,
         height: 300,
-        latitude: 21.031673076538056,
-        longitude: 105.84038426747847,
+        latitude: 21.0002016,
+        longitude: 105.8294838,
         zoom: 14
     })
     const [urlQueryParams, setUrlQueryParams] = useState({
@@ -60,8 +62,8 @@ export const LocationWidget: FC<T_MapProps> = props => {
         if (!props.isOpen) {
             setViewport({
                 ...viewport,
-                latitude: 21.031673076538056,
-                longitude: 105.84038426747847
+                latitude: 105.8294838,
+                longitude: 105.8294838
             })
         }
 

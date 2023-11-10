@@ -61,6 +61,15 @@ export class ApiService {
     postFarLogout(idSession:string): Promise<ApiResModel> {
         return AxiosClient.post(`account/logout/${idSession}`);
     }
+    getListDiary(query?: T_QueryVO) :Promise<ApiResModel>{
+        return AxiosClient.get(`diary`,query)
+    }
+    getListDiaryPost(idPost:string|undefined,query?: T_QueryVO) :Promise<ApiResModel>{
+        return AxiosClient.get(`diary/${idPost}/posts`,query)
+    }
+    deleteDiaryPost(diaryPostId:string): Promise<ApiResModel> {
+        return AxiosClient.post(`.../${diaryPostId}`);
+    }
 
 
 

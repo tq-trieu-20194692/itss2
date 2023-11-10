@@ -24,6 +24,7 @@ export type T_QueryVO = {
     page?: number
     limit?: number
     sort?: string
+    sort_by?:string
     order?: string
     search?: string
     tab?: string

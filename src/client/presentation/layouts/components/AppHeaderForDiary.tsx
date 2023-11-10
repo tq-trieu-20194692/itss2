@@ -10,6 +10,7 @@ import Function from "../../../const/Function";
 import {HomeOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
 import {RouteConfig} from "../../../config/RouteConfig";
+import {DiaryListAction} from "../../../recoil/diary/diaryList/DiaryListAction";
 
 // type _T_Props = {
 //     tool?: ReactNode
@@ -25,6 +26,9 @@ const AppHeaderForDiary = () => {
         vm: vmLanguage,
         dispatchSetLanguage
     } = LanguageAction();
+    const {
+        vm:vmDiary,
+    } = DiaryListAction()
     const [keyFlag, setKeyFlag] = useState(vmLanguage.languageNum);
     const [isHovered, setIsHovered] = useState(false); // Thêm state để kiểm tra hover
     const navigate = useNavigate()
@@ -124,10 +128,11 @@ const AppHeaderForDiary = () => {
                     onClick={() => dispatchSetState({ sidebarShow: !vm.sidebarShow })}
                 >
                     {!vm.sidebarShow ? (
-                        <CIcon icon={cilIndentIncrease} size="lg" />
+                        <CIcon icon={cilIndentIncrease} size="lg" style={{marginRight:"20px"}} />
                     ) : (
-                        <CIcon icon={cilIndentDecrease} size="lg" />
+                        <CIcon icon={cilIndentDecrease} size="lg" style={{marginRight:"20px"}}/>
                     )}
+                    <span style={{ fontWeight: 'bold' }}>ddd</span>
                 </CHeaderToggler>
                 <hr style={{ width: '1px', height: '20px', border: '1px', color: 'red', backgroundColor: '#fff', margin: '0' }} />
             </div>

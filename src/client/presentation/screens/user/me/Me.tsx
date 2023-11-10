@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {MeAction} from "../../../../recoil/account/me/MeAction";
-import {Col, Row, Avatar, Modal, Input} from "antd";
+import {Col, Row, Avatar, Modal} from "antd";
 import {useTranslation} from "react-i18next";
 import CIcon from '@coreui/icons-react';
 import {cilPen} from "@coreui/icons";
@@ -15,33 +15,6 @@ const MeScreen = () => {
     const {t} = useTranslation();
     const [previewVisible, setPreviewVisible] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
-    //
-    const [editingName, setEditingName] = useState(false); // Trạng thái để quản lý chế độ chỉnh sửa
-    const [newName, setNewName] = useState(vm?.user?.name || ""); // Trạng thái để lưu trữ tên đã cập nhật
-    const [isNameModalVisible, setNameModalVisible] = useState(false); // Trạng thái để quản lý hiển thị modal chỉnh sửa tên
-    const handleEditName = () => {
-        setEditingName(true);
-    };
-
-    // Function to save the edited name
-    const saveEditedName = () => {
-        // Update the name in your data or API here
-        // For now, just update the local state:
-        vm.user?.name = newName;
-
-        // Exit the editing mode and close the modal
-        setEditingName(false);
-        setNameModalVisible(false);
-    };
-
-    // Function to open the name editing modal
-    const openNameModal = () => {
-        if (vm?.user) { // Kiểm tra vm.user trước khi mở modal
-            setNameModalVisible(true);
-            setNewName(vm.user.name || "");
-        }
-    };
-
 
     const handlePreview = async (file) => {
         if (!file.url && !file.preview) {
@@ -115,12 +88,7 @@ const MeScreen = () => {
                                     <div>
                                         <div>
                                             {t("text.fullname")}: {vm.user.name}
-                                            <CIcon
-                                                icon={cilPen}
-                                                size="sm"
-                                                style={{float: "right", cursor: "pointer"}}
-                                                onClick={openNameModal}
-                                            />
+                                            <CIcon icon={cilPen} size="sm" style={{float: "right"}}/>
                                         </div>
                                         <hr/>
                                     </div>
@@ -203,9 +171,11 @@ const MeScreen = () => {
                                             marginTop: "16px",
                                         }}
                                     >
-                                        <div>
-                                            <h5 style={{color: "blue"}}> {t("text.password")}</h5>
-                                            <div style={{marginTop: "10px"}}>
+                                        <div style={{ display: "flex", flexDirection: "column" }}>
+                                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                                <div style={{ display: "flex", alignItems: "center" }}>
+                                                    <h5 style={{ color: "blue", marginRight: "10px" }}>{t("text.password")}</h5>
+                                                </div>
                                                 <button
                                                     onClick={handleChangePassword}
                                                     style={{
@@ -215,8 +185,6 @@ const MeScreen = () => {
                                                         border: "none",
                                                         cursor: "pointer",
                                                         transition: "background-color 0.3s",
-                                                        float: "right",
-                                                        marginRight: "16px",
                                                     }}
                                                     onMouseOver={(e) => handleMouseOver(e)}
                                                     onMouseOut={(e) => handleMouseOut(e)}
@@ -224,9 +192,9 @@ const MeScreen = () => {
                                                     Change Password
                                                 </button>
                                             </div>
-                                            {t("text.passwordInfoMess")}
-                                            <hr/>
+                                            <div>{t("text.passwordInfoMess")}</div>
                                         </div>
+                                        <hr />
                                         <div>{t("text.password")}: ******</div>
                                     </div>
                                 </Col>
@@ -256,26 +224,14 @@ const MeScreen = () => {
                     }}
                 >
                     <img
-                        alt="Xem trước"
+                        alt="preview"
                         style={{maxWidth: "100%", height: "auto"}}
                         src={previewImage}
                     />
                 </div>
             </Modal>
-            <Modal
-            title="Edit Name"
-            visible={isNameModalVisible}
-            onOk={saveEditedName}
-            onCancel={() => setNameModalVisible(false)}
-            >
-            <Input
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
-            />
-        </Modal>
-</div>
-)
-    ;
+        </div>
+    );
 };
 
 export default MeScreen;

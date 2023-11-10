@@ -19,6 +19,7 @@ type _T_NavChild = {
 export type T_Nav = _T_NavChild & {
     icon?: any
 }
+
 export const diary: T_Nav[] = [
     {
         component: CNavItem,
@@ -60,5 +61,4 @@ const _nav: T_Nav[] = [
     },
 
 ]
-
 export default _nav

@@ -24,3 +24,7 @@ export const KeyLoginHistory = createKey('UserLoginHistory')
 export const KeyActivityLog = createKey('UserActivityLog')
 
 export const KeyLanguage = createKey('language')
+
+export const KeyDiaryList = createKey('diaryList')
+
+export const KeyDiaryListPost = createKey('diaryListPost')
