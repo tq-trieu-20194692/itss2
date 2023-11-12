@@ -1,7 +1,7 @@
 import {useInjection} from "inversify-react";
 import {ApiService} from "../../../repositories/ApiService";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {DiaryListPostState, initialDeleteState,T_CommonState} from "./DiaryPostListState";
+import {DiaryListPostState,initialState, initialDeleteState,T_CommonState} from "./DiaryPostListState";
 import {T_QueryVO} from "../../../models/UserModel";
 import {E_SendingStatus} from "../../../const/Events";
 import {PaginateMetaModel} from "../../../models/ApiResModel";
@@ -108,10 +108,14 @@ export const DiaryPostListAction = () =>{
             .catch(err => setErrorHandled(state, setState, 'error', err))
 
     }
+    const dispatchResetDiaryPostState =() =>{
+        setState(initialState)
+    }
     return {
         vm,
         vmDelete: deleteState,
         dispatchGetDiaryListPost,
-        dispatchDeleteDiaryPost
+        dispatchDeleteDiaryPost,
+        dispatchResetDiaryPostState
     }
 }

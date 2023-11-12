@@ -28,10 +28,10 @@ export const MapWidget: FC<T_MapProps> = props => {
     const {t} = useTranslation()
 
     const [viewport, setViewport] = useState({
-        width: 800,
-        height: 700,
-        latitude: 21.031673076538056,
-        longitude: 105.84038426747847,
+        width: 950,
+        height: 400,
+        latitude: props.coordinate && props.coordinate[0] !== undefined ? props.coordinate[0] : 21.00460,
+        longitude: props.coordinate && props.coordinate[1] !== undefined ? props.coordinate[1] : 105.85054,
         zoom: 14
     })
 
@@ -207,10 +207,10 @@ export const MapWidget: FC<T_MapProps> = props => {
             centered
             open={props.isOpen}
             onCancel={onCloseMap}
-            width={400}
+            width={1000}
             closable={false}
             className={'relative'}
-            zIndex={400}
+            zIndex={500}
             onOk={onOk}
         >
             <ReactMapGL

@@ -28,11 +28,9 @@ export class RouteConfig {
     static readonly DASHBOARD: string = "/dashboard"
     static readonly HOME_PAGE: string = "/"
     static readonly LOGIN_HISTORY: string = "/loginHistory"
-    static readonly LOGIN_HISTORY_DETAIL: string = "/loginHistory/:id"
-    static readonly USER_ACTIVITY_HISTORY: string = "/activityHistory"
     static readonly RESET_PASSWORD_OTP: string = "/change-password-otp"
     static readonly RESET_PASSWORD: string = "/reset-password/:token/:email/:time" // Attention !!!!!!!!!!
-    static readonly ONE_DIARY: string = "/diary/:diaryId"
+    static readonly ONE_DIARY: string = "/diary"
     static readonly REGISTER: string = "/register"
     static readonly ME: string = "/me"
     static readonly USER_ACTIVITY_LOG: string = "/activityLog"

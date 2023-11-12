@@ -9,13 +9,15 @@ import {UrlQuery} from "../../../core/UrlQuery";
 import {T_QueryVO} from "../../../models/UserModel";
 import {DiaryModel} from "../../../models/DiaryModel";
 import noAvatar from "../../../assets/images/no_avatar.jpg";
-
+import {EDLocal} from "../../../core/encrypt/EDLocal";
 
 const {Meta} = Card;
 const HomePage = () => {
     const {
         vm: vmDiaryList,
         dispatchGetDiaryList,
+        disPatchLoadID,
+        dispatchResetDiaryState
 
     } = DiaryListAction()
     const {t} = useTranslation();
@@ -51,6 +53,7 @@ const HomePage = () => {
         dispatchGetDiaryList(new UrlQuery(queryParams).toObject());
         return () => {
             console.log('UNMOUNT: HomePage Screen');
+            dispatchResetDiaryState()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -64,7 +67,6 @@ const HomePage = () => {
         setDiaryList(vmDiaryList.items)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vmDiaryList.items])
-
     const handleShowMore = () => {
         const nextVisibleData = visibleData + 3;
         if (nextVisibleData >= diaryList.length) {
@@ -80,7 +82,15 @@ const HomePage = () => {
     }
     const handleOnClick = (value: string | undefined) => {
         console.log(value)
-        navigate(`/diary/${value}`)
+
+      if(value!==undefined)
+      {
+          EDLocal.setLocalStore("diaryId", value)
+          disPatchLoadID(value)
+      }
+
+        navigate(RouteConfig.ONE_DIARY)
+
     }
     return (
         <div

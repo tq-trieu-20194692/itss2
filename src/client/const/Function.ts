@@ -2,7 +2,7 @@ import {useTranslation} from "react-i18next";
 
 
 
-const Function = () => {
+const  Function = () => {
     const {t} = useTranslation();
     const setIcon = (date: string | undefined) =>{
         if (date !== undefined) {
@@ -15,7 +15,7 @@ const Function = () => {
             return 0
         }
     }
-    const setUpDate = (date: string | undefined) => {
+    const setUpDateForUserInfo = (date: string | undefined) => {
         if (date !== undefined) {
             const targetDate = new Date(date);
             const currentDate = new Date();
@@ -29,6 +29,34 @@ const Function = () => {
             }
             else if (days > 0) {
                 result += `${days} ${t('text.day')}`;
+            } else {
+                const seconds = Math.floor(timeDifference / 1000);
+                const minutes = Math.floor(seconds / 60);
+                const hours = Math.floor(minutes / 60);
+
+                if (hours > 0) {
+                    result += `${hours} ${t('text.hour')}`;
+                }
+                if (minutes > 0 && minutes % 60 !== 0) {
+                    result += ` ${minutes % 60} ${t('text.minute')}`;
+                }
+            }
+            if (result === '') {
+                result = `${t('text.seconds')}`;
+            }
+            return (result + `${t('text.ago')}`)
+        }
+    }
+    const setUpDateForDiaryPost = (date: string | undefined) => {
+        if (date !== undefined) {
+            const targetDate = new Date(date);
+            const currentDate = new Date();
+            const timeDifference = currentDate.getTime() - targetDate.getTime(); // Khoảng thời gian tính bằng mili giây
+            const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            let result = '';
+            if (days > 0) {
+                result += `${days} ${t('text.day')}`;
+
             } else {
                 const seconds = Math.floor(timeDifference / 1000);
                 const minutes = Math.floor(seconds / 60);
@@ -141,13 +169,14 @@ const Function = () => {
 
     return{
         setIcon,
-        setUpDate,
+        setUpDate: setUpDateForUserInfo,
         StateDetail,
         ActivityText,
         setFlag,
         setExpiresAtTime,
         decimalToDMS,
-        ChangeTime
+        ChangeTime,
+        setUpDateForDiaryPost
     }
 }
 export default Function

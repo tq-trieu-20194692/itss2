@@ -29,6 +29,7 @@ export const UserLoginHistoryWidget = (props: {
     const {t} = useTranslation();
     const [oneLoginDetail, setOneLoginDetail] = useState<LoginHistoryModel>()
     const [selectedLocation, setSelectedLocation] = useState<string | undefined>();
+
     const [isModalMapVisible, setIsModalMapVisible] = useState(false)
     let createAt: Date | undefined;
     if (oneLoginDetail?.createdAt) {

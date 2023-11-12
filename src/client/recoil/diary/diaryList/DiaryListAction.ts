@@ -1,7 +1,7 @@
 import {useInjection} from "inversify-react";
 import {ApiService} from "../../../repositories/ApiService";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {DiaryListState} from "./DiaryListState";
+import {DiaryListState,initialState} from "./DiaryListState";
 import {T_QueryVO} from "../../../models/UserModel";
 import {E_SendingStatus} from "../../../const/Events";
 import {PaginateMetaModel} from "../../../models/ApiResModel";
@@ -73,19 +73,24 @@ export const DiaryListAction = ()=>{
             })
             .catch(err => setErrorHandled(state, setState, 'isLoading', err))
     }
-    // const disPatchLoadID =(id:string|undefined) =>{
-    //     if(id!==undefined)
-    //     {
-    //         setState({
-    //             ...state,
-    //             isLoading:E_SendingStatus.success,
-    //             diaryId:id
-    //         })
-    //
-    //     }
-    // }
+    const dispatchResetDiaryState =() =>{
+        setState(initialState)
+    }
+    const disPatchLoadID =(id:string|undefined) =>{
+        if(id!==undefined)
+        {
+            setState({
+                ...state,
+                isLoading:E_SendingStatus.success,
+                diaryId:id
+            })
+
+        }
+    }
     return {
         vm,
         dispatchGetDiaryList,
+        disPatchLoadID,
+        dispatchResetDiaryState
     }
 }

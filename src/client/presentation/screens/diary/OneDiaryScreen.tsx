@@ -10,39 +10,56 @@ import {DiaryPostListAction} from "../../../recoil/diary/diaryPostList/DiaryPost
 import {UrlQuery} from "../../../core/UrlQuery";
 import {T_QueryVO} from "../../../models/UserModel";
 import {DiaryListAction} from "../../../recoil/diary/diaryList/DiaryListAction";
-import {useParams} from "react-router-dom";
 import noAvatar from "../../../assets/images/no_avatar.jpg";
 import Function from "../../../const/Function";
 import CIcon from "@coreui/icons-react";
 import {cilTrash} from "@coreui/icons";
 import {OneDiaryEditWidget, T_OneDiaryEditWidgetProps} from "./OneDiaryEditWidget";
 import {E_SendingStatus} from "../../../const/Events";
+import {EDLocal} from "../../../core/encrypt/EDLocal";
+import {MapWidget} from "../../widgets/MapWidget";
 
 const OneDiaryScreen = () => {
-    const {diaryId} = useParams()
     const {
         vm: vmDiaryPost,
         vmDelete,
         dispatchDeleteDiaryPost,
-        dispatchGetDiaryListPost
+        dispatchGetDiaryListPost,
+        dispatchResetDiaryPostState
     } = DiaryPostListAction()
     const {
         vm: vmDiary,
     } = DiaryListAction()
     const {
         ChangeTime,
-        decimalToDMS
+        decimalToDMS,
+        setUpDateForDiaryPost
     } = Function()
     const {t} = useTranslation();
+    const [diaryId]=useState<string>(
+        ()=>{
+            try {
+                const id = EDLocal.getLocalStore('diaryId')
+                if (id) {
+                   return id
+                }
+            } catch (e) {
+                console.error(e)
+            }
+            return ''
+        }
+    )
     const [deleteModal, setDeleteModal] = useState(false)
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [deleteDiaryPostId, setDeleteDiaryPost] = useState<string | undefined>()
     const [oneDiaryEditWidget, setOneDiaryEditWidget] = useState<T_OneDiaryEditWidgetProps>({
         isOpen: false
     })
-    const [messageApi, contextHolder] = message.useMessage();
 
+    const [messageApi, contextHolder] = message.useMessage();
     const [DiaryListPost, setDiaryListPost] = useState<PostDiaryModel[]>([])
+    const [isModalMapVisible, setIsModalMapVisible] = useState(false)
+    const [selectedCoordinate, setSelectedCoordinate] = useState<[number | undefined, number | undefined]>([0, 0]);
     const URL = new UrlQuery(location.search)
     const page = URL.getInt("page", vmDiaryPost.query.page)
     const limit = URL.getInt("limit", vmDiaryPost.query.limit)
@@ -61,6 +78,7 @@ const OneDiaryScreen = () => {
         dispatchGetDiaryListPost(diaryId, new UrlQuery(queryParams).toObject());
         return () => {
             console.log('UNMOUNT: Diary Post  Screen');
+            dispatchResetDiaryPostState()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [diaryId]);
@@ -100,7 +118,7 @@ const OneDiaryScreen = () => {
     const handleDeleteModalOk = () => {
         setConfirmLoading(true);
         if (deleteDiaryPostId !== undefined) {
-           dispatchDeleteDiaryPost(deleteDiaryPostId)
+            dispatchDeleteDiaryPost(deleteDiaryPostId)
             console.log("chua co api nen chua test duoc")
         }
     }
@@ -134,6 +152,20 @@ const OneDiaryScreen = () => {
             isOpen: false
         })
     }
+    const handleShowMap = (coordinate: any) => {
+        const coordinatesArray: string[] = coordinate.split(',');
+        // Chuyển đổi các phần tử từ chuỗi sang số
+        const lat: number = parseFloat(coordinatesArray[0]);
+        const long: number = parseFloat(coordinatesArray[1]);
+
+        // Cập nhật state với giá trị mới
+        setSelectedCoordinate([lat, long]);
+        setIsModalMapVisible(true)
+
+    }
+    const onCloseModalMap = () => {
+        setIsModalMapVisible(false)
+    }
     return (
         <>
             {contextHolder}
@@ -165,6 +197,9 @@ const OneDiaryScreen = () => {
                             />
                             <div style={{marginLeft: '10px'}}>
                                 <div style={{fontWeight: 'bold'}}>{item.name}</div>
+                                <Tooltip placement="top" title={ChangeTime(item.createAt)}>
+                                    <div style={{fontWeight: 'lighter'}}>{setUpDateForDiaryPost(item.createAt)}</div>
+                                </Tooltip>
                             </div>
                             <div style={{position: 'absolute', right: '0'}}>
                                 {/* Adjusted position and right properties */}
@@ -228,6 +263,7 @@ const OneDiaryScreen = () => {
                                             alignItems: 'center',
 
                                         }}
+                                        onClick={() => handleShowMap(item.location)}
                                     >
                                {decimalToDMS(item.location)} </span>
                                 </Tooltip>
@@ -251,6 +287,15 @@ const OneDiaryScreen = () => {
                     id={oneDiaryEditWidget.id}
                     onClose={onCloseWidget}
                 />
+                {
+                    isModalMapVisible && (
+                        <MapWidget
+                            onClose={onCloseModalMap}
+                            isOpen={isModalMapVisible}
+                            coordinate={selectedCoordinate}
+                        />
+                    )
+                }
             </div>
         </>
     );
