@@ -30,6 +30,12 @@ export type T_QueryVO = {
     tab?: string
 }
 
+export type T_ChangePasswordVO ={
+    old_password: string
+    password: string
+    password_confirmation: string
+}
+
 export type T_ResetPasswordVO ={
     password: string
     password_confirmation: string
@@ -185,8 +191,6 @@ export class LoginHistoryModel extends Model{
         this.id = Normalize.initJsonString(data, 'id')
         this.mySession =Normalize.initJsonBool(data, 'is_my_session')
         this.logout =Normalize.initJsonBool(data, 'far_logout')
-
-
 
     }
     copyFrom = (data: Record<string, any>): LoginHistoryModel => {

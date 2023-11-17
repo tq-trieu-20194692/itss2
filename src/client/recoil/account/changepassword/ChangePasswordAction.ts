@@ -1,23 +1,23 @@
-import {initialState, T_ResetPasswordState} from "./ResetPasswordState";
+import {initialState, T_ChangePasswordState} from "./ChangePasswordState";
 import {ApiService} from "../../../repositories/ApiService";
-import {T_ResetPasswordVO, UserModel} from "../../../models/UserModel";
+import {T_ChangePasswordVO ,UserModel} from "../../../models/UserModel";
 import {setErrorHandled} from "../../CmAction";
 import {useInjection} from "inversify-react";
 import {E_SendingStatus} from "../../../const/Events";
 import {useState} from "react";
 
-export const ResetPasswordAction = () => {
+export const ChangePasswordAction = () => {
     const apiService = useInjection(ApiService)
-    const [state, setState] = useState<T_ResetPasswordState>(initialState)
+    const [state, setState] = useState<T_ChangePasswordState>(initialState)
 
-    const dispatchResetPassword = (data: T_ResetPasswordVO) => {
+    const dispatchResetPassword = (data: T_ChangePasswordVO) => {
         setState({
             ...state,
             status: E_SendingStatus.loading
         })
 
         apiService
-            .resetpassword(data)
+            .changePassword(data)
             .then(r => {
                 console.log(r)
                 if (r.success) {
@@ -38,13 +38,13 @@ export const ResetPasswordAction = () => {
             .catch(err => setErrorHandled(state, setState, 'status', err))
     }
 
-    const dispatchResetState = () => {
+    const dispatchChangeState = () => {
         setState(initialState)
     }
 
     return {
         vm: state,
         dispatchResetPassword,
-        dispatchResetState
+        dispatchChangeState
     }
 }

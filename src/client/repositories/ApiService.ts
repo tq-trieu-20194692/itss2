@@ -1,7 +1,14 @@
 import {AxiosClient} from "./AxiosClient";
 import {ApiResModel} from "../models/ApiResModel";
 import {injectable} from "inversify";
-import {T_LoginVO, T_ResetPasswordVO, T_ResetPasswordOTPVO, T_QueryVO, UserModel} from "../models/UserModel";
+import {
+    T_LoginVO,
+    T_ResetPasswordVO,
+    T_ResetPasswordOTPVO,
+    T_QueryVO,
+    UserModel,
+    T_ChangePasswordVO
+} from "../models/UserModel";
 
 @injectable()
 export class ApiService {
@@ -29,6 +36,9 @@ export class ApiService {
         return AxiosClient.put("account/edit", data)
     }
 
+    changePassword(data: T_ChangePasswordVO): Promise<ApiResModel> {
+        return AxiosClient.post("account/changePassword", data)
+    }
     //emailVerify()
 
     getLoginHistory() :Promise<ApiResModel>{   //xem lịch sử login của tk đăng nhập

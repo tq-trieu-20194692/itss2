@@ -38,9 +38,7 @@ const MeScreen = () => {
     };
 
     const handleChangePassword = () => {
-        // Add your logic here to handle the password change action
-        // For example, you can open a modal or navigate to a new page for changing the password.
-        // You can use state or a library like Ant Design Modal to implement the password change form.
+
         console.log("Change Password button clicked");
     };
 
