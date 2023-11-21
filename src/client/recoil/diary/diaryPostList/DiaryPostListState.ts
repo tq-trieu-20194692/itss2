@@ -7,7 +7,13 @@ export type T_CommonState = {
     isLoading: E_SendingStatus,
     error?: Record<string, any>
 }
-
+export type T_FormState = {
+    isLoading: E_SendingStatus,
+    error?: Record<string, any>
+}
+export const initialFormState: T_FormState = {
+    isLoading: E_SendingStatus.idle
+}
 export type T_DiaryListPostState = {
     isLoading: E_SendingStatus,
     items: PostDiaryModel[],

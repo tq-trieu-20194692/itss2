@@ -1,7 +1,9 @@
 const {PHASE_DEVELOPMENT_SERVER} = require('next/constants')
 const {ulid} = require('ulid')
 const {lib} = require("crypto-js")
+const withCSS = require('@zeit/next-css');
 
+module.exports = withCSS({});
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     env: {

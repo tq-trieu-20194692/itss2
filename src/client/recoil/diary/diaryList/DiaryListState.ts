@@ -3,6 +3,14 @@ import {PaginateMetaModel} from "../../../models/ApiResModel";
 import {DiaryModel} from "../../../models/DiaryModel";
 import {atom} from "recoil";
 import {KeyDiaryList} from "../../KeyRecoil";
+export type T_CommonState = {
+    isLoading: E_SendingStatus,
+    error?: Record<string, any>
+}
+export type T_FormState = {
+    isLoading: E_SendingStatus,
+    error?: Record<string, any>
+}
 
 export type T_DiaryListState = {
     isLoading: E_SendingStatus,
@@ -43,5 +51,11 @@ export type T_DiaryIdState = {
     error?: Record<string, any>
 }
 export const initialDiaryIdState: T_DiaryIdState = {
+    isLoading: E_SendingStatus.idle
+}
+export const initialDeleteState: T_CommonState = {
+    isLoading: E_SendingStatus.idle
+}
+export const initialFormState: T_FormState = {
     isLoading: E_SendingStatus.idle
 }

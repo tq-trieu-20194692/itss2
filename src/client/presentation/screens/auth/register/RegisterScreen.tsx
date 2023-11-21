@@ -257,31 +257,31 @@ const RegisterScreen: React.FC = () => {
 
 
     //Upload image
-    const getBase64 = (file: RcFile): Promise<string> =>
-        new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = (error) => reject(error);
-        })
-
-    const handleChange: UploadProps['onChange'] = ({fileList: newFileList}) => {
-        // Keep only the last uploaded file
-        const lastFile = newFileList.slice(-1);
-        setFileList(lastFile);
-    };
+    // const getBase64 = (file: RcFile): Promise<string> =>
+    //     new Promise((resolve, reject) => {
+    //         const reader = new FileReader();
+    //         reader.readAsDataURL(file);
+    //         reader.onload = () => resolve(reader.result as string);
+    //         reader.onerror = (error) => reject(error);
+    //     })
+    //
+    // const handleChange: UploadProps['onChange'] = ({fileList: newFileList}) => {
+    //     // Keep only the last uploaded file
+    //     const lastFile = newFileList.slice(-1);
+    //     setFileList(lastFile);
+    // };
 
     const handleCancel = () => setPreviewOpen(false);
 
-    const handlePreview = async (file: UploadFile) => {
-        if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj as RcFile);
-        }
-
-        setPreviewImage(file.url || (file.preview as string));
-        setPreviewOpen(true);
-        setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
-    };
+    // const handlePreview = async (file: UploadFile) => {
+    //     if (!file.url && !file.preview) {
+    //         file.preview = await getBase64(file.originFileObj as RcFile);
+    //     }
+    //
+    //     setPreviewImage(file.url || (file.preview as string));
+    //     setPreviewOpen(true);
+    //     setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
+    // };
 
     const uploadButton = (
         <div>

@@ -17,9 +17,10 @@
     "fullname": "Họ và tên",
     "username": "Tài khoản",
     "password": "Mật khẩu",
-    "newPassword":"Mật khẩu mới",
+    "description": "Mô tả",
+    "newPassword": "Mật khẩu mới",
     "confirmPassword": "Xác nhận mật khẩu",
-    "resetPassword" : "Đặt lại mật khẩu",
+    "resetPassword": "Đặt lại mật khẩu",
     "resetPasswordTitle": "Vui lòng nhập thông tin thay đổi",
     "register": "Đăng kí",
     "registerSubTitle": "Vui lòng đăng kí tài khoản ",
@@ -93,6 +94,7 @@
     "edit": "Chỉnh sửa",
     "editArticle": "Chỉnh sửa bài viết",
     "editAccount": "Chỉnh sửa tài khoản",
+    "editDiary": "Chỉnh sửa nhật ký",
     "editedAccount": "Đã Edit một tài khoản",
     "share": "Chia sẻ",
     "view": "Xem",
@@ -181,10 +183,10 @@
     "time": "Time",
     "deleteAccount": "Xóa tài khoản user",
     "deleteAdmin": "Xóa tài khoản admin",
-    "adminRegister" : "Tạo tài khoản admin mới",
+    "adminRegister": "Tạo tài khoản admin mới",
     "changeLanguageSuccess": "Thay đổi ngôn ngữ thành công",
     "viewProfile": "Xem hồ sơ của bạn",
-    "personalInfo":"Thông tin cá nhân",
+    "personalInfo": "Thông tin cá nhân",
     "basicInfo": "Thông tin cơ bản",
     "contactInfo": "Thông tin liên hệ",
     "passwordInfoMess": "Mật khẩu là nơi để bảo vệ tài khoản của bạn",
@@ -211,11 +213,11 @@
     "deleteSuccess": "Xóa thành công",
     "deleteError": "Xóa không thành công. Quý khách vui lòng thử lại sau.",
     "copySuccess": "Sao chép thành công!",
-    "updateSuccess" : "Cập nhập thành công!!",
+    "updateSuccess": "Cập nhập thành công!!",
     "updateError": "Cập nhập không thành công!!",
     "sentEmail": "Đã gửi tin nhắn đến email của bạn",
-    "sentOTPEmail": "Đã gửi mã OTP đến gmail của bạn"
-
+    "sentOTPEmail": "Đã gửi mã OTP đến gmail của bạn",
+    "uploadFile": "Nhấp hoặc kéo tệp vào khu vực này để tải lên"
   },
   "button": {
     "close": "Đóng",
@@ -240,7 +242,8 @@
     "cancel": "Hủy",
     "sent": "Gửi",
     "showMore": "Hiển thị thêm",
-    "showLess": "Thu gọn"
+    "showLess": "Thu gọn",
+    "getCurrLocation": "Nhận vị trí hiện tại"
   },
   "error": {
     "required": "Vui lòng nhập {{label}}",

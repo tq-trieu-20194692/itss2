@@ -21,7 +21,7 @@ export const RegisterAction = () => {
         formData.append('password', data.password)
         formData.append('email', data.email)
         formData.append('phone', data.phone)
-
+        console.log(data)
         if (data.image) {
             formData.append('image', data.image.slice(), data.image.name)
         }
@@ -34,6 +34,7 @@ export const RegisterAction = () => {
         apiService
             .register(formData)
             .then(r => {
+
                 console.log(r)
                 if (r.success) {
                     const user = new UserModel(r.data)

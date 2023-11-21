@@ -74,7 +74,7 @@ const AppHeader = (props: _T_Props) => {
         <CHeader position="sticky" className="mb-4">
             <CContainer fluid>
                 <CHeaderToggler
-                    className="ps-1"
+                    className=""
                     onClick={() => dispatchSetState({sidebarShow: !vm.sidebarShow})}
                 >
                     <CIcon icon={cilMenu} size="lg"/>

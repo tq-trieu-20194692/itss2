@@ -89,7 +89,7 @@ const AppHeader = () => {
                         </div>
                     </CHeaderBrand>
                     {/*</Link>*/}
-                    <CHeaderNav className="d-none d-md-flex me-auto">
+                    <CHeaderNav className=" d-md-flex me-auto">
                         <CNavItem>
                             <div
                                 onMouseEnter={() => setIsHovered(true)} // Đặt isHovered thành chỉ mục của phần tử khi hover vào
@@ -109,7 +109,7 @@ const AppHeader = () => {
                                 <HomeOutlined style={{
                                     color: isHovered ? 'blue' : 'black',
                                     fontSize: '20px'
-                                }} />
+                                }}  />
                             </div>
                         </CNavItem>
                     </CHeaderNav>
@@ -124,7 +124,7 @@ const AppHeader = () => {
                                         width: '20px',
                                         height: '20px'
                                     }}
-                                /> {' '}
+                                />
                                 Language
                             </Button>
                         </Dropdown>

@@ -3,7 +3,7 @@ import {Avatar, Button, Divider, Image, message, Modal, notification, Popover, T
 import React, {useEffect, useState} from "react";
 import {WiHumidity, WiStrongWind, WiThermometer} from "react-icons/wi";
 import {AiOutlineAim, AiOutlineCopy} from "react-icons/ai";
-
+import { ImageGrid } from "react-fb-image-video-grid";
 import {useTranslation} from "react-i18next";
 import {PostDiaryModel} from "../../../models/DiaryModel";
 import {DiaryPostListAction} from "../../../recoil/diary/diaryPostList/DiaryPostListAction";
@@ -18,6 +18,7 @@ import {OneDiaryEditWidget, T_OneDiaryEditWidgetProps} from "./OneDiaryEditWidge
 import {E_SendingStatus} from "../../../const/Events";
 import {EDLocal} from "../../../core/encrypt/EDLocal";
 import {MapWidget} from "../../widgets/MapWidget";
+import ImageSS from "./Image";
 
 const OneDiaryScreen = () => {
     const {
@@ -25,10 +26,9 @@ const OneDiaryScreen = () => {
         vmDelete,
         dispatchDeleteDiaryPost,
         dispatchGetDiaryListPost,
-        dispatchResetDiaryPostState
     } = DiaryPostListAction()
     const {
-        vm: vmDiary,
+        // vm: vmDiary,
     } = DiaryListAction()
     const {
         ChangeTime,
@@ -36,12 +36,12 @@ const OneDiaryScreen = () => {
         setUpDateForDiaryPost
     } = Function()
     const {t} = useTranslation();
-    const [diaryId]=useState<string>(
-        ()=>{
+    const [diaryId] = useState<string>(
+        () => {
             try {
                 const id = EDLocal.getLocalStore('diaryId')
                 if (id) {
-                   return id
+                    return id
                 }
             } catch (e) {
                 console.error(e)
@@ -60,6 +60,9 @@ const OneDiaryScreen = () => {
     const [DiaryListPost, setDiaryListPost] = useState<PostDiaryModel[]>([])
     const [isModalMapVisible, setIsModalMapVisible] = useState(false)
     const [selectedCoordinate, setSelectedCoordinate] = useState<[number | undefined, number | undefined]>([0, 0]);
+    const [latitude, setLatitude] = useState<number | null>(null);
+    const [longitude, setLongitude] = useState<number | null>(null);
+
     const URL = new UrlQuery(location.search)
     const page = URL.getInt("page", vmDiaryPost.query.page)
     const limit = URL.getInt("limit", vmDiaryPost.query.limit)
@@ -73,12 +76,17 @@ const OneDiaryScreen = () => {
     })
     useEffect(() => {
         console.log('MOUNT: Diary Post Screen');
-        console.log(vmDiary)
-        // Gọi hàm dispatchGetActivity khi component được mount lại
-        dispatchGetDiaryListPost(diaryId, new UrlQuery(queryParams).toObject());
+        const fetchData = async () => {
+            try {
+                dispatchGetDiaryListPost(diaryId, new UrlQuery(queryParams).toObject());
+                console.log('dispatchGetDiaryListPost completed');
+            } catch (error) {
+                console.error('dispatchGetDiaryListPost:', error);
+            }
+        };
+        fetchData().then();
         return () => {
             console.log('UNMOUNT: Diary Post  Screen');
-            dispatchResetDiaryPostState()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [diaryId]);
@@ -89,9 +97,12 @@ const OneDiaryScreen = () => {
 
     useEffect(() => {
         console.log('vm.items', vmDiaryPost.items)
-        setDiaryListPost(vmDiaryPost.items)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        const fetchData = async () => {
+            setDiaryListPost(vmDiaryPost.items);
+        };
+        fetchData().then();
     }, [vmDiaryPost.items])
+
     useEffect(() => {
         console.log("vm.error", vmDelete.error);
         if (vmDelete.isLoading !== E_SendingStatus.loading) {
@@ -111,17 +122,31 @@ const OneDiaryScreen = () => {
     const handleDeleteModalCancel = () => {
         setDeleteModal(false);
     };
-    const handleDeleteModalOpen = (diaryPostId: string | undefined) => {
+    const handleDeleteModalOpen = (diaryPostId: string | undefined, coordinatesArray: string | undefined) => {
+        if (coordinatesArray !== undefined) {
+            const locationArray = coordinatesArray.split(',');
+            const lat: number = parseFloat(locationArray[0]);
+            const long: number = parseFloat(locationArray[1]);
+            setLatitude(lat)
+            setLongitude(long)
+        }
         setDeleteModal(true);
         setDeleteDiaryPost(diaryPostId)
     };
     const handleDeleteModalOk = () => {
         setConfirmLoading(true);
         if (deleteDiaryPostId !== undefined) {
-            dispatchDeleteDiaryPost(deleteDiaryPostId)
-            console.log("chua co api nen chua test duoc")
+            const data = {
+                _method: 'DELETE',
+                lat: latitude,
+                lng: longitude,
+
+            }
+            dispatchDeleteDiaryPost(deleteDiaryPostId, data)
+
         }
     }
+
     const handleCopyToClipboard = async (dataToCopy: string | undefined) => {
         if (dataToCopy !== undefined) {
             try {
@@ -138,12 +163,11 @@ const OneDiaryScreen = () => {
         }
     };
 
-    const handleEditDiaryPost = (diaryPostId: string | undefined) => {
+    const  handleEditDiaryPost = (diaryPostId: string | undefined) => {
         if (diaryPostId !== undefined) {
             setOneDiaryEditWidget({
                 isOpen: true,
                 id: diaryPostId,
-
             })
         }
     }
@@ -157,7 +181,6 @@ const OneDiaryScreen = () => {
         // Chuyển đổi các phần tử từ chuỗi sang số
         const lat: number = parseFloat(coordinatesArray[0]);
         const long: number = parseFloat(coordinatesArray[1]);
-
         // Cập nhật state với giá trị mới
         setSelectedCoordinate([lat, long]);
         setIsModalMapVisible(true)
@@ -166,13 +189,26 @@ const OneDiaryScreen = () => {
     const onCloseModalMap = () => {
         setIsModalMapVisible(false)
     }
+    const  images =[
+    'https://th.bing.com/th?id=OIP.9U6ZvbMYvlmVJ7RwuBaajAHaLJ&w=203&h=306&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2',
+        'https://th.bing.com/th?id=OIP.m8FhePi93frBy7Q9vEBGZQHaEo&w=316&h=197&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2',
+        'https://th.bing.com/th?id=OIP.m8FhePi93frBy7Q9vEBGZQHaEo&w=316&h=197&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2',
+        'https://th.bing.com/th?id=OIP.m8FhePi93frBy7Q9vEBGZQHaEo&w=316&h=197&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2',
+    ]
+
     return (
         <>
             {contextHolder}
             <div style={{
-                marginTop: '20px',
+                marginTop: '10px',
+                maxWidth: 900,
                 paddingLeft: '5vw',
                 paddingRight: '5vw',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center', // Căn giữa theo chiều ngang
+                marginLeft: 'auto',
+                marginRight: 'auto',
             }}>
                 {DiaryListPost.map((item) => (
                     <div style={{
@@ -184,7 +220,6 @@ const OneDiaryScreen = () => {
                         paddingRight: '30px',
                         paddingTop: "15px",
                         alignItems: 'center',
-                        // Thêm thuộc tính position: 'relative'
 
                     }}
                          key={item.postDiaryId}
@@ -198,7 +233,12 @@ const OneDiaryScreen = () => {
                             <div style={{marginLeft: '10px'}}>
                                 <div style={{fontWeight: 'bold'}}>{item.name}</div>
                                 <Tooltip placement="top" title={ChangeTime(item.createAt)}>
-                                    <div style={{fontWeight: 'lighter'}}>{setUpDateForDiaryPost(item.createAt)}</div>
+                                    <div>
+                                        {item.updateAt !== undefined ? (
+                                            setUpDateForDiaryPost(item.updateAt)
+                                        ) : (
+                                            setUpDateForDiaryPost(item.createAt)
+                                        )}</div>
                                 </Tooltip>
                             </div>
                             <div style={{position: 'absolute', right: '0'}}>
@@ -208,7 +248,7 @@ const OneDiaryScreen = () => {
                                     content={
                                         <div style={{display: 'flex', flexDirection: 'column'}}>
                                             <Button onClick={() => handleEditDiaryPost(item.postDiaryId)} type="text">{t('text.edit')}</Button>
-                                            <Button onClick={() => handleDeleteModalOpen(item.postDiaryId)} type="text" style={{marginTop: '8px', color: 'red'}}>
+                                            <Button onClick={() => handleDeleteModalOpen(item.postDiaryId, item.location)} type="text" style={{marginTop: '8px', color: 'red'}}>
                                                 <CIcon icon={cilTrash} style={{marginRight: '5px'}}/> {t('text.delete')}
                                             </Button>
                                         </div>
@@ -247,6 +287,14 @@ const OneDiaryScreen = () => {
                         </div>
                         <Divider/>
                         <div>
+                            {item.description}
+                        </div>
+                        <div style={{marginTop: '10px'}}>
+                           {/*<FbImageLibrary*/}
+                           {/*    images={images}*/}
+                           {/*    width={80}*/}
+                           {/*/>*/}
+                            <ImageSS count={2} images={images} />
                             <Image src="https://res-gdta.autotimelapse.com/files/dmi/08-2023/wELl3QrRlVybROn_1691368158_327WXu.jpg"
                                    alt="diaryImage"
                             />
@@ -300,5 +348,4 @@ const OneDiaryScreen = () => {
         </>
     );
 };
-
 export default OneDiaryScreen;

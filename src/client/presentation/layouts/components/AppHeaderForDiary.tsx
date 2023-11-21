@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {CContainer, CHeader, CHeaderNav, CHeaderToggler, CNavItem} from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import {cilIndentDecrease, cilIndentIncrease} from '@coreui/icons'
@@ -11,6 +11,8 @@ import {HomeOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
 import {RouteConfig} from "../../../config/RouteConfig";
 import {DiaryListAction} from "../../../recoil/diary/diaryList/DiaryListAction";
+import {EDLocal} from "../../../core/encrypt/EDLocal";
+import {DiaryModel} from "../../../models/DiaryModel";
 
 // type _T_Props = {
 //     tool?: ReactNode
@@ -23,12 +25,26 @@ const AppHeaderForDiary = () => {
         dispatchSetState
     } = ThemeAction()
     const {
+        vm: vmDiaryList,
+    } = DiaryListAction()
+    const {
         vm: vmLanguage,
         dispatchSetLanguage
     } = LanguageAction();
-    const {
-        vm:vmDiary,
-    } = DiaryListAction()
+    const [diaryId]=useState<string>(
+        ()=>{
+            try {
+                const id = EDLocal.getLocalStore('diaryId')
+                if (id) {
+                    return id
+                }
+            } catch (e) {
+                console.error(e)
+            }
+            return ''
+        }
+    )
+    const [foundDetail,setFoundDetail] = useState<DiaryModel>()
     const [keyFlag, setKeyFlag] = useState(vmLanguage.languageNum);
     const [isHovered, setIsHovered] = useState(false); // Thêm state để kiểm tra hover
     const navigate = useNavigate()
@@ -55,6 +71,13 @@ const AppHeaderForDiary = () => {
         },
 
     ];
+
+    useEffect(() => {
+        const detail = vmDiaryList.items.find((detail) => detail.diaryId === diaryId);
+        setFoundDetail(detail)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [diaryId]);
+
     const handleMenuClick: MenuProps['onClick'] = (e) => {
         if (e.key === "1") {
             dispatchSetLanguage('vi', 1)
@@ -80,7 +103,7 @@ const AppHeaderForDiary = () => {
         <>
             <CHeader position="sticky" style={{ backgroundColor: '#001529' }}>
                 <CContainer fluid>
-                    <CHeaderNav className="d-none d-md-flex me-auto">
+                    <CHeaderNav className="d-md-flex me-auto">
                         <CNavItem>
                             <div
                                 onMouseEnter={() => setIsHovered(true)} // Đặt isHovered thành chỉ mục của phần tử khi hover vào
@@ -132,7 +155,7 @@ const AppHeaderForDiary = () => {
                     ) : (
                         <CIcon icon={cilIndentDecrease} size="lg" style={{marginRight:"20px"}}/>
                     )}
-                    <span style={{ fontWeight: 'bold' }}>ddd</span>
+                    <span style={{ fontWeight: 'bold' }}>{foundDetail?.name}</span>
                 </CHeaderToggler>
                 <hr style={{ width: '1px', height: '20px', border: '1px', color: 'red', backgroundColor: '#fff', margin: '0' }} />
             </div>

@@ -17,6 +17,7 @@
     "fullname": "Full Name",
     "username": "Username",
     "password": "Password",
+    "description": "Description",
     "newPassword": "New Password",
     "confirmPassword": "Confirm Password",
     "resetPassword": "Reset Password",
@@ -94,6 +95,8 @@
     "editAccount": "Edit Account",
     "editedAccount": "Edited an account",
     "editArticle": "Edit Article",
+    "editDiary": "Edit Diary",
+
     "share": "Share",
     "view": "View",
     "add": "Add New",
@@ -215,7 +218,9 @@
     "updateSuccess": "Update successful!!",
     "updateError": "Update unsuccessful!!",
     "sentEmail": "Sent a message to your email",
-    "sentOTPEmail": "The OTP code has been sent to your email"
+    "sentOTPEmail": "The OTP code has been sent to your email",
+    "uploadFile": "Click or drag file to this area to upload"
+
   },
 
   "button": {
@@ -241,7 +246,8 @@
     "cancel": "Cancel",
     "sent": "Send",
     "showMore": "Show more",
-    "showLess": "Show less"
+    "showLess": "Show less",
+    "getCurrLocation": "Get current location"
   },
 
   "error": {

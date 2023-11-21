@@ -18,6 +18,7 @@
     "username": "用户名",
     "password": "密码",
     "newPassword": "新密码",
+    "description": "描述",
     "confirmPassword": "确认密码",
     "resetPassword": "重置密码",
     "resetPasswordTitle": "请输入要重置的信息",
@@ -94,6 +95,8 @@
     "editAccount": "编辑帐户",
     "editedAccount": "编辑了一个帐户",
     "editArticle": "编辑文章",
+    "editDiary": "编辑日记",
+
 
     "share": "分享",
     "view": "查看",
@@ -213,7 +216,9 @@
     "deleteError": "删除失败。请稍后重试。",
     "copySuccess": "成功复制!",
     "updateSuccess": "更新成功！",
-    "updateError": "更新失败！"
+    "updateError": "更新失败！",
+    "uploadFile": "点击或拖拽文件至此区域即可上传"
+
   },
   "button": {
     "close": "关闭",
@@ -237,7 +242,8 @@
     "cancel": "取消",
     "sent": "发送",
     "showMore": "显示更多",
-    "showLess": "显示更少"
+    "showLess": "显示更少",
+    "getCurrLocation": "获取当前位置"
   },
   "error": {
     "required": "请输入{{label}}",

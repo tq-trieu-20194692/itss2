@@ -12,6 +12,7 @@ import {SessionContextProvider} from "../client/presentation/contexts/SessionCon
 import {InitTracking} from "../client/presentation/contexts/InitTracking";
 import {EDNext} from "../client/core/encrypt/EDNext";
 import {EnvSingleton} from "../client/config/EnvSingleton";
+
 const MyApp = ({Component, pageProps}: AppProps) => {
     const [render, setRender] = useState<ReactNode>()
     const envSingleton = EnvSingleton.getInstance()

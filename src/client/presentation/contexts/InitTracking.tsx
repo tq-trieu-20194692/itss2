@@ -37,11 +37,9 @@ export const InitTracking = (props: any) => {
 
     useEffect(() => {
         console.log('%cMount Screen: InitTracking', Color.ConsoleInfo)
-
         if (vm.isLoading == E_SendingStatus.idle) {
             dispatchInit()
         }
-
         return () => {
             if (vm.init && vm.tracking) {
                 console.log('%cUnmount Screen: InitTracking', Color.ConsoleInfo)
