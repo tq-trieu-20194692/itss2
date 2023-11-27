@@ -8,13 +8,10 @@ import { Card, Dropdown, Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { LogoutWidget } from '../../widgets/LogoutWidget';
-import {RouteConfig} from "../../../config/RouteConfig";
-import {useNavigate} from "react-router";
 
 const AppHeaderDropdown = () => {
     const { t } = useTranslation();
     const [modalApi, contextHolder] = Modal.useModal();
-    const navigate = useNavigate()
 
     const { vm: vmMe } = MeAction();
     const [isModalLogoutVisible, setIsModalLogoutVisible] = useState(false);
@@ -37,9 +34,6 @@ const AppHeaderDropdown = () => {
         setIsModalLogoutVisible(false);
     };
 
-    const handleViewUser = () => {
-        navigate(RouteConfig.ME)
-    };
 
     const userDivStyle = {
         display: 'flex',
@@ -77,7 +71,6 @@ const AppHeaderDropdown = () => {
                     >
                         <div
                             style={userDivStyle}
-                            onClick={handleViewUser}
                             onMouseEnter={() => setIsHovered(true)} // Đặt isHovered thành true khi hover vào
                             onMouseLeave={() => setIsHovered(false)} // Đặt isHovered thành false khi rời ra
                         >

@@ -71,39 +71,6 @@ export const MeAction = () => {
         });
     };
 
-    const dispatchEditMe = (data: Partial<UserModel>) => {
-        setState({
-            ...state,
-            isLoading: E_SendingStatus.loading,
-        });
-
-        const updatedUser = new UserModel({
-            ...state.user,
-        });
-
-        for (const key in data) {
-            if (data.hasOwnProperty(key)) {
-                updatedUser[key] = data[key];
-            }
-        }
-        apiService.editMe(updatedUser).then((r) => {
-            if (r.success) {
-                setState({
-                    ...state,
-                    user: updatedUser,
-                    isLoading: E_SendingStatus.success,
-                });
-                dispatchStoreUser(updatedUser, true, true);
-            } else {
-                setState({
-                    ...state,
-                    isLoading: E_SendingStatus.error,
-                    error: r.error,
-                });
-            }
-        }).catch((err) => setErrorHandled(state, setState, 'state', err));
-    };
-
     const dispatchStoreUser = (user: UserModel, isLS: boolean = true, isCookie: boolean = true) => {
         storeConfig.accessToken = user.accessToken;
         // set localStorage
@@ -144,9 +111,7 @@ export const MeAction = () => {
         vm,
         dispatchLoadMe,
         dispatchSetMe,
-        dispatchEditMe,
         dispatchUpdateMeImage,
-        // dispatchChangePassword,
         dispatchStoreUser,
         dispatchClearUser,
         dispatchResetState: resetState,

@@ -13,9 +13,6 @@ const AppSidebar = () => {
         dispatchSetState
     } = ThemeAction()
     const navigate = useNavigate()
-    const onHomePageClick =()=>{
-        navigate(RouteConfig.HOME_PAGE)
-    }
     return (
         <CSidebar
             position="fixed"
@@ -29,7 +26,9 @@ const AppSidebar = () => {
         >
             {/*@ts-ignore*/}
             <CSidebarBrand className="d-none d-md-flex" to="/homepage" style={{backgroundColor: "#001529"}}>
-                <div style={{fontSize: '20px'}} onClick={onHomePageClick}>
+                <div style={{fontSize: '20px'}}
+                     // onClick={onHomePageClick}
+                >
                     <CImage rounded src="/logo.svg" width={32} height={32} style={{color: "white"}}/>
                     AUTOTIMELAPSE
                 </div>

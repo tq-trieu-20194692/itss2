@@ -7,11 +7,9 @@ import {useTranslation} from 'react-i18next';
 import {useSessionContext} from "../../contexts/SessionContext";
 import {E_SendingStatus} from '../../../const/Events';
 import {LoginAction} from '../../../recoil/auth/login/LoginAction';
-import {ForgotPasswordAction} from '../../../recoil/auth/forgotpassword/ForgotPasswordAction';
-import {ForgotPasswordOTPAction} from '../../../recoil/auth/forgotpassword-otp/ForgotPasswordOTPAction';
 import {Color} from '../../../const/Color';
 import {useNavigate} from 'react-router';
-import {Navigate, Link} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import {RouteConfig} from '../../../config/RouteConfig';
 import {FieldData, ValidateErrorEntity} from 'rc-field-form/lib/interface';
 import {LoginOutlined} from '@ant-design/icons';
@@ -40,28 +38,11 @@ const LoginScreen = () => {
         dispatchResetState
     } = LoginAction();
 
-    const {
-        dispatchForgotPassword
-    } = ForgotPasswordAction();
-
-    const {
-        dispatchForgotPasswordOTP
-    } = ForgotPasswordOTPAction();
 
     const [formErrors, setFormErrors] = useState<_T_FormError>({});
 
     const inputTimeoutRef = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
 
-    const [otpSent, setOtpSent] = useState(false);
-
-    const [forgotPasswordProps, setForgotPasswordProps] = useState({
-        isOpen: false,
-        username: ''
-    })
-
-    const [sentMessageVisible, setSentMessageVisible] = useState(false);
-
-    const [redirectToChangePassword, setRedirectToChangePassword] = useState(false);
 
     useEffect(() => {
         console.log('%cMount Screen: LoginScreen', Color.ConsoleInfo);
@@ -107,55 +88,6 @@ const LoginScreen = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vm.error]);
 
-    useEffect(() => {
-        if (redirectToChangePassword) {
-            navigate("/change-password-otp");
-        }
-    }, [redirectToChangePassword]);
-
-    const showForgotPasswordPopup = () => {
-        setForgotPasswordProps({
-            ...forgotPasswordProps,
-            isOpen: true
-        })
-    };
-
-    const hideForgotPasswordPopup = () => {
-        setForgotPasswordProps({
-            ...forgotPasswordProps,
-            isOpen: false,
-            username: ""
-        })
-    };
-
-    const handleForgotPasswordUsernameChange = (e: { target: { value: any; }; }) => {
-        setForgotPasswordProps({
-            ...forgotPasswordProps,
-            username: e.target.value
-        })
-    };
-
-    const handleForgotPasswordSubmit = (method: 'link' | 'otp') => {
-        if (!forgotPasswordProps.username) {
-            modalApi.error({
-                title: 'Error',
-                content: 'Bạn chưa điền tên tài khoản',
-            });
-            return;
-        }
-        if (method === 'link') {
-            dispatchForgotPassword(forgotPasswordProps.username);
-        } else if (method === 'otp') {
-            dispatchForgotPasswordOTP(forgotPasswordProps.username);
-            setOtpSent(true);
-        }
-        setForgotPasswordProps({
-            ...forgotPasswordProps,
-            username: ''
-        })
-        hideForgotPasswordPopup();
-        setSentMessageVisible(true);
-    };
 
     const onFinish = (values: _T_FormName) => {
         dispatchLogIn({
@@ -228,7 +160,7 @@ const LoginScreen = () => {
 
     // redirect if logged
     if (session.isAuthenticated) {
-        return <Navigate to={RouteConfig.HOME_PAGE}/>;
+        return <Navigate to={RouteConfig.DASHBOARD}/>;
     }
 
     return (
@@ -342,20 +274,6 @@ const LoginScreen = () => {
                                                             {t('text.login')}
                                                         </Button>
                                                     </CCol>
-                                                    <CCol xs={6} className="text-right">
-                                                        <Button type="link" onClick={showForgotPasswordPopup}>
-                                                            {t('text.forgotPassword')}
-                                                        </Button>
-                                                    </CCol>
-                                                    <CCol xs={12} className="text-center">
-                                                            <span style={{marginLeft: '8px'}}>
-                                                                    Thành viên mới? <Link to="/register"
-                                                                                          style={{
-                                                                                              color: 'green',
-                                                                                              textDecoration: 'underline'
-                                                                                          }}>{t('text.register')}</Link> tại đây
-                                                            </span>
-                                                    </CCol>
                                                 </CRow>
                                             </Form>
                                         </ErrorItemWidget>
@@ -365,97 +283,10 @@ const LoginScreen = () => {
                         </CCol>
                     </CRow>
                 </CContainer>
-                <Modal
-                    title={<div style={{textAlign: 'center'}}>{t('text.forgotPassword')}</div>}
-                    open={forgotPasswordProps.isOpen}
-                    onCancel={hideForgotPasswordPopup}
-                    footer={[
-                        <Button key="back" onClick={hideForgotPasswordPopup}>
-                            Cancel
-                        </Button>,
-                        <Button
-                            key="submitOTP"
-                            type="primary"
-                            loading={isLoading}
-                            onClick={() => {
-                                handleForgotPasswordSubmit("otp");
-                            }}
-                        >
-                            Sent OTP
-                        </Button>,
-                        <Button
-                            key="submitLink"
-                            type="primary"
-                            loading={isLoading}
-                            onClick={() => {
-                                handleForgotPasswordSubmit("link");
-                            }}
-                        >
-                            Sent Link
-                        </Button>,
-                    ]}
-                >
-                    <Form
-                        fields={[
-                            {
-                                name: "forgotUsername",
-                                value: forgotPasswordProps.username
-                            }
-                        ]}
-                    >
-                        <Form.Item
-                            name="forgotUsername"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: t('error.required', {
-                                        label: t('text.username').toLowerCase(),
-                                    }),
-                                },
-                            ]}
-                        >
-                            <Input
-                                placeholder={t('text.username')}
-                                onChange={handleForgotPasswordUsernameChange}
-                            />
-                        </Form.Item>
-                    </Form>
-                </Modal>
-                <Modal
-                    title="Thông báo"
-                    open={sentMessageVisible}
-                    onCancel={() => setSentMessageVisible(false)}
-                    footer={[
-                        <Button key="back" onClick={() => setSentMessageVisible(false)}>
-                            {t('button.comeBack')}
-                        </Button>,
-                    ]}
-                >
-                    {t('message.sentEmail')}
-                </Modal>
-                <Modal
-                    title="Thông báo"
-                    open={otpSent}
-                    onCancel={() => setOtpSent(false)}
-                    footer={[
-                        <Button key="back" onClick={() => setOtpSent(false)}>
-                            {t('button.comeBack')}
-                        </Button>,
-                        <Button
-                            key="next"
-                            type="primary"
-                            onClick={() => setRedirectToChangePassword(true)}
-                        >
-                            {t('button.next')}
-                        </Button>
-                    ]}
-                >
-                    {t('message.sentOTPEmail')}
-                </Modal>
             </div>
         </>
     );
-};
+}
 
-export default LoginScreen;
+    export default LoginScreen;
 
